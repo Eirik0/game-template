@@ -1,0 +1,5 @@
+package gt.drawable;
+
+public enum UserInput {
+    LEFT_BUTTON_PRESSED, LEFT_BUTTON_RELEASED, RIGHT_BUTTON_PRESSED, RIGHT_BUTTON_RELEASED
+}
