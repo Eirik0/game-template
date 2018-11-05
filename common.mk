@@ -25,6 +25,8 @@ endif
 find_files = $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call find_files,$d/,$2))
 # Find files and folders and then filter by suffix
 filter_find = $(filter %$2,$(call find_files,$1,*$2))
+# Find files and folders and then attempt to filter out folders
+filter_findall = $(filter-out %/,$(call find_files,$1,*))
 
 
 ### Configuration for sources file and compilation artefacts ###
