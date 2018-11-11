@@ -3,9 +3,10 @@ package gt.component;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import gt.drawable.DrawingMethods;
+import gt.gameentity.DrawingMethods;
+import gt.gameentity.Sizable;
 
-public class GameImage implements DrawingMethods {
+public class GameImage implements DrawingMethods, Sizable {
     private BufferedImage image;
     private Graphics2D graphics;
 
@@ -32,7 +33,8 @@ public class GameImage implements DrawingMethods {
         graphics = newGraphics;
     }
 
-    public void checkResized(int width, int height) {
+    @Override
+    public void setSize(int width, int height) {
         if (width <= 0 || height <= 0) {
             return;
         }

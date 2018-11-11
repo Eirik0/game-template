@@ -2,7 +2,7 @@ package gt.component;
 
 import java.util.function.Consumer;
 
-import gt.drawable.UserInput;
+import gt.gamestate.UserInput;
 
 public class MouseTracker {
     public boolean isMouseEntered = false;

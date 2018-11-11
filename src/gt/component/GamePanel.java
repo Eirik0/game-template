@@ -6,37 +6,43 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JPanel;
 
-import gt.drawable.GameState;
+import gt.gamestate.GameState;
+import gt.gamestate.NullGameState;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
-    private final String name;
     private final GamePanelController controller;
 
-    public GamePanel(String name, GameState initialState) {
-        this.name = name;
-
-        controller = new GamePanelController(this, initialState);
+    public GamePanel(String name) {
+        controller = new GamePanelController(name, this, NullGameState.getInstance());
 
         setBackground(ComponentCreator.backgroundColor());
+
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                controller.checkResized(getWidth(), getHeight());
+                controller.setSize(getWidth(), getHeight());
             }
         });
     }
 
     public void addToGameLoop() {
-        controller.addToGameLoop(name, this::repaint);
+        controller.addToGameLoop();
     }
 
     public void removeFromGameLoop() {
-        controller.removeFromGameLoop(name);
+        controller.removeFromGameLoop();
+    }
+
+    public void setGameState(GameState gameState) {
+        controller.setGameState(gameState);
+        if (getWidth() > 0 && getHeight() > 0) {
+            controller.setSize(getWidth(), getHeight());
+        }
     }
 
     @Override
     protected synchronized void paintComponent(Graphics g) {
-        controller.drawOn(g);
+        controller.drawImageOn(g);
     }
 }

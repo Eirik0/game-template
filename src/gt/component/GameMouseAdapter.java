@@ -4,7 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
-import gt.drawable.UserInput;
+import gt.gamestate.UserInput;
 
 public class GameMouseAdapter extends MouseAdapter {
     private final MouseTracker mouseTracker;

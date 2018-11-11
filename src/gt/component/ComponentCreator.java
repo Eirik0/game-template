@@ -13,6 +13,7 @@ public class ComponentCreator {
     public static final int DEFAULT_HEIGHT = 720;
 
     public static final Font DEFAULT_FONT = new Font("consolas", Font.PLAIN, 24);
+    public static final Font DEFAULT_FONT_SMALL = new Font(Font.DIALOG, Font.PLAIN, 12);
 
     private static Color backgroundColor;
     private static Color foregroundColor;

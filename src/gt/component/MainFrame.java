@@ -1,6 +1,5 @@
 package gt.component;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -8,28 +7,28 @@ import gt.gameloop.FixedDurationGameLoop;
 
 public class MainFrame {
     private final JFrame mainFrame;
-    private final JComponent contentPane;
+    private final GamePanel gamePanel;
 
-    public MainFrame(String title, JComponent contentPane) {
-        this.contentPane = contentPane;
+    public MainFrame(String title, GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
         mainFrame = new JFrame(title);
         mainFrame.setBackground(ComponentCreator.backgroundColor());
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setFocusable(false);
-        mainFrame.setContentPane(contentPane);
+        mainFrame.setContentPane(gamePanel);
     }
 
-    public void show(Runnable startRunnable) {
+    public void show() {
         SwingUtilities.invokeLater(() -> {
             mainFrame.pack();
 
-            startRunnable.run();
+            gamePanel.addToGameLoop();
             FixedDurationGameLoop.startLoop();
 
             mainFrame.setLocationRelativeTo(null);
             mainFrame.setVisible(true);
 
-            contentPane.requestFocus();
+            gamePanel.requestFocus();
         });
     }
 }
