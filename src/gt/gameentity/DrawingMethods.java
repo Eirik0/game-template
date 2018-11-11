@@ -7,8 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Stroke;
 
-import gt.component.ComponentCreator;
-
 public interface DrawingMethods {
     default int round(double d) {
         return (int) Math.round(d);
@@ -29,15 +27,15 @@ public interface DrawingMethods {
     }
 
     default void drawCenteredString(Graphics2D g, String text, double x, double y) {
-        drawCenteredString(g, ComponentCreator.DEFAULT_FONT, text, x, y);
-    }
-
-    default void drawCenteredString(Graphics2D g, Font font, String text, double x, double y) {
-        g.setFont(font);
         Rectangle glyphVector = g.getFont().createGlyphVector(g.getFontRenderContext(), text).getPixelBounds(null, 0, 0);
         double width = glyphVector.getWidth();
         double height = glyphVector.getHeight();
         g.drawString(text, round(x - width / 2), round(y + height / 2));
+    }
+
+    default void drawCenteredString(Graphics2D g, Font font, String text, double x, double y) {
+        g.setFont(font);
+        drawCenteredString(g, text, x, y);
     }
 
     default void drawCenteredYString(Graphics2D g, String text, double x, double y) {
