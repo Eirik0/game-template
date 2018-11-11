@@ -15,7 +15,7 @@ MAKEFLAGS += --no-builtin-rules
 # Define the os dependent classpath file separator
 CP_SEPARATOR := :
 ifeq ($(OS),Windows_NT)
-	CP_SEPARATOR := \;
+	CP_SEPARATOR := ;
 endif
 
 
