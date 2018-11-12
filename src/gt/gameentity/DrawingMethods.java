@@ -61,10 +61,10 @@ public interface DrawingMethods {
         g.setStroke(oldStroke);
     }
 
-    default Color decayToColor(Color mainColor, double percent) {
-        double red = percent * 255 + (1 - percent) * mainColor.getRed();
-        double green = percent * 255 + (1 - percent) * mainColor.getGreen();
-        double blue = percent * 255 + (1 - percent) * mainColor.getBlue();
+    default Color fadeToColor(Color from, Color to, double percent) {
+        double red = percent * to.getRed() + (1 - percent) * from.getRed();
+        double green = percent * to.getGreen() + (1 - percent) * from.getGreen();
+        double blue = percent * to.getBlue() + (1 - percent) * from.getBlue();
         return new Color((int) red, (int) green, (int) blue);
     }
 
