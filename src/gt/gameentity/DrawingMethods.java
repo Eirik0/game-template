@@ -38,6 +38,12 @@ public interface DrawingMethods {
         drawCenteredString(g, text, x, y);
     }
 
+    default void drawCenteredXString(Graphics2D g, String text, double x, double y) {
+        Rectangle glyphVector = g.getFont().createGlyphVector(g.getFontRenderContext(), text).getPixelBounds(null, 0, 0);
+        double width = glyphVector.getWidth();
+        g.drawString(text, round(x - width / 2), round(y));
+    }
+
     default void drawCenteredYString(Graphics2D g, String text, double x, double y) {
         Rectangle glyphVector = g.getFont().createGlyphVector(g.getFontRenderContext(), text).getPixelBounds(null, 0, 0);
         double height = glyphVector.getHeight();
