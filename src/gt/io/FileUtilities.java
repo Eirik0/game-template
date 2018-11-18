@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -31,7 +32,7 @@ public class FileUtilities {
         }
     }
 
-    public static <T> void listToFile(File file, List<T> ts, Function<T, String> toString) throws IOException {
+    public static <T> void collectionToFile(File file, Collection<T> ts, Function<T, String> toString) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (T t : ts) {
                 writer.write(toString.apply(t));
