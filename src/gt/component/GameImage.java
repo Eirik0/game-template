@@ -5,8 +5,9 @@ import java.awt.image.BufferedImage;
 
 import gt.gameentity.DrawingMethods;
 import gt.gameentity.Sizable;
+import gt.gameentity.Sized;
 
-public class GameImage implements DrawingMethods, Sizable {
+public class GameImage implements DrawingMethods, Sizable, Sized {
     private BufferedImage image;
     private Graphics2D graphics;
 
@@ -22,6 +23,16 @@ public class GameImage implements DrawingMethods, Sizable {
         return graphics;
     }
 
+    @Override
+    public void setSize(int width, int height) {
+        if (width <= 0 || height <= 0) {
+            return;
+        }
+        if (image.getWidth() != width || image.getHeight() != height) {
+            resizeImage(width, height);
+        }
+    }
+
     private void resizeImage(int width, int height) {
         BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D newGraphics = newImage.createGraphics();
@@ -34,12 +45,12 @@ public class GameImage implements DrawingMethods, Sizable {
     }
 
     @Override
-    public void setSize(int width, int height) {
-        if (width <= 0 || height <= 0) {
-            return;
-        }
-        if (image.getWidth() != width || image.getHeight() != height) {
-            resizeImage(width, height);
-        }
+    public int getWidth() {
+        return image.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return image.getHeight();
     }
 }
