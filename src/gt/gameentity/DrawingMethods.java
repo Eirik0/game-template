@@ -74,12 +74,24 @@ public interface DrawingMethods {
         return new Color((int) red, (int) green, (int) blue);
     }
 
+    static int roundS(double d) {
+        return (int) Math.round(d);
+    }
+
     static void fillCircleS(Graphics2D g, double x, double y, double radius) {
         double height = 2 * radius;
         g.fillOval(roundS(x - radius), roundS(y - radius), roundS(height), roundS(height));
     }
 
-    static int roundS(double d) {
-        return (int) Math.round(d);
+    static void fillRectS(Graphics2D g, double x, double y, double width, double height, Color color) {
+        g.setColor(color);
+        g.fillRect(roundS(x), roundS(y), roundS(width), roundS(height));
+    }
+
+    static Color fadeToColorS(Color from, Color to, double percent) {
+        double red = percent * to.getRed() + (1 - percent) * from.getRed();
+        double green = percent * to.getGreen() + (1 - percent) * from.getGreen();
+        double blue = percent * to.getBlue() + (1 - percent) * from.getBlue();
+        return new Color((int) red, (int) green, (int) blue);
     }
 }
