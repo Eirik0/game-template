@@ -63,8 +63,8 @@ public class FpsTracker implements GameEntity {
         String sleepText = new StringBuilder("Sleeping: ").append(Integer.toString(percentSleeping)).append("%").toString();
         String driftText = new StringBuilder("Drift: ").append(Integer.toString(drift)).append("ms").toString();
 
-        drawCenteredYString(graphics, fpsText, 10, 35);
-        drawCenteredYString(graphics, sleepText, 10, 55);
-        drawCenteredYString(graphics, driftText, 10, 75);
+        drawCenteredYString(graphics, fpsText, 10, 15);
+        drawCenteredYString(graphics, sleepText, 10, 35);
+        drawCenteredYString(graphics, driftText, 10, 55);
     }
 }
