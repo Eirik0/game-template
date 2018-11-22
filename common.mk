@@ -12,10 +12,21 @@ MAKEFLAGS += --no-builtin-rules
 # Clear and reset suffixes
 .SUFFIXES:
 .SUFFIXES: .java .class
-# Define the os dependent classpath file separator
+
+
+### Define OS dependent variables ###
+
+# Extension for scripts
+SCRIPT_EXTENSION := sh
+# Separator character for classpath entries
 CP_SEPARATOR := :
+# Command to recursively delete
+RM := rm -rf
+# Redefine for windows
 ifeq ($(OS),Windows_NT)
+	SCRIPT_EXTENSION := bat
 	CP_SEPARATOR := ;
+	RM := del /S /Q /F
 endif
 
 

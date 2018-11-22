@@ -45,6 +45,6 @@ $(JAR_FILE): $(CLASS_FILES)
 clean:
 	$(RM) $(JAR_FILE) $(CLASS_FILES)
 
-### Remove the jar archive and all class files ###
+### Remove the jar archive and the bin directory ###
 cleanall:
-	rm -rf $(JAR_FILE) $(CLASS_DIR)
+	$(RM) $(JAR_FILE) $(CLASS_DIR)
