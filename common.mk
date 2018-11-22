@@ -26,7 +26,7 @@ RM := rm -rf
 ifeq ($(OS),Windows_NT)
 	SCRIPT_EXTENSION := bat
 	CP_SEPARATOR := ;
-	RM := del /S /Q /F
+	# RM := del /S /Q /F
 endif
 
 
