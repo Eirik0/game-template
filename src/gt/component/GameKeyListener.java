@@ -29,6 +29,10 @@ public class GameKeyListener implements KeyListener {
             return UserInput.RIGHT_KEY_PRESSED;
         case KeyEvent.VK_DOWN: // 40
             return UserInput.DOWN_KEY_PRESSED;
+        case KeyEvent.VK_MINUS: // 45
+            return UserInput.MINUS_KEY_PRESSED;
+        case KeyEvent.VK_EQUALS: // 61
+            return UserInput.EQUALS_KEY_PRESSED;
         case KeyEvent.VK_A: // 65
             return UserInput.A_KEY_PRESSED;
         case KeyEvent.VK_B: // 66
