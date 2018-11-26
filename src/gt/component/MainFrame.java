@@ -12,7 +12,7 @@ public class MainFrame {
     public MainFrame(String title, GamePanel gamePanel) {
         this.gamePanel = gamePanel;
         mainFrame = new JFrame(title);
-        mainFrame.setBackground(ComponentCreator.backgroundColor());
+        mainFrame.setIgnoreRepaint(true);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setFocusable(false);
         mainFrame.setContentPane(gamePanel);

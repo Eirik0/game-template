@@ -14,9 +14,11 @@ public class GamePanel extends JPanel {
     private final GamePanelController controller;
 
     public GamePanel(String name) {
+        super(null, false);
+
         controller = new GamePanelController(name, this, NullGameState.getInstance());
 
-        setBackground(ComponentCreator.backgroundColor());
+        setIgnoreRepaint(true);
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -42,7 +44,7 @@ public class GamePanel extends JPanel {
     }
 
     @Override
-    protected synchronized void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) {
         controller.drawImageOn(g);
     }
 }
