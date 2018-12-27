@@ -28,8 +28,8 @@ public interface DrawingMethods {
 
     default void drawCenteredString(Graphics2D g, String text, double x, double y) {
         Rectangle glyphVector = g.getFont().createGlyphVector(g.getFontRenderContext(), text).getPixelBounds(null, 0, 0);
-        double width = glyphVector.getWidth();
-        double height = glyphVector.getHeight();
+        double width = glyphVector.getWidth() - glyphVector.getX();
+        double height = glyphVector.getHeight() - glyphVector.getY();
         g.drawString(text, round(x - width / 2), round(y + height / 2));
     }
 
@@ -40,13 +40,13 @@ public interface DrawingMethods {
 
     default void drawCenteredXString(Graphics2D g, String text, double x, double y) {
         Rectangle glyphVector = g.getFont().createGlyphVector(g.getFontRenderContext(), text).getPixelBounds(null, 0, 0);
-        double width = glyphVector.getWidth();
+        double width = glyphVector.getWidth() - glyphVector.getX();
         g.drawString(text, round(x - width / 2), round(y));
     }
 
     default void drawCenteredYString(Graphics2D g, String text, double x, double y) {
         Rectangle glyphVector = g.getFont().createGlyphVector(g.getFontRenderContext(), text).getPixelBounds(null, 0, 0);
-        double height = glyphVector.getHeight();
+        double height = glyphVector.getHeight() - glyphVector.getY();
         g.drawString(text, round(x), round(y + height / 2));
     }
 
@@ -68,9 +68,9 @@ public interface DrawingMethods {
     }
 
     default Color fadeToColor(Color from, Color to, double percent) {
-        double red = percent * to.getRed() + (1 - percent) * from.getRed();
-        double green = percent * to.getGreen() + (1 - percent) * from.getGreen();
-        double blue = percent * to.getBlue() + (1 - percent) * from.getBlue();
+        double red = Math.min(percent * to.getRed() + (1 - percent) * from.getRed(), 255);
+        double green = Math.min(percent * to.getGreen() + (1 - percent) * from.getGreen(), 255);
+        double blue = Math.min(percent * to.getBlue() + (1 - percent) * from.getBlue(), 255);
         return new Color((int) red, (int) green, (int) blue);
     }
 
@@ -89,9 +89,9 @@ public interface DrawingMethods {
     }
 
     static Color fadeToColorS(Color from, Color to, double percent) {
-        double red = percent * to.getRed() + (1 - percent) * from.getRed();
-        double green = percent * to.getGreen() + (1 - percent) * from.getGreen();
-        double blue = percent * to.getBlue() + (1 - percent) * from.getBlue();
+        double red = Math.min(percent * to.getRed() + (1 - percent) * from.getRed(), 255);
+        double green = Math.min(percent * to.getGreen() + (1 - percent) * from.getGreen(), 255);
+        double blue = Math.min(percent * to.getBlue() + (1 - percent) * from.getBlue(), 255);
         return new Color((int) red, (int) green, (int) blue);
     }
 }
