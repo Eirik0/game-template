@@ -15,6 +15,8 @@ public class GamePanelController implements GameLoopItem, Sizable {
     private final GamePanel gamePanel;
     private final GameImage gameImage = new GameImage();
 
+    private final MouseTracker mouseTracker;
+
     private GameState currentState;
     private boolean showFpsToggled = false;
 
@@ -27,7 +29,8 @@ public class GamePanelController implements GameLoopItem, Sizable {
 
         currentState = initialState;
 
-        GameMouseAdapter mouseAdapter = new GameMouseAdapter(new MouseTracker(this::handleUserInput));
+        mouseTracker = new MouseTracker(this::handleUserInput);
+        GameMouseAdapter mouseAdapter = new GameMouseAdapter(mouseTracker);
         gamePanel.addMouseListener(mouseAdapter);
         gamePanel.addMouseMotionListener(mouseAdapter);
 
@@ -98,5 +101,9 @@ public class GamePanelController implements GameLoopItem, Sizable {
             showFpsToggled = !showFpsToggled;
         }
         currentState.handleUserInput(input);
+    }
+
+    public MouseTracker getMouseTracker() {
+        return mouseTracker;
     }
 }

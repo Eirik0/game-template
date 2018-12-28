@@ -12,9 +12,13 @@ public interface DrawingMethods {
         return (int) Math.round(d);
     }
 
+    default void drawRect(Graphics2D g, double x, double y, double width, double height) {
+        g.drawRect(round(x), round(y), round(width), round(height));
+    }
+
     default void drawRect(Graphics2D g, double x, double y, double width, double height, Color color) {
         g.setColor(color);
-        g.drawRect(round(x), round(y), round(width), round(height));
+        drawRect(g, x, y, width, height);
     }
 
     default void fillRect(Graphics2D g, double x, double y, double width, double height, Color color) {
@@ -29,7 +33,7 @@ public interface DrawingMethods {
     default void drawCenteredString(Graphics2D g, String text, double x, double y) {
         Rectangle glyphVector = g.getFont().createGlyphVector(g.getFontRenderContext(), text).getPixelBounds(null, 0, 0);
         double width = glyphVector.getWidth() - glyphVector.getX();
-        double height = glyphVector.getHeight() - glyphVector.getY();
+        double height = glyphVector.getHeight();
         g.drawString(text, round(x - width / 2), round(y + height / 2));
     }
 
@@ -46,7 +50,7 @@ public interface DrawingMethods {
 
     default void drawCenteredYString(Graphics2D g, String text, double x, double y) {
         Rectangle glyphVector = g.getFont().createGlyphVector(g.getFontRenderContext(), text).getPixelBounds(null, 0, 0);
-        double height = glyphVector.getHeight() - glyphVector.getY();
+        double height = glyphVector.getHeight();
         g.drawString(text, round(x), round(y + height / 2));
     }
 

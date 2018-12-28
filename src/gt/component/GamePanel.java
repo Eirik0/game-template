@@ -43,6 +43,10 @@ public class GamePanel extends JPanel {
         }
     }
 
+    public MouseTracker getMouseTracker() {
+        return controller.getMouseTracker();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         controller.drawImageOn(g);

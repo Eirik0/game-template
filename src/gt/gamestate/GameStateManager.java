@@ -1,6 +1,7 @@
 package gt.gamestate;
 
 import gt.component.GamePanel;
+import gt.component.MouseTracker;
 
 public class GameStateManager {
     private static final GameStateManager instance = new GameStateManager();
@@ -16,5 +17,9 @@ public class GameStateManager {
 
     public static void setGameState(GameState gameState) {
         instance.mainPanel.setGameState(gameState);
+    }
+
+    public static MouseTracker getMouseTracker() {
+        return instance.mainPanel.getMouseTracker();
     }
 }
