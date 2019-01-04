@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ThreadNumber {
-    private static Map<String, Integer> threadNumMap = new HashMap<>();
+    private static final Map<String, Integer> threadNumMap = new HashMap<>();
 
     private ThreadNumber() {
     }
