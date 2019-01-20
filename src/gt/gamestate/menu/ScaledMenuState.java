@@ -12,6 +12,10 @@ import gt.gamestate.UserInput;
 import gt.util.Pair;
 
 public class ScaledMenuState implements GameState {
+    private static final double VERTICAL_GAP = 0.05;
+    private static final double HORIZONTAL_GAP = 0.05;
+    private static final double HORIZONTAL_PADDING = 0.1;
+
     private final MouseTracker mouseTracker;
     private final Font menuFont;
 
@@ -20,21 +24,29 @@ public class ScaledMenuState implements GameState {
     private int width;
     private int height;
 
-    public ScaledMenuState(MouseTracker mouseTracker, Font menuFont, List<Pair<String, Runnable>> namedActions) {
+    public ScaledMenuState(MouseTracker mouseTracker, Font menuFont, List<List<Pair<String, Runnable>>> namedActionsList) {
         this.mouseTracker = mouseTracker;
         this.menuFont = menuFont;
 
-        double widthPercentStart = 0.25;
-        double widthPercentEnd = 0.75;
-        double gap = 0.05;
-        double height = 1.0 / namedActions.size() - gap * (namedActions.size() + 1) / namedActions.size();
+        int numColumns = namedActionsList.size();
+        int maxActions = namedActionsList.get(0).size();
+        for (int i = 1; i < numColumns; ++i) {
+            maxActions = Math.max(maxActions, namedActionsList.get(i).size());
+        }
 
-        double currentHeight = gap;
-        for (Pair<String, Runnable> namedRunnable : namedActions) {
-            String name = namedRunnable.getFirst();
-            Runnable action = namedRunnable.getSecond();
-            menuItems.add(new ScaledMenuItem(this, name, action, widthPercentStart, currentHeight, widthPercentEnd, currentHeight + height));
-            currentHeight += height + gap;
+        double widthPercent = (1.0 - (numColumns + 1) * HORIZONTAL_GAP - 2 * HORIZONTAL_PADDING) / numColumns;
+        double heightPercent = (1.0 - (maxActions + 1) * VERTICAL_GAP) / maxActions;
+
+        double currentWidth = HORIZONTAL_GAP + HORIZONTAL_PADDING;
+        for (List<Pair<String, Runnable>> namedActions : namedActionsList) {
+            double currentHeight = VERTICAL_GAP;
+            for (Pair<String, Runnable> namedAction : namedActions) {
+                String name = namedAction.getFirst();
+                Runnable action = namedAction.getSecond();
+                menuItems.add(new ScaledMenuItem(this, name, action, currentWidth, currentHeight, currentWidth + widthPercent, currentHeight + heightPercent));
+                currentHeight += heightPercent + VERTICAL_GAP;
+            }
+            currentWidth += widthPercent + HORIZONTAL_GAP;
         }
     }
 
