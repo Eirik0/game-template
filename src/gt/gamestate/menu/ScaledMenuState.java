@@ -14,7 +14,6 @@ import gt.util.Pair;
 public class ScaledMenuState implements GameState {
     private static final double VERTICAL_GAP = 0.05;
     private static final double HORIZONTAL_GAP = 0.05;
-    private static final double HORIZONTAL_PADDING = 0.1;
 
     private final MouseTracker mouseTracker;
     private final Font menuFont;
@@ -24,7 +23,7 @@ public class ScaledMenuState implements GameState {
     private int width;
     private int height;
 
-    public ScaledMenuState(MouseTracker mouseTracker, Font menuFont, List<List<Pair<String, Runnable>>> namedActionsList) {
+    public ScaledMenuState(MouseTracker mouseTracker, Font menuFont, double horizontalPadding, List<List<Pair<String, Runnable>>> namedActionsList) {
         this.mouseTracker = mouseTracker;
         this.menuFont = menuFont;
 
@@ -34,10 +33,10 @@ public class ScaledMenuState implements GameState {
             maxActions = Math.max(maxActions, namedActionsList.get(i).size());
         }
 
-        double widthPercent = (1.0 - (numColumns + 1) * HORIZONTAL_GAP - 2 * HORIZONTAL_PADDING) / numColumns;
+        double widthPercent = (1.0 - (numColumns + 1) * HORIZONTAL_GAP - 2 * horizontalPadding) / numColumns;
         double heightPercent = (1.0 - (maxActions + 1) * VERTICAL_GAP) / maxActions;
 
-        double currentWidth = HORIZONTAL_GAP + HORIZONTAL_PADDING;
+        double currentWidth = HORIZONTAL_GAP + horizontalPadding;
         for (List<Pair<String, Runnable>> namedActions : namedActionsList) {
             double currentHeight = VERTICAL_GAP;
             for (Pair<String, Runnable> namedAction : namedActions) {
