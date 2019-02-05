@@ -87,6 +87,8 @@ public class GameKeyListener implements KeyListener {
             return UserInput.Z_KEY_PRESSED;
         case KeyEvent.VK_F3: // 114
             return UserInput.F3_KEY_PRESSED;
+        case KeyEvent.VK_DELETE: // 127
+            return UserInput.DELETE_KEY_PRESSED;
         default:
             return null;
         }
