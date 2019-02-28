@@ -8,6 +8,7 @@ public class MouseTracker {
     public boolean isMouseEntered = false;
     public int mouseX;
     public int mouseY;
+    public double wheelRotation = 0;
 
     private final Consumer<UserInput> userInputConsumer;
 

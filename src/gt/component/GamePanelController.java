@@ -33,6 +33,7 @@ public class GamePanelController implements GameLoopItem, Sizable {
         GameMouseAdapter mouseAdapter = new GameMouseAdapter(mouseTracker);
         gamePanel.addMouseListener(mouseAdapter);
         gamePanel.addMouseMotionListener(mouseAdapter);
+        gamePanel.addMouseWheelListener(mouseAdapter);
 
         gamePanel.addKeyListener(new GameKeyListener(this::handleUserInput));
     }

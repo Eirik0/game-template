@@ -48,15 +48,19 @@ public class GameMouseAdapter extends MouseAdapter {
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
+        mouseTracker.wheelRotation += e.getPreciseWheelRotation();
+        mouseTracker.handleUserInput(UserInput.MOUSE_WHEEL_MOVED);
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
         mouseTracker.setMouseXY(e.getX(), e.getY());
+        mouseTracker.handleUserInput(UserInput.MOUSE_MOVED);
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
         mouseTracker.setMouseXY(e.getX(), e.getY());
+        mouseTracker.handleUserInput(UserInput.MOUSE_MOVED);
     }
 }
