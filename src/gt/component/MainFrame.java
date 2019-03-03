@@ -18,6 +18,10 @@ public class MainFrame {
         mainFrame.setContentPane(gamePanel);
     }
 
+    public JFrame getFrame() {
+        return mainFrame;
+    }
+
     public void show() {
         SwingUtilities.invokeLater(() -> {
             mainFrame.pack();
