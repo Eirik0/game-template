@@ -51,6 +51,14 @@ public class CartesianSpace implements Sizable {
         return scale * width;
     }
 
+    public double getImageWidth() {
+        return imageWidth;
+    }
+
+    public double getImageHeight() {
+        return imageHeight;
+    }
+
     public void move(double imageX, double imageY) {
         x0 += imageX / scale;
         y0 += imageY / scale;
