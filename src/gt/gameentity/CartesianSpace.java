@@ -11,6 +11,7 @@ public class CartesianSpace implements Sizable {
     private double imageHeight;
 
     private double scale;
+    private double scaleInv;
 
     public CartesianSpace(double imageWidth, double imageHeight, double x0, double y0, double width, double height) {
         this.imageWidth = imageWidth;
@@ -23,8 +24,31 @@ public class CartesianSpace implements Sizable {
     public void setSize(int imageWidth, int imageHeight) {
         this.imageWidth = imageWidth;
         this.imageHeight = imageHeight;
-
         setBounds(x0, y0, width, height);
+    }
+
+    public double getX(double imageX) {
+        return x0 + imageX * scaleInv;
+    }
+
+    public double getY(double imageY) {
+        return y0 + imageY * scaleInv;
+    }
+
+    public double getWidth(double imageWidth) {
+        return imageWidth * scaleInv;
+    }
+
+    public double getImageX(double x) {
+        return scale * (x - x0);
+    }
+
+    public double getImageY(double y) {
+        return scale * (y - y0);
+    }
+
+    public double getImageWidth(double width) {
+        return scale * width;
     }
 
     public void move(double imageX, double imageY) {
@@ -46,23 +70,7 @@ public class CartesianSpace implements Sizable {
         setBounds(x0 + dx2 * (x / imageWidth), y0 + dy2 * (y / imageHeight), width - dx2, height - dy2);
     }
 
-    public double getImageX(double x) {
-        return scale * (x - x0);
-    }
-
-    public double getImageY(double y) {
-        return scale * (y - y0);
-    }
-
-    public double getImageWidth(double width) {
-        return scale * width;
-    }
-
-    public double getImageHeight(double height) {
-        return scale * height;
-    }
-
-    private void setBounds(double x0, double y0, double width, double height) {
+    public void setBounds(double x0, double y0, double width, double height) {
         this.x0 = x0;
         this.y0 = y0;
 
@@ -83,5 +91,6 @@ public class CartesianSpace implements Sizable {
         }
 
         scale = imageWidth / this.width;
+        scaleInv = this.width / imageWidth;
     }
 }
