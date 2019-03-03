@@ -13,12 +13,14 @@ public class GameKeyListener implements KeyListener {
         this.userInputConsumer = userInputConsumer;
     }
 
-    private static UserInput keyCodeToUserInput(int keyCode) {
+    private static UserInput keyCodeToKeyPressed(int keyCode) {
         switch (keyCode) {
         case KeyEvent.VK_BACK_SPACE: // 8
             return UserInput.BACK_SPACE_KEY_PRESSED;
         case KeyEvent.VK_ENTER: // 10
             return UserInput.ENTER_KEY_PRESSED;
+        case KeyEvent.VK_CONTROL: // 17
+            return UserInput.CTRL_KEY_PRESSED;
         case KeyEvent.VK_ESCAPE: // 27
             return UserInput.ESC_KEY_PRESSED;
         case KeyEvent.VK_LEFT: // 37
@@ -94,6 +96,15 @@ public class GameKeyListener implements KeyListener {
         }
     }
 
+    private static UserInput keyCodeToKeyReleased(int keyCode) {
+        switch (keyCode) {
+        case KeyEvent.VK_CONTROL: // 17
+            return UserInput.CTRL_KEY_RELEASED;
+        default:
+            return null;
+        }
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
         // Do nothing
@@ -101,7 +112,7 @@ public class GameKeyListener implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        UserInput maybeUserInput = keyCodeToUserInput(e.getKeyCode());
+        UserInput maybeUserInput = keyCodeToKeyPressed(e.getKeyCode());
         if (maybeUserInput != null) {
             userInputConsumer.accept(maybeUserInput);
         }
@@ -109,6 +120,9 @@ public class GameKeyListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // Do nothing
+        UserInput maybeUserInput = keyCodeToKeyReleased(e.getKeyCode());
+        if (maybeUserInput != null) {
+            userInputConsumer.accept(maybeUserInput);
+        }
     }
 }
