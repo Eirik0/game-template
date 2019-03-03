@@ -22,4 +22,8 @@ public class GameStateManager {
     public static MouseTracker getMouseTracker() {
         return instance.mainPanel.getMouseTracker();
     }
+
+    public static void requestFocus() {
+        instance.mainPanel.requestFocus();
+    }
 }
