@@ -2,7 +2,14 @@ package gt.component;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.function.IntConsumer;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -40,5 +47,42 @@ public class ComponentCreator {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
         }
+    }
+
+    public static <T extends JComponent> T initComponent(T component) {
+        component.setBackground(backgroundColor);
+        component.setForeground(foregroundColor);
+        component.setFocusable(false);
+        if (component instanceof JTextField) {
+            component.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createDashedBorder(null), BorderFactory.createEmptyBorder(2, 5, 2, 5)));
+        } else if (!(component instanceof JButton)) {
+            component.setBorder(BorderFactory.createEmptyBorder());
+        }
+        return component;
+    }
+
+    public static JButton createButton(String text, Runnable action) {
+        JButton button = initComponent(new JButton(text));
+        button.addActionListener(e -> action.run());
+        return button;
+    }
+
+    public static JLabel createLabel(String title, Color foregroundColor) {
+        JLabel label = initComponent(new JLabel(title));
+        label.setForeground(foregroundColor);
+        return label;
+    }
+
+    public static JSlider createSlider(int min, int max, int defaultVlue, IntConsumer valueConsumer) {
+        JSlider slider = initComponent(new JSlider(JSlider.HORIZONTAL));
+        slider.setMinimum(min);
+        slider.setMaximum(max);
+        slider.setMinorTickSpacing(min);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        slider.setSnapToTicks(true);
+        slider.setValue(defaultVlue);
+        slider.addChangeListener(e -> valueConsumer.accept(slider.getValue()));
+        return slider;
     }
 }
