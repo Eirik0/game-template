@@ -69,6 +69,7 @@ public class ComponentCreator {
 
     public static JLabel createLabel(String title, Color foregroundColor) {
         JLabel label = initComponent(new JLabel(title));
+        label.setOpaque(true);
         label.setForeground(foregroundColor);
         return label;
     }
