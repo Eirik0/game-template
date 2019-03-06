@@ -52,11 +52,14 @@ public class ComponentCreator {
     public static <T extends JComponent> T initComponent(T component) {
         component.setBackground(backgroundColor);
         component.setForeground(foregroundColor);
-        component.setFocusable(false);
         if (component instanceof JTextField) {
+            ((JTextField) component).setCaretColor(foregroundColor);
             component.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createDashedBorder(null), BorderFactory.createEmptyBorder(2, 5, 2, 5)));
-        } else if (!(component instanceof JButton)) {
-            component.setBorder(BorderFactory.createEmptyBorder());
+        } else {
+            component.setFocusable(false);
+            if (!(component instanceof JButton)) {
+                component.setBorder(BorderFactory.createEmptyBorder());
+            }
         }
         return component;
     }
