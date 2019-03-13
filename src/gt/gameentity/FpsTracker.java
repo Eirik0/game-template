@@ -35,11 +35,10 @@ public class FpsTracker implements GameEntity {
     public void update(double dt) {
         ++frames;
         updateTime += dt;
-        if (updateTime > TimeConstants.NANOS_PER_SECOND) {
+        if (System.nanoTime() - actualTimeStart > TimeConstants.NANOS_PER_SECOND) {
             actualTimeStart = System.nanoTime();
             currentFps = frames;
             currentSleepingTime = sleepingTime;
-
             frames = 0;
             updateTime = 0;
             sleepingTime = 0;
