@@ -12,7 +12,7 @@ public class GamePanelController implements GameLoopItem, Sizable {
     private final String name;
 
     private final GamePanel gamePanel;
-    private final GameImage gameImage = new GameImage();
+    private final BufferedGameImage gameImage = new BufferedGameImage();
 
     private final MouseTracker mouseTracker;
 
@@ -50,6 +50,7 @@ public class GamePanelController implements GameLoopItem, Sizable {
         if (showFpsToggled) {
             FpsTracker.getInstance().drawOn(gameImage.getGraphics());
         }
+        gameImage.commitBuffer();
         gamePanel.repaint();
     }
 
