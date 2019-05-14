@@ -6,6 +6,7 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JPanel;
 
+import gt.gameloop.FixedDurationGameLoop;
 import gt.gamestate.GameState;
 import gt.gamestate.NullGameState;
 
@@ -29,11 +30,11 @@ public class GamePanel extends JPanel {
     }
 
     public void addToGameLoop() {
-        controller.addToGameLoop();
+        FixedDurationGameLoop.addItem(controller);
     }
 
     public void removeFromGameLoop() {
-        controller.removeFromGameLoop();
+        FixedDurationGameLoop.removeItem(controller);
     }
 
     public void setGameState(GameState gameState) {

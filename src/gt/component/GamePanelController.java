@@ -4,7 +4,6 @@ import java.awt.Graphics;
 
 import gt.gameentity.FpsTracker;
 import gt.gameentity.Sizable;
-import gt.gameloop.FixedDurationGameLoop;
 import gt.gameloop.GameLoopItem;
 import gt.gamestate.GameState;
 import gt.gamestate.UserInput;
@@ -35,17 +34,14 @@ public class GamePanelController implements GameLoopItem, Sizable {
         gamePanel.addKeyListener(new GameKeyListener(this::handleUserInput));
     }
 
-    public void addToGameLoop() {
-        FixedDurationGameLoop.addItem(name, this);
-    }
-
-    public void removeFromGameLoop() {
-        FixedDurationGameLoop.removeItem(name);
-    }
-
     @Override
     public void update(double dt) {
         currentState.update(dt);
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override

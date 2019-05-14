@@ -50,8 +50,8 @@ public class FixedDurationGameLoop {
         }
     }
 
-    public static void addItem(String name, GameLoopItem item) {
-        instance.addItemToMap(name, item);
+    public static void addItem(GameLoopItem item) {
+        instance.addItemToMap(item.getName(), item);
     }
 
     private synchronized void addItemToMap(String name, GameLoopItem item) {
@@ -60,8 +60,8 @@ public class FixedDurationGameLoop {
         gameLoopItemMap = newItemMap;
     }
 
-    public static void removeItem(String name) {
-        instance.removeItemFromMap(name);
+    public static void removeItem(GameLoopItem item) {
+        instance.removeItemFromMap(item.getName());
     }
 
     private synchronized void removeItemFromMap(String name) {
