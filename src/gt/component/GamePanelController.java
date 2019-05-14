@@ -20,9 +20,6 @@ public class GamePanelController implements GameLoopItem, Sizable {
     private GameState currentState;
     private boolean showFpsToggled = false;
 
-    private volatile boolean ignoreWait = false;
-    private volatile boolean paintComplete = false;
-
     public GamePanelController(String name, GamePanel gamePanel, GameState initialState) {
         this.name = name;
         this.gamePanel = gamePanel;
@@ -44,10 +41,6 @@ public class GamePanelController implements GameLoopItem, Sizable {
 
     public void removeFromGameLoop() {
         FixedDurationGameLoop.removeItem(name);
-        synchronized (this) {
-            ignoreWait = true;
-            notify();
-        }
     }
 
     @Override
@@ -61,22 +54,7 @@ public class GamePanelController implements GameLoopItem, Sizable {
         if (showFpsToggled) {
             FpsTracker.getInstance().drawOn(gameImage.getGraphics());
         }
-        repaintAndWait();
-    }
-
-    private void repaintAndWait() {
-        paintComplete = false;
         gamePanel.repaint();
-        synchronized (this) {
-            int tries = 0;
-            while (!ignoreWait && !paintComplete && ++tries < 5) {
-                try {
-                    wait(50);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
     }
 
     public void setGameState(GameState state) {
@@ -85,10 +63,6 @@ public class GamePanelController implements GameLoopItem, Sizable {
 
     public void drawImageOn(Graphics g) {
         g.drawImage(gameImage.getImage(), 0, 0, null);
-        synchronized (this) {
-            paintComplete = true;
-            notify();
-        }
     }
 
     @Override
