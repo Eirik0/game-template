@@ -3,9 +3,13 @@ package gt.gameloop;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 import gt.gameentity.FpsTracker;
+import gt.gamestate.UserInput;
+import gt.util.Pair;
 
 public class FixedDurationGameLoop {
     private static final double TARGET_FPS = 60;
@@ -15,6 +19,7 @@ public class FixedDurationGameLoop {
     private static final FixedDurationGameLoop instance = new FixedDurationGameLoop();
 
     private Map<String, GameLoopItem> gameLoopItemMap = new HashMap<>();
+    private final Queue<Pair<String, UserInput>> userInputQueue = new LinkedList<>();
 
     private FixedDurationGameLoop() {
     }
@@ -24,11 +29,22 @@ public class FixedDurationGameLoop {
     }
 
     private void runLoop() {
+        Queue<Pair<String, UserInput>> userInputs = new LinkedList<>();
         long loopStart;
         for (;;) {
             loopStart = System.nanoTime();
 
             FpsTracker.getInstance().update(TARGET_NANOS_PER_FRAME);
+
+            userInputs.clear();
+            popUserInputs(userInputs);
+            Pair<String, UserInput> userInputPair;
+            while ((userInputPair = userInputs.poll()) != null) {
+                GameLoopItem gameLoopItem = gameLoopItemMap.get(userInputPair.getFirst());
+                if (gameLoopItem != null) {
+                    gameLoopItem.handleUserInput(userInputPair.getSecond());
+                }
+            }
 
             Collection<GameLoopItem> items = new ArrayList<>(gameLoopItemMap.values());
             for (GameLoopItem item : items) {
@@ -68,5 +84,21 @@ public class FixedDurationGameLoop {
         HashMap<String, GameLoopItem> newItemMap = new HashMap<>(gameLoopItemMap);
         newItemMap.remove(name);
         gameLoopItemMap = newItemMap;
+    }
+
+    public static void enqueueUserInput(GameLoopItem item, UserInput input) {
+        instance.pushUserInput(item.getName(), input);
+    }
+
+    private synchronized void pushUserInput(String name, UserInput input) {
+        userInputQueue.add(Pair.valueOf(name, input));
+    }
+
+    private synchronized Queue<Pair<String, UserInput>> popUserInputs(Queue<Pair<String, UserInput>> userInputs) {
+        Pair<String, UserInput> userInputPair;
+        while ((userInputPair = userInputQueue.poll()) != null) {
+            userInputs.add(userInputPair);
+        }
+        return userInputs;
     }
 }
