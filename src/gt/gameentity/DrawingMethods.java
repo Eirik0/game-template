@@ -26,6 +26,10 @@ public interface DrawingMethods {
         g.fillRect(round(x), round(y), round(width), round(height));
     }
 
+    default void drawLine(Graphics2D g, double x0, double y0, double x1, double y1) {
+        g.drawLine(round(x0), round(y0), round(x1), round(y1));
+    }
+
     default void drawPixel(Graphics2D g, int x, int y) {
         g.drawLine(x, y, x, y);
     }
@@ -80,6 +84,13 @@ public interface DrawingMethods {
 
     static int roundS(double d) {
         return (int) Math.round(d);
+    }
+
+    static void drawCenteredStringS(Graphics2D g, String text, double x, double y) {
+        Rectangle glyphVector = g.getFont().createGlyphVector(g.getFontRenderContext(), text).getPixelBounds(null, 0, 0);
+        double width = glyphVector.getWidth() - glyphVector.getX();
+        double height = glyphVector.getHeight();
+        g.drawString(text, roundS(x - width / 2), roundS(y + height / 2));
     }
 
     static void fillCircleS(Graphics2D g, double x, double y, double radius) {
