@@ -24,14 +24,14 @@ public class BufferedGameImage implements DrawingMethods, Sizable, Sized {
         return buffer.getGraphics();
     }
 
-    public void commitBuffer() {
+    public synchronized void commitBuffer() {
         GameImage temp = current;
         current = buffer;
         buffer = temp;
     }
 
     @Override
-    public void setSize(int width, int height) {
+    public synchronized void setSize(int width, int height) {
         current.setSize(width, height);
         buffer.setSize(width, height);
     }
