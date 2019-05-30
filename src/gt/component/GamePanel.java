@@ -19,6 +19,7 @@ public class GamePanel extends JPanel {
 
         controller = new GamePanelController(name, this, NullGameState.getInstance());
 
+        setBackground(ComponentCreator.backgroundColor());
         setIgnoreRepaint(true);
 
         addComponentListener(new ComponentAdapter() {
@@ -50,6 +51,7 @@ public class GamePanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
         controller.drawImageOn(g);
     }
 }
