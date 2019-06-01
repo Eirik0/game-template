@@ -1,6 +1,7 @@
 package gt.gamestate;
 
 public enum UserInput {
+    RESIZE,
     // Mouse:
     MOUSE_MOVED, MOUSE_WHEEL_MOVED,
     //  -Left button

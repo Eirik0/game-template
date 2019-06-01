@@ -71,8 +71,13 @@ public class GamePanelController implements GameLoopItem, Sizable {
 
     @Override
     public void handleUserInput(UserInput input) {
-        if (input == UserInput.F3_KEY_PRESSED) {
+        switch (input) {
+        case RESIZE:
+            setSize(gamePanel.getWidth(), gamePanel.getHeight());
+            return;
+        case F3_KEY_PRESSED:
             showFpsToggled = !showFpsToggled;
+            break;
         }
         currentState.handleUserInput(input);
     }

@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import gt.gameloop.FixedDurationGameLoop;
 import gt.gamestate.GameState;
 import gt.gamestate.NullGameState;
+import gt.gamestate.UserInput;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
@@ -25,7 +26,7 @@ public class GamePanel extends JPanel {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                controller.setSize(getWidth(), getHeight());
+                FixedDurationGameLoop.enqueueUserInput(controller, UserInput.RESIZE);
             }
         });
     }
