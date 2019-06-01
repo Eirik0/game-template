@@ -11,6 +11,11 @@ public class DurationTimer implements Updatable {
         this.duration = duration;
     }
 
+    public DurationTimer(double duration, boolean countUp) {
+        this.duration = duration;
+        this.countUp = countUp;
+    }
+
     @Override
     public void update(double dt) {
         internalTimer += countUp ? dt : -dt;
@@ -23,6 +28,14 @@ public class DurationTimer implements Updatable {
     public void reset() {
         internalTimer = 0;
         countUp = true;
+    }
+
+    public void setCountUp(boolean countUp) {
+        if (countUp) {
+            countUp();
+        } else {
+            countDown();
+        }
     }
 
     public void countUp() {
