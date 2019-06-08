@@ -10,6 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -78,7 +79,7 @@ public class ComponentCreator {
     }
 
     public static JSlider createSlider(int min, int max, int defaultVlue, IntConsumer valueConsumer) {
-        JSlider slider = initComponent(new JSlider(JSlider.HORIZONTAL));
+        JSlider slider = initComponent(new JSlider(SwingConstants.HORIZONTAL));
         slider.setMinimum(min);
         slider.setMaximum(max);
         slider.setMinorTickSpacing(min);
