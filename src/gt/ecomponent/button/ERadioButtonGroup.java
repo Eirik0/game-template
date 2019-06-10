@@ -7,6 +7,7 @@ import java.util.function.IntConsumer;
 import gt.ecomponent.EComponent;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.location.EFixedLocation;
+import gt.ecomponent.location.ERelativeLocation;
 
 public class ERadioButtonGroup implements EComponent {
     private static final int BUTTON_SPACING = 4;
@@ -23,18 +24,18 @@ public class ERadioButtonGroup implements EComponent {
         this.multiSelect = multiSelect;
         double buttonWidth = (cl.getWidth() - (numWide - 1) * BUTTON_SPACING) / numWide;
         double buttonHeight = (cl.getHeight() - (numHigh - 1) * BUTTON_SPACING) / numHigh;
-        double x = cl.getX0();
-        double y = cl.getY0();
+        double x = 0;
+        double y = 0;
         int i = 0;
         for (int i_y = 0; i_y < numHigh; ++i_y) {
             for (int i_x = 0; i_x < numWide; ++i_x) {
                 int value = i;
-                buttons[i] = EButton.createBlockButton(new EFixedLocation(x, y, x + buttonWidth - 1, y + buttonHeight - 1), colors[i],
-                        () -> selectButton(value));
+                EFixedLocation buttonLoc = new EFixedLocation(x, y, x + buttonWidth - 1, y + buttonHeight - 1);
+                buttons[i] = EButton.createBlockButton(new ERelativeLocation(cl, buttonLoc), colors[i], () -> selectButton(value));
                 ++i;
                 x += buttonWidth + BUTTON_SPACING;
             }
-            x = cl.getX0();
+            x = 0;
             y += buttonHeight + BUTTON_SPACING;
         }
         buttons[0].setSelected(true);

@@ -110,5 +110,4 @@ public class EComponentPanel implements Updatable, Drawable, UserInputHandler {
             break;
         }
     }
-
 }
