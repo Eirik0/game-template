@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 public class ThreadWorker {
     private final String name;
 
-    private Consumer<ThreadWorker> completedWorkerConsumer;
+    private final Consumer<ThreadWorker> completedWorkerConsumer;
 
     private Thread thread;
     private volatile boolean keepRunning = true;
@@ -77,12 +77,10 @@ public class ThreadWorker {
         }
     }
 
-    public void waitForStart() {
+    public synchronized void waitForStart() {
         while (!workStarted) {
             try {
-                synchronized (this) {
-                    wait();
-                }
+                wait();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
