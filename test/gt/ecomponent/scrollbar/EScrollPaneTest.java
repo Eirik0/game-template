@@ -10,7 +10,7 @@ import gt.ecomponent.scrollbar.EScrollPane;
 
 public class EScrollPaneTest {
     private static EScrollPane createAndCheckViewLocation(EFixedLocation cl, TestViewport view, int x0, int y0, int x1, int y1) {
-        EScrollPane scrollPane = new EScrollPane(view, cl);
+        EScrollPane scrollPane = new EScrollPane(cl, view);
         EComponentLocation viewLocation = view.getViewLocation();
         assertEquals(x0, viewLocation.getX0());
         assertEquals(y0, viewLocation.getY0());

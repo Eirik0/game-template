@@ -4,41 +4,51 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.function.IntConsumer;
 
-import gt.component.ComponentCreator;
+import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
+import gt.ecomponent.EComponentColors;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.location.EPaddedLocation;
+import gt.settings.GameSettings;
 
-public class ESlider implements EComponent {
+public class ESlider implements EComponent, EComponentColors {
+    private static final Color BACKGROUND_COLOR = GameSettings.getValue(SLIDER_BACKGROUND_COLOR, SLIDER_BACKGROUND_COLOR_DEFAULT);
+    private static final Color BAR_COLOR = GameSettings.getValue(SLIDER_BAR_COLOR, SLIDER_BAR_COLOR_DEFAULT);
+    private static final Color KNOB_COLOR = GameSettings.getValue(SLIDER_KNOB_COLOR, SLIDER_KNOB_COLOR_DEFAULT);
+    private static final Color KNOB_HIGHLIGHT_COLOR = GameSettings.getValue(SLIDER_KNOB_HIGHLIGHT_COLOR, SLIDER_KNOB_HIGHLIGHT_COLOR_DEFAULT);
+    private static final Color TICK_COLOR = GameSettings.getValue(SLIDER_TICK_COLOR, SLIDER_TICK_COLOR_DEFAULT);
+
     private static final double DIAL_WIDTH = 20;
     private static final double TICK_HEIGHT = 10;
 
     private final EComponentLocation cl;
     private final ESliderKnobLocation kcl;
 
+    private final EBackground background;
+    private final EBorder sliderKnob;
+
     private final int min;
     private final int max;
     private final double pixelsPerValue;
     private double currentValue;
 
-    private final EBorder sliderKnob;
-
     private final IntConsumer action;
 
+    private boolean mousePressed = false;
     private boolean mouseOver = false;
     private double mouseOverX = 0;
-    private boolean mousePressed = false;
 
     public ESlider(EComponentLocation pl, int min, int max, int defaultValue, IntConsumer action) {
-        cl = new EPaddedLocation(pl, 0, 0, DIAL_WIDTH / 2, DIAL_WIDTH / 2);
         this.min = min;
         this.max = max;
         this.action = action;
+        cl = new EPaddedLocation(pl, 0, 0, DIAL_WIDTH / 2, DIAL_WIDTH / 2);
+        background = new EBackground(pl, BACKGROUND_COLOR);
         pixelsPerValue = (cl.getWidth() - 1) / (max - min);
         currentValue = defaultValue;
         kcl = new ESliderKnobLocation(this, cl.getCenterY(), DIAL_WIDTH, cl.getHeight());
-        sliderKnob = new EBorder(kcl, false);
+        sliderKnob = new EBorder(kcl, KNOB_COLOR, KNOB_HIGHLIGHT_COLOR, false);
     }
 
     public double getValueX() {
@@ -52,12 +62,13 @@ public class ESlider implements EComponent {
 
     @Override
     public void drawOn(Graphics2D graphics) {
+        background.drawOn(graphics);
         double centerY = cl.getCenterY();
-        graphics.setColor(Color.CYAN);
+        graphics.setColor(BAR_COLOR);
         drawLine(graphics, cl.getX0(), centerY, cl.getX1(), centerY);
         sliderKnob.drawOn(graphics);
         double tickX = mouseOver || mousePressed ? mouseOverX : getValueX();
-        graphics.setColor(ComponentCreator.foregroundColor());
+        graphics.setColor(TICK_COLOR);
         drawLine(graphics, tickX, centerY - TICK_HEIGHT / 2, tickX, centerY + TICK_HEIGHT / 2);
     }
 

@@ -3,22 +3,31 @@ package gt.ecomponent.button;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import gt.component.ComponentCreator;
+import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
+import gt.ecomponent.EComponentColors;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.ETextLabel;
 import gt.ecomponent.button.EArrowButtonDrawer.ArrowDirection;
 import gt.gameentity.Drawable;
+import gt.settings.GameSettings;
 
-public class EButton implements EComponent {
+public class EButton implements EComponent, EComponentColors {
+    private static final Color BACKGROUND_COLOR = GameSettings.getValue(BUTTON_BACKGROUND_COLOR, BUTTON_BACKGROUND_COLOR_DEFAULT);
+    private static final Color BORDER_COLOR = GameSettings.getValue(BUTTON_BORDER_COLOR, BUTTON_BORDER_COLOR_DEFAULT);
+    private static final Color BORDER_HIGHLIGHT_COLOR = GameSettings.getValue(BUTTON_BORDER_HIGHLIGHT_COLOR, BUTTON_BORDER_HIGHLIGHT_COLOR_DEFAULT);
+    private static final Color PRESSED_COLOR = GameSettings.getValue(BUTTON_PRESSED_COLOR, BUTTON_PRESSED_COLOR_DEFAULT);
+
     public static final int PRESSED_GAP = 2;
 
     private final EComponentLocation cl;
     private final Drawable drawer;
-    private final Runnable action;
 
+    private final EBackground background;
     private final EBorder border;
+
+    private final Runnable action;
 
     private boolean mousePressed = false;
     private boolean selected = false;
@@ -27,11 +36,12 @@ public class EButton implements EComponent {
         this.cl = cl;
         this.drawer = drawer;
         this.action = action;
-        border = new EBorder(cl, false);
+        background = new EBackground(cl, BACKGROUND_COLOR);
+        border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
     }
 
     public static EButton createTextButton(EComponentLocation cl, String text, Runnable action) {
-        return new EButton(cl, new ETextLabel(cl, text), action);
+        return new EButton(cl, new ETextLabel(cl, text, false), action);
     }
 
     public static EButton createBlockButton(EComponentLocation cl, Color color, Runnable action) {
@@ -57,17 +67,17 @@ public class EButton implements EComponent {
 
     @Override
     public void drawOn(Graphics2D graphics) {
-        fillRect(graphics, cl.getX0(), cl.getY0(), cl.getWidth(), cl.getHeight(), ComponentCreator.backgroundColor());
+        background.drawOn(graphics);
         border.drawOn(graphics);
+        drawer.drawOn(graphics);
         if (mousePressed || selected) {
-            graphics.setColor(Color.CYAN);
+            graphics.setColor(PRESSED_COLOR);
             double x = cl.getX0() + PRESSED_GAP;
             double y = cl.getY0() + PRESSED_GAP;
             double width = cl.getWidth() - 2 * PRESSED_GAP - 1;
             double height = cl.getHeight() - 2 * PRESSED_GAP - 1;
             drawRect(graphics, x, y, width, height);
         }
-        drawer.drawOn(graphics);
     }
 
     @Override

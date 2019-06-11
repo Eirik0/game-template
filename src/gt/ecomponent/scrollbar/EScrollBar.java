@@ -3,22 +3,29 @@ package gt.ecomponent.scrollbar;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import gt.component.ComponentCreator;
+import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
+import gt.ecomponent.EComponentColors;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.button.EButton;
+import gt.settings.GameSettings;
 
-public class EScrollBar implements EComponent {
+public class EScrollBar implements EComponent, EComponentColors {
+    private static final Color BACKGROUND_COLOR = GameSettings.getValue(SCROLL_BAR_BACKGROUND_COLOR, SCROLL_BAR_BACKGROUND_COLOR_DEFAULT);
+    private static final Color BORDER_COLOR = GameSettings.getValue(SCROLL_BAR_BORDER_COLOR, SCROLL_BAR_BORDER_COLOR_DEFAULT);
+    private static final Color THUMB_COLOR = GameSettings.getValue(SCROLL_BAR_THUMB_COLOR, SCROLL_BAR_THUMB_COLOR_DEFAULT);
+    private static final Color THUMB_HIGHLIGHT_COLOR = GameSettings.getValue(SCROLL_BAR_THUMB_HIGHLIGHT_COLOR, SCROLL_BAR_THUMB_HIGHLIGHT_COLOR_DEFAULT);
+
     public static final int BAR_WIDTH = 20;
 
     private final EScrollBarStrategy strategy;
 
-    private final EViewport view;
-
     private final EComponentLocation trackLocation;
     private final EComponentLocation thumbLocation;
 
+    private final EViewport view;
+    private final EBackground background;
     private final EButton button1;
     private final EButton button2;
     private final EBorder barThumb;
@@ -33,7 +40,8 @@ public class EScrollBar implements EComponent {
         button2 = strategy.getButton2();
         trackLocation = strategy.getTrackLocation();
         thumbLocation = strategy.getThumbLocation();
-        barThumb = new EBorder(thumbLocation, true);
+        background = new EBackground(trackLocation, BACKGROUND_COLOR);
+        barThumb = new EBorder(thumbLocation, THUMB_COLOR, THUMB_HIGHLIGHT_COLOR, true);
     }
 
     public void setVisible(boolean visible) {
@@ -61,10 +69,9 @@ public class EScrollBar implements EComponent {
         }
         button1.drawOn(graphics);
         button2.drawOn(graphics);
-        fillRect(graphics, trackLocation.getX0(), trackLocation.getY0(), trackLocation.getWidth(),
-                trackLocation.getHeight(), ComponentCreator.backgroundColor());
-        drawRect(graphics, trackLocation.getX0(), trackLocation.getY0(), trackLocation.getWidth() - 1,
-                trackLocation.getHeight() - 1, Color.CYAN);
+        background.drawOn(graphics);
+        graphics.setColor(BORDER_COLOR);
+        drawRect(graphics, trackLocation.getX0(), trackLocation.getY0(), trackLocation.getWidth() - 1, trackLocation.getHeight() - 1);
         barThumb.drawOn(graphics);
     }
 

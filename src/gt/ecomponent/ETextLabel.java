@@ -1,16 +1,27 @@
 package gt.ecomponent;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import gt.component.ComponentCreator;
+import gt.settings.GameSettings;
 
-public class ETextLabel implements EComponent {
+public class ETextLabel implements EComponent, EComponentColors {
+    private static final Color BACKGROUND_COLOR = GameSettings.getValue(TEXT_LABEL_BACKGROUND_COLOR, TEXT_LABEL_BACKGROUND_COLOR_DEFAULT);
+    private static final Color TEXT_COLOR = GameSettings.getValue(TEXT_LABEL_TEXT_COLOR, TEXT_LABEL_TEXT_COLOR_DEFAULT);
+
     private final EComponentLocation cl;
+
+    private final EBackground background;
+
+    private final boolean drawBackground;
     private final String text;
 
-    public ETextLabel(EComponentLocation cl, String text) {
+    public ETextLabel(EComponentLocation cl, String text, boolean drawBackground) {
         this.cl = cl;
         this.text = text;
+        this.drawBackground = drawBackground;
+        background = new EBackground(cl, BACKGROUND_COLOR);
     }
 
     @Override
@@ -19,7 +30,10 @@ public class ETextLabel implements EComponent {
 
     @Override
     public void drawOn(Graphics2D graphics) {
-        graphics.setColor(ComponentCreator.foregroundColor());
+        if (drawBackground) {
+            background.drawOn(graphics);
+        }
+        graphics.setColor(TEXT_COLOR);
         graphics.setFont(ComponentCreator.DEFAULT_FONT_SMALL);
         drawCenteredString(graphics, text, cl.getCenterX(), cl.getCenterY());
     }

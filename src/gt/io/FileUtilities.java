@@ -19,6 +19,10 @@ import java.util.function.Supplier;
 import gt.component.ComponentCreator;
 
 public class FileUtilities {
+    public static String getProjectDirectory(String projectName) {
+        return System.getProperty("user.home") + File.separator + "." + projectName + File.separator;
+    }
+
     public static List<String> fileToList(File file) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             List<String> lines = new ArrayList<>();

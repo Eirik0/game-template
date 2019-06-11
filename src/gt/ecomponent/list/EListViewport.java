@@ -4,30 +4,41 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.function.IntConsumer;
 
-import gt.component.ComponentCreator;
+import gt.ecomponent.EBackground;
+import gt.ecomponent.EComponentColors;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.scrollbar.EScrollBar;
 import gt.ecomponent.scrollbar.EScrollPaneViewLocation;
 import gt.ecomponent.scrollbar.EViewport;
+import gt.ecomponent.scrollbar.EViewportBackgroundLocation;
+import gt.settings.GameSettings;
 
-public class EListViewport implements EViewport {
+public class EListViewport implements EViewport, EComponentColors {
+    private static final Color BACKGROUND_COLOR = GameSettings.getValue(LIST_VIEWPORT_BACKGROUND_COLOR, LIST_VIEWPORT_BACKGROUND_COLOR_DEFAULT);
+    private static final Color PRESSED_COLOR = GameSettings.getValue(LIST_VIEWPORT_PRESSED_COLOR, LIST_VIEWPORT_PRESSED_COLOR_DEFAULT);
+    private static final Color SELECTED_COLOR = GameSettings.getValue(LIST_VIEWPORT_SELECTED_COLOR, LIST_VIEWPORT_SELECTED_COLOR_DEFAULT);
+    private static final Color TEXT_COLOR = GameSettings.getValue(LIST_VIEWPORT_TEXT_COLOR, LIST_VIEWPORT_TEXT_COLOR_DEFAULT);
+
     public static final int X_PADDING = 5;
     public static final int LIST_ITEM_HEIGHT = 20;
 
     private final EComponentLocation cl;
-    private final String[] items;
-    private int selectedIndex;
-    private final IntConsumer action;
-
     private final EScrollPaneViewLocation vl;
+    private final String[] items;
+
+    private final EBackground background;
+
     private double x0 = 0;
     private double y0 = 0;
     private double viewWidth;
     private double viewHeight;
 
-    private boolean mouseOver = false;
+    private final IntConsumer action;
+    private int selectedIndex;
+
     private boolean mousePressed = false;
-    private int mouseOverY;
+    private boolean mouseOver = false;
+    private int mouseOverY = 0;
 
     public EListViewport(EComponentLocation cl, String[] items, int selectedIndex, IntConsumer action) {
         this.cl = cl;
@@ -35,6 +46,7 @@ public class EListViewport implements EViewport {
         this.selectedIndex = selectedIndex;
         this.action = action;
         vl = new EScrollPaneViewLocation(cl, this);
+        background = new EBackground(new EViewportBackgroundLocation(this), BACKGROUND_COLOR);
         viewWidth = cl.getWidth();
         viewHeight = cl.getHeight();
     }
@@ -77,22 +89,21 @@ public class EListViewport implements EViewport {
 
     @Override
     public void drawOn(Graphics2D graphics) {
-        fillRect(graphics, 0, 0, vl.getWidth(), vl.getHeight(), ComponentCreator.backgroundColor());
+        background.drawOn(graphics);
         double itemY = -getTruncatedY0();
-        graphics.setColor(ComponentCreator.foregroundColor());
+        graphics.setColor(TEXT_COLOR);
         for (int i = 0; i < items.length; ++i) {
             if (itemY >= 0 && itemY <= viewHeight) {
                 drawCenteredYString(graphics, items[i], X_PADDING - getViewX(), itemY + LIST_ITEM_HEIGHT / 2);
             }
             itemY += LIST_ITEM_HEIGHT;
         }
-
         if (mouseOver || mousePressed) {
-            graphics.setColor(Color.GREEN);
+            graphics.setColor(PRESSED_COLOR);
             double mouseOverY = getMouseOverIndex() * LIST_ITEM_HEIGHT - getTruncatedY0();
             drawRect(graphics, 1, mouseOverY + 1, vl.getWidth() - 3, LIST_ITEM_HEIGHT - 3);
         }
-        graphics.setColor(Color.CYAN);
+        graphics.setColor(SELECTED_COLOR);
         double selectedY = selectedIndex * LIST_ITEM_HEIGHT - getTruncatedY0();
         drawRect(graphics, 0, selectedY, vl.getWidth() - 1, LIST_ITEM_HEIGHT - 1);
     }

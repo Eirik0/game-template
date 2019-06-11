@@ -1,28 +1,38 @@
 package gt.ecomponent.list;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.function.IntConsumer;
 
-import gt.component.ComponentCreator;
+import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
+import gt.ecomponent.EComponentColors;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.button.EArrowButtonDrawer;
 import gt.ecomponent.button.EArrowButtonDrawer.ArrowDirection;
 import gt.ecomponent.location.EGluedLocation;
 import gt.ecomponent.location.EStruttedLocation;
 import gt.ecomponent.location.GlueSide;
+import gt.settings.GameSettings;
 
-public class EComboBox implements EComponent {
+public class EComboBox implements EComponent, EComponentColors {
+    private static final Color BACKGROUND_COLOR = GameSettings.getValue(COMBO_BOX_BACKGROUND_COLOR, COMBO_BOX_BACKGROUND_COLOR_DEFAULT);
+    private static final Color BORDER_COLOR = GameSettings.getValue(COMBO_BOX_BORDER_COLOR, COMBO_BOX_BORDER_COLOR_DEFAULT);
+    private static final Color BORDER_HIGHLIGHT_COLOR = GameSettings.getValue(COMBO_BOX_BORDER_HIGHLIGHT_COLOR, COMBO_BOX_BORDER_HIGHLIGHT_COLOR_DEFAULT);
+    private static final Color TEXT_COLOR = GameSettings.getValue(COMBO_BOX_TEXT_COLOR, COMBO_BOX_TEXT_COLOR_DEFAULT);
+
     private final EComponentLocation cl;
     private final String[] items;
-    private int selectedIndex;
-    private final IntConsumer action;
 
+    private final EBackground background;
     private final EBorder border;
     private final EArrowButtonDrawer arrowDrawer;
     private final EComponentLocation listLocation;
     private final EList list;
+
+    private final IntConsumer action;
+    private int selectedIndex;
 
     private boolean mousePressed = false;
     private boolean listVisible = false;
@@ -32,7 +42,8 @@ public class EComboBox implements EComponent {
         this.items = items;
         this.selectedIndex = selectedIndex;
         this.action = action;
-        border = new EBorder(cl, false);
+        background = new EBackground(cl, BACKGROUND_COLOR);
+        border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
         arrowDrawer = new EArrowButtonDrawer(new EGluedLocation(cl, GlueSide.RIGHT, cl.getHeight()), ArrowDirection.DOWN);
         listLocation = new EStruttedLocation(cl, GlueSide.TOP, Math.min(items.length, numItemsToShow) * EListViewport.LIST_ITEM_HEIGHT + 2);
         list = new EList(listLocation, items, selectedIndex, i -> setSelectedIndex(i));
@@ -52,8 +63,9 @@ public class EComboBox implements EComponent {
 
     @Override
     public void drawOn(Graphics2D graphics) {
+        background.drawOn(graphics);
         border.drawOn(graphics);
-        graphics.setColor(ComponentCreator.foregroundColor());
+        graphics.setColor(TEXT_COLOR);
         drawCenteredYString(graphics, items[selectedIndex], EListViewport.X_PADDING + cl.getX0(), cl.getCenterY());
         arrowDrawer.drawOn(graphics);
         if (listVisible) {

@@ -1,21 +1,29 @@
 package gt.ecomponent.scrollbar;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import gt.component.GameImage;
+import gt.ecomponent.EBackground;
 import gt.ecomponent.EComponent;
+import gt.ecomponent.EComponentColors;
 import gt.ecomponent.EComponentLocation;
 import gt.gameentity.Sizable;
+import gt.settings.GameSettings;
 
-public class EScrollPane implements EComponent, Sizable {
+public class EScrollPane implements EComponent, EComponentColors, Sizable {
+    private static final Color BACKGROUND_COLOR = GameSettings.getValue(SCROLL_PANE_BACKGROUND_COLOR, SCROLL_PANE_BACKGROUND_COLOR_DEFAULT);
+
     private final EViewport view;
     private final GameImage viewImage = new GameImage();
 
+    private final EBackground background;
     private final EScrollBar hBar;
     private final EScrollBar vBar;
 
-    public EScrollPane(EViewport view, EComponentLocation cl) {
+    public EScrollPane(EComponentLocation cl, EViewport view) {
         this.view = view;
+        background = new EBackground(cl, BACKGROUND_COLOR);
         hBar = new EScrollBar(new EHScrollBarStrategy(cl, view), view);
         vBar = new EScrollBar(new EVScrollBarStrategy(cl, view), view);
         setSize(round(cl.getWidth()), round(cl.getHeight()));
@@ -60,6 +68,7 @@ public class EScrollPane implements EComponent, Sizable {
 
     @Override
     public void drawOn(Graphics2D graphics) {
+        background.drawOn(graphics);
         hBar.drawOn(graphics);
         vBar.drawOn(graphics);
         view.drawOn(viewImage.getGraphics());
