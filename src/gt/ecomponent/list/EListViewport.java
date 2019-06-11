@@ -6,7 +6,7 @@ import java.util.function.IntConsumer;
 
 import gt.component.ComponentCreator;
 import gt.ecomponent.EComponentLocation;
-import gt.ecomponent.scrollbar.EScrollPane;
+import gt.ecomponent.scrollbar.EScrollBar;
 import gt.ecomponent.scrollbar.EScrollPaneViewLocation;
 import gt.ecomponent.scrollbar.EViewport;
 
@@ -100,7 +100,7 @@ public class EListViewport implements EViewport {
     @Override
     public double getWidth() {
         boolean scrollBar = (items.length * LIST_ITEM_HEIGHT) > cl.getHeight();
-        return scrollBar ? cl.getWidth() - EScrollPane.BAR_WIDTH : cl.getWidth();
+        return scrollBar ? cl.getWidth() - EScrollBar.BAR_WIDTH : cl.getWidth();
     }
 
     @Override

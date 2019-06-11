@@ -8,27 +8,25 @@ import gt.ecomponent.EComponentLocation;
 import gt.gameentity.Sizable;
 
 public class EScrollPane implements EComponent, Sizable {
-    public static final int BAR_WIDTH = 20;
-
     private final EViewport view;
     private final GameImage viewImage = new GameImage();
 
-    private final EHScrollBar hBar;
-    private final EVScrollBar vBar;
+    private final EScrollBar hBar;
+    private final EScrollBar vBar;
 
     public EScrollPane(EViewport view, EComponentLocation cl) {
         this.view = view;
-        hBar = new EHScrollBar(cl, view, BAR_WIDTH);
-        vBar = new EVScrollBar(cl, view, BAR_WIDTH);
+        hBar = new EScrollBar(new EHScrollBarStrategy(cl, view), view);
+        vBar = new EScrollBar(new EVScrollBarStrategy(cl, view), view);
         setSize(round(cl.getWidth()), round(cl.getHeight()));
     }
 
     @Override
     public void setSize(int width, int height) {
-        boolean hBarVisible = view.getWidth() > width || (view.getHeight() > height && view.getWidth() > width - BAR_WIDTH);
-        boolean vBarVisible = view.getHeight() > height || (view.getWidth() > width && view.getHeight() > height - BAR_WIDTH);
-        double newImageWidth = vBarVisible ? width - BAR_WIDTH : width;
-        double newImageHeight = hBarVisible ? height - BAR_WIDTH : height;
+        boolean hBarVisible = view.getWidth() > width || (view.getHeight() > height && view.getWidth() > width - EScrollBar.BAR_WIDTH);
+        boolean vBarVisible = view.getHeight() > height || (view.getWidth() > width && view.getHeight() > height - EScrollBar.BAR_WIDTH);
+        double newImageWidth = vBarVisible ? width - EScrollBar.BAR_WIDTH : width;
+        double newImageHeight = hBarVisible ? height - EScrollBar.BAR_WIDTH : height;
         double x = view.getWidth() - newImageWidth;
         double y = view.getHeight() - newImageHeight;
 
@@ -46,10 +44,10 @@ public class EScrollPane implements EComponent, Sizable {
 
         hBar.setVisible(hBarVisible);
         vBar.setVisible(vBarVisible);
-        hBar.setVBarVisible(vBarVisible, BAR_WIDTH);
-        vBar.setHBarVisible(hBarVisible, BAR_WIDTH);
+        hBar.setOtherBarVisible(vBarVisible);
+        vBar.setOtherBarVisible(hBarVisible);
 
-        view.setViewSize(vBarVisible ? width - BAR_WIDTH : width, hBarVisible ? height - BAR_WIDTH : height);
+        view.setViewSize(vBarVisible ? width - EScrollBar.BAR_WIDTH : width, hBarVisible ? height - EScrollBar.BAR_WIDTH : height);
         viewImage.setSize(round(newImageWidth), round(newImageHeight));
     }
 
