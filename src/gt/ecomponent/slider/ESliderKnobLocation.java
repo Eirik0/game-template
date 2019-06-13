@@ -3,16 +3,15 @@ package gt.ecomponent.slider;
 import gt.ecomponent.EComponentLocation;
 
 public class ESliderKnobLocation implements EComponentLocation {
+    private final EComponentLocation pl;
     private final ESlider parent;
-    private double centerY;
-    private final double width;
-    private final double height;
 
-    public ESliderKnobLocation(ESlider parent, double centerY, double width, double height) {
+    private final double width;
+
+    public ESliderKnobLocation(ESlider parent, EComponentLocation pl, double width) {
+        this.pl = pl;
         this.parent = parent;
-        this.centerY = centerY;
         this.width = width;
-        this.height = height;
     }
 
     @Override
@@ -22,7 +21,7 @@ public class ESliderKnobLocation implements EComponentLocation {
 
     @Override
     public double getY0() {
-        return centerY - height / 2;
+        return pl.getY0();
     }
 
     @Override
@@ -32,6 +31,6 @@ public class ESliderKnobLocation implements EComponentLocation {
 
     @Override
     public double getY1() {
-        return centerY + height / 2;
+        return pl.getY1();
     }
 }

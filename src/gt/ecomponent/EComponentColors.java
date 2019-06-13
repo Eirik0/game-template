@@ -80,7 +80,7 @@ public interface EComponentColors {
     GameSetting<Color> SLIDER_KNOB_COLOR_DEFAULT = new ColorSetting(Color.RED);
     String SLIDER_KNOB_HIGHLIGHT_COLOR = "ecomponent.slider.knob.highlight";
     GameSetting<Color> SLIDER_KNOB_HIGHLIGHT_COLOR_DEFAULT = new ColorSetting(Color.GREEN);
-    String SLIDER_TICK_COLOR = "ecomponent.slider.tick"; // XXX Rename
+    String SLIDER_TICK_COLOR = "ecomponent.slider.tick";
     GameSetting<Color> SLIDER_TICK_COLOR_DEFAULT = new ColorSetting(ComponentCreator.foregroundColor());
 
     /* Text Label */

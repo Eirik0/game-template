@@ -47,7 +47,7 @@ public class ESlider implements EComponent, EComponentColors {
         background = new EBackground(pl, BACKGROUND_COLOR);
         pixelsPerValue = (cl.getWidth() - 1) / (max - min);
         currentValue = defaultValue;
-        kcl = new ESliderKnobLocation(this, cl.getCenterY(), DIAL_WIDTH, cl.getHeight());
+        kcl = new ESliderKnobLocation(this, cl, DIAL_WIDTH);
         sliderKnob = new EBorder(kcl, KNOB_COLOR, KNOB_HIGHLIGHT_COLOR, false);
     }
 
