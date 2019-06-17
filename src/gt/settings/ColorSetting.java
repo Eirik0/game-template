@@ -9,9 +9,8 @@ public class ColorSetting implements GameSetting<Color> {
         this.color = color;
     }
 
-    public ColorSetting(String s) {
-        String[] colors = s.substring(6, s.length() - 1).split(",");
-        color = new Color(Integer.parseInt(colors[0]), Integer.parseInt(colors[1]), Integer.parseInt(colors[2]));
+    public ColorSetting(int r, int g, int b) {
+        color = new Color(r, g, b);
     }
 
     @Override

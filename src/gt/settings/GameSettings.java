@@ -22,8 +22,11 @@ public class GameSettings {
                 lines -> {
                     for (String line : lines) {
                         try {
-                            String[] setting = line.split("=");
-                            settingsMap.put(setting[0], parseSetting(setting[1]));
+                            String[] settingStr = line.split("=");
+                            GameSetting<?> setting = parseSetting(settingStr[1]);
+                            if (setting != null) {
+                                settingsMap.put(settingStr[0], setting);
+                            }
                         } catch (Exception e) {
                         }
                     }
@@ -33,7 +36,12 @@ public class GameSettings {
 
     public static GameSetting<?> parseSetting(String s) {
         if (s.startsWith("color(") && s.endsWith(")")) {
-            return new ColorSetting(s);
+            String[] colors = s.substring(6, s.length() - 1).split(",");
+            return new ColorSetting(Integer.parseInt(colors[0]), Integer.parseInt(colors[1]), Integer.parseInt(colors[2]));
+        }
+        try {
+            return new DoubleSetting(Double.valueOf(Double.parseDouble(s)));
+        } catch (Exception e) {
         }
         return null;
     }
@@ -58,6 +66,11 @@ public class GameSettings {
             settingsMap.put(settingName, defaultValue);
             return defaultValue.getValue();
         }
-        return (T) value.getValue();
+        try {
+            return (T) value.getValue();
+        } catch (Exception e) {
+            settingsMap.put(settingName, defaultValue);
+            return defaultValue.getValue();
+        }
     }
 }
