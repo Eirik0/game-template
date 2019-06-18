@@ -11,9 +11,9 @@ public class BufferedGameImage implements DrawingMethods, Sizable, Sized {
     private GameImage buffer;
     private GameImage current;
 
-    public BufferedGameImage() {
-        buffer = new GameImage();
-        current = new GameImage();
+    public BufferedGameImage(int width, int height) {
+        buffer = new GameImage(width, height);
+        current = new GameImage(width, height);
     }
 
     public BufferedImage getImage() {

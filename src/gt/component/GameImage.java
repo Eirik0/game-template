@@ -15,6 +15,10 @@ public class GameImage implements DrawingMethods, Sizable, Sized {
         resizeImage(ComponentCreator.DEFAULT_WIDTH, ComponentCreator.DEFAULT_HEIGHT);
     }
 
+    public GameImage(int width, int height) {
+        resizeImage(width, height);
+    }
+
     public BufferedImage getImage() {
         return image;
     }

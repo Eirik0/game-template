@@ -13,7 +13,7 @@ public class GamePanelController implements GameLoopItem, Sizable {
     private final String name;
 
     private final GamePanel gamePanel;
-    private final BufferedGameImage gameImage = new BufferedGameImage();
+    private final BufferedGameImage gameImage;
 
     private final MouseTracker mouseTracker;
 
@@ -23,6 +23,7 @@ public class GamePanelController implements GameLoopItem, Sizable {
     public GamePanelController(String name, GamePanel gamePanel, GameState initialState) {
         this.name = name;
         this.gamePanel = gamePanel;
+        gameImage = new BufferedGameImage(ComponentCreator.DEFAULT_WIDTH, ComponentCreator.DEFAULT_HEIGHT);
 
         currentState = initialState;
 
