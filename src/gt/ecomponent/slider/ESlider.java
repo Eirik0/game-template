@@ -7,20 +7,20 @@ import java.util.function.IntConsumer;
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentColors;
 import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.location.EPaddedLocation;
 import gt.settings.GameSettings;
 
-public class ESlider implements EComponent, EComponentColors {
+public class ESlider implements EComponent, EComponentSettings {
     private static final Color BACKGROUND_COLOR = GameSettings.getValue(SLIDER_BACKGROUND_COLOR, SLIDER_BACKGROUND_COLOR_DEFAULT);
     private static final Color BAR_COLOR = GameSettings.getValue(SLIDER_BAR_COLOR, SLIDER_BAR_COLOR_DEFAULT);
     private static final Color KNOB_COLOR = GameSettings.getValue(SLIDER_KNOB_COLOR, SLIDER_KNOB_COLOR_DEFAULT);
     private static final Color KNOB_HIGHLIGHT_COLOR = GameSettings.getValue(SLIDER_KNOB_HIGHLIGHT_COLOR, SLIDER_KNOB_HIGHLIGHT_COLOR_DEFAULT);
     private static final Color TICK_COLOR = GameSettings.getValue(SLIDER_TICK_COLOR, SLIDER_TICK_COLOR_DEFAULT);
 
-    private static final double DIAL_WIDTH = 20;
-    private static final double TICK_HEIGHT = 10;
+    private static final double KNOB_WIDTH = GameSettings.getDouble(SLIDER_KNOB_WIDTH, SLIDER_KNOB_WIDTH_DEFAULT);
+    private static final double TICK_HEIGHT = GameSettings.getDouble(SLIDER_TICK_HEIGHT, SLIDER_TICK_HEIGHT_DEFAULT);
 
     private final EComponentLocation cl;
     private final ESliderKnobLocation kcl;
@@ -43,11 +43,11 @@ public class ESlider implements EComponent, EComponentColors {
         this.min = min;
         this.max = max;
         this.action = action;
-        cl = new EPaddedLocation(pl, 0, 0, DIAL_WIDTH / 2, DIAL_WIDTH / 2);
+        cl = new EPaddedLocation(pl, 0, 0, KNOB_WIDTH / 2, KNOB_WIDTH / 2);
         background = new EBackground(pl, BACKGROUND_COLOR);
         pixelsPerValue = (cl.getWidth() - 1) / (max - min);
         currentValue = defaultValue;
-        kcl = new ESliderKnobLocation(this, cl, DIAL_WIDTH);
+        kcl = new ESliderKnobLocation(this, cl, KNOB_WIDTH);
         sliderKnob = new EBorder(kcl, KNOB_COLOR, KNOB_HIGHLIGHT_COLOR, false);
     }
 

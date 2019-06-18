@@ -6,13 +6,13 @@ import java.util.function.IntConsumer;
 
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentColors;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.location.EPaddedLocation;
 import gt.ecomponent.scrollbar.EScrollPane;
 import gt.settings.GameSettings;
 
-public class EList implements EComponent, EComponentColors {
+public class EList implements EComponent, EComponentSettings {
     private static final Color BORDER_COLOR = GameSettings.getValue(LIST_BORDER_COLOR, LIST_BORDER_COLOR_DEFAULT);
     private static final Color BORDER_HIGHLIGHT_COLOR = GameSettings.getValue(LIST_BORDER_HIGHLIGHT_COLOR, LIST_BORDER_HIGHLIGHT_COLOR_DEFAULT);
 

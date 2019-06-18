@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import gt.component.ComponentCreator;
 import gt.settings.GameSettings;
 
-public class ETextLabel implements EComponent, EComponentColors {
+public class ETextLabel implements EComponent, EComponentSettings {
     private static final Color BACKGROUND_COLOR = GameSettings.getValue(TEXT_LABEL_BACKGROUND_COLOR, TEXT_LABEL_BACKGROUND_COLOR_DEFAULT);
     private static final Color TEXT_COLOR = GameSettings.getValue(TEXT_LABEL_TEXT_COLOR, TEXT_LABEL_TEXT_COLOR_DEFAULT);
 

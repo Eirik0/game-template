@@ -5,22 +5,22 @@ import java.awt.Graphics2D;
 import java.util.function.IntConsumer;
 
 import gt.ecomponent.EBackground;
-import gt.ecomponent.EComponentColors;
 import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.scrollbar.EScrollBar;
 import gt.ecomponent.scrollbar.EScrollPaneViewLocation;
 import gt.ecomponent.scrollbar.EViewport;
 import gt.ecomponent.scrollbar.EViewportBackgroundLocation;
 import gt.settings.GameSettings;
 
-public class EListViewport implements EViewport, EComponentColors {
+public class EListViewport implements EViewport, EComponentSettings {
     private static final Color BACKGROUND_COLOR = GameSettings.getValue(LIST_VIEWPORT_BACKGROUND_COLOR, LIST_VIEWPORT_BACKGROUND_COLOR_DEFAULT);
     private static final Color PRESSED_COLOR = GameSettings.getValue(LIST_VIEWPORT_PRESSED_COLOR, LIST_VIEWPORT_PRESSED_COLOR_DEFAULT);
     private static final Color SELECTED_COLOR = GameSettings.getValue(LIST_VIEWPORT_SELECTED_COLOR, LIST_VIEWPORT_SELECTED_COLOR_DEFAULT);
     private static final Color TEXT_COLOR = GameSettings.getValue(LIST_VIEWPORT_TEXT_COLOR, LIST_VIEWPORT_TEXT_COLOR_DEFAULT);
 
-    public static final int X_PADDING = 5;
-    public static final int LIST_ITEM_HEIGHT = 20;
+    public static final double ITEM_PADDING = GameSettings.getDouble(LIST_VIEWPORT_ITEM_PADDING, LIST_VIEWPORT_ITEM_PADDING_DEFAULT);
+    public static final int ITEM_HEIGHT = GameSettings.getInt(LIST_VIEWPORT_ITEM_HEIGHT, LIST_VIEWPORT_ITEM_HEIGHT_DEFAULT);
 
     private final EComponentLocation cl;
     private final EScrollPaneViewLocation vl;
@@ -65,15 +65,15 @@ public class EListViewport implements EViewport, EComponentColors {
     }
 
     private double getTruncatedY0() {
-        double rounded = (int) y0 / LIST_ITEM_HEIGHT * LIST_ITEM_HEIGHT;
-        return y0 - rounded < LIST_ITEM_HEIGHT / 2 ? rounded : rounded + LIST_ITEM_HEIGHT;
+        double rounded = (int) y0 / ITEM_HEIGHT * ITEM_HEIGHT;
+        return y0 - rounded < ITEM_HEIGHT / 2 ? rounded : rounded + ITEM_HEIGHT;
     }
 
     private int getMouseOverIndex() {
         double indexY = mouseOverY + round(getTruncatedY0());
         double minY = getTruncatedY0();
-        double maxY = Math.min(getViewHeight() + getTruncatedY0() - 1, (items.length - 1) * LIST_ITEM_HEIGHT);
-        return round(Math.min(Math.max(minY, indexY), maxY)) / LIST_ITEM_HEIGHT;
+        double maxY = Math.min(getViewHeight() + getTruncatedY0() - 1, (items.length - 1) * ITEM_HEIGHT);
+        return round(Math.min(Math.max(minY, indexY), maxY)) / ITEM_HEIGHT;
     }
 
     @Override
@@ -94,29 +94,29 @@ public class EListViewport implements EViewport, EComponentColors {
         graphics.setColor(TEXT_COLOR);
         for (int i = 0; i < items.length; ++i) {
             if (itemY >= 0 && itemY <= viewHeight) {
-                drawCenteredYString(graphics, items[i], X_PADDING - getViewX(), itemY + LIST_ITEM_HEIGHT / 2);
+                drawCenteredYString(graphics, items[i], ITEM_PADDING - getViewX(), itemY + ITEM_HEIGHT / 2);
             }
-            itemY += LIST_ITEM_HEIGHT;
+            itemY += ITEM_HEIGHT;
         }
         if (mouseOver || mousePressed) {
             graphics.setColor(PRESSED_COLOR);
-            double mouseOverY = getMouseOverIndex() * LIST_ITEM_HEIGHT - getTruncatedY0();
-            drawRect(graphics, 1, mouseOverY + 1, vl.getWidth() - 3, LIST_ITEM_HEIGHT - 3);
+            double mouseOverY = getMouseOverIndex() * ITEM_HEIGHT - getTruncatedY0();
+            drawRect(graphics, 1, mouseOverY + 1, vl.getWidth() - 3, ITEM_HEIGHT - 3);
         }
         graphics.setColor(SELECTED_COLOR);
-        double selectedY = selectedIndex * LIST_ITEM_HEIGHT - getTruncatedY0();
-        drawRect(graphics, 0, selectedY, vl.getWidth() - 1, LIST_ITEM_HEIGHT - 1);
+        double selectedY = selectedIndex * ITEM_HEIGHT - getTruncatedY0();
+        drawRect(graphics, 0, selectedY, vl.getWidth() - 1, ITEM_HEIGHT - 1);
     }
 
     @Override
     public double getWidth() {
-        boolean scrollBar = (items.length * LIST_ITEM_HEIGHT) > cl.getHeight();
+        boolean scrollBar = (items.length * ITEM_HEIGHT) > cl.getHeight();
         return scrollBar ? cl.getWidth() - EScrollBar.BAR_WIDTH : cl.getWidth();
     }
 
     @Override
     public double getHeight() {
-        return Math.max(cl.getHeight(), items.length * LIST_ITEM_HEIGHT - 1);
+        return Math.max(cl.getHeight(), items.length * ITEM_HEIGHT - 1);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class EListViewport implements EViewport, EComponentColors {
 
     @Override
     public double getYIncrement() {
-        return LIST_ITEM_HEIGHT;
+        return ITEM_HEIGHT;
     }
 
     @Override

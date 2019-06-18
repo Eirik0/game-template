@@ -3,13 +3,13 @@ package gt.ecomponent.button;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import gt.ecomponent.EComponentColors;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.location.EScaledLocation;
 import gt.gameentity.Drawable;
 import gt.settings.GameSettings;
 
-public class EArrowButtonDrawer implements Drawable, EComponentColors {
+public class EArrowButtonDrawer implements Drawable, EComponentSettings {
     private static final Color ARROW_COLOW = GameSettings.getValue(BUTTON_ARROW_COLOR, BUTTON_ARROW_COLOR_DEFAULT);
 
     public enum ArrowDirection {

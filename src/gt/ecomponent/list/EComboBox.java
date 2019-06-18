@@ -7,7 +7,7 @@ import java.util.function.IntConsumer;
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentColors;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.button.EArrowButtonDrawer;
 import gt.ecomponent.button.EArrowButtonDrawer.ArrowDirection;
@@ -16,7 +16,7 @@ import gt.ecomponent.location.EStruttedLocation;
 import gt.ecomponent.location.GlueSide;
 import gt.settings.GameSettings;
 
-public class EComboBox implements EComponent, EComponentColors {
+public class EComboBox implements EComponent, EComponentSettings {
     private static final Color BACKGROUND_COLOR = GameSettings.getValue(COMBO_BOX_BACKGROUND_COLOR, COMBO_BOX_BACKGROUND_COLOR_DEFAULT);
     private static final Color BORDER_COLOR = GameSettings.getValue(COMBO_BOX_BORDER_COLOR, COMBO_BOX_BORDER_COLOR_DEFAULT);
     private static final Color BORDER_HIGHLIGHT_COLOR = GameSettings.getValue(COMBO_BOX_BORDER_HIGHLIGHT_COLOR, COMBO_BOX_BORDER_HIGHLIGHT_COLOR_DEFAULT);
@@ -45,7 +45,7 @@ public class EComboBox implements EComponent, EComponentColors {
         background = new EBackground(cl, BACKGROUND_COLOR);
         border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
         arrowDrawer = new EArrowButtonDrawer(new EGluedLocation(cl, GlueSide.RIGHT, cl.getHeight()), ArrowDirection.DOWN);
-        listLocation = new EStruttedLocation(cl, GlueSide.TOP, Math.min(items.length, numItemsToShow) * EListViewport.LIST_ITEM_HEIGHT + 2);
+        listLocation = new EStruttedLocation(cl, GlueSide.TOP, Math.min(items.length, numItemsToShow) * EListViewport.ITEM_HEIGHT + 2);
         list = new EList(listLocation, items, selectedIndex, i -> setSelectedIndex(i));
     }
 
@@ -66,7 +66,7 @@ public class EComboBox implements EComponent, EComponentColors {
         background.drawOn(graphics);
         border.drawOn(graphics);
         graphics.setColor(TEXT_COLOR);
-        drawCenteredYString(graphics, items[selectedIndex], EListViewport.X_PADDING + cl.getX0(), cl.getCenterY());
+        drawCenteredYString(graphics, items[selectedIndex], EListViewport.ITEM_PADDING + cl.getX0(), cl.getCenterY());
         arrowDrawer.drawOn(graphics);
         if (listVisible) {
             list.drawOn(graphics);

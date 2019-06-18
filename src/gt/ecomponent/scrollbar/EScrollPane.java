@@ -6,12 +6,12 @@ import java.awt.Graphics2D;
 import gt.component.GameImage;
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentColors;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.EComponentLocation;
 import gt.gameentity.Sizable;
 import gt.settings.GameSettings;
 
-public class EScrollPane implements EComponent, EComponentColors, Sizable {
+public class EScrollPane implements EComponent, EComponentSettings, Sizable {
     private static final Color BACKGROUND_COLOR = GameSettings.getValue(SCROLL_PANE_BACKGROUND_COLOR, SCROLL_PANE_BACKGROUND_COLOR_DEFAULT);
 
     private final EViewport view;

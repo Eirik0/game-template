@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import gt.gameentity.DrawingMethods;
 import gt.io.FileUtilities;
 
 public class GameSettings {
@@ -72,5 +73,13 @@ public class GameSettings {
             settingsMap.put(settingName, defaultValue);
             return defaultValue.getValue();
         }
+    }
+
+    public static double getDouble(String settingName, GameSetting<Double> defaultValue) {
+        return getValue(settingName, defaultValue).doubleValue();
+    }
+
+    public static int getInt(String settingName, GameSetting<Double> defaultValue) {
+        return DrawingMethods.roundS(getValue(settingName, defaultValue).doubleValue());
     }
 }

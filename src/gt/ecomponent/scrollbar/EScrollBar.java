@@ -6,18 +6,18 @@ import java.awt.Graphics2D;
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentColors;
 import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.button.EButton;
 import gt.settings.GameSettings;
 
-public class EScrollBar implements EComponent, EComponentColors {
+public class EScrollBar implements EComponent, EComponentSettings {
     private static final Color BACKGROUND_COLOR = GameSettings.getValue(SCROLL_BAR_BACKGROUND_COLOR, SCROLL_BAR_BACKGROUND_COLOR_DEFAULT);
     private static final Color BORDER_COLOR = GameSettings.getValue(SCROLL_BAR_BORDER_COLOR, SCROLL_BAR_BORDER_COLOR_DEFAULT);
     private static final Color THUMB_COLOR = GameSettings.getValue(SCROLL_BAR_THUMB_COLOR, SCROLL_BAR_THUMB_COLOR_DEFAULT);
     private static final Color THUMB_HIGHLIGHT_COLOR = GameSettings.getValue(SCROLL_BAR_THUMB_HIGHLIGHT_COLOR, SCROLL_BAR_THUMB_HIGHLIGHT_COLOR_DEFAULT);
 
-    public static final int BAR_WIDTH = 20;
+    public static final double BAR_WIDTH = GameSettings.getDouble(SCROLL_BAR_WIDTH, SCROLL_BAR_WIDTH_DEFAULT);
 
     private final EScrollBarStrategy strategy;
 

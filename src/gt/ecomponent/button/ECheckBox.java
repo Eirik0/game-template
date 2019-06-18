@@ -6,13 +6,13 @@ import java.awt.Graphics2D;
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentColors;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.location.EScaledLocation;
 import gt.settings.GameSettings;
 import gt.util.BooleanConsumer;
 
-public class ECheckBox implements EComponent, EComponentColors {
+public class ECheckBox implements EComponent, EComponentSettings {
     private static final Color BACKGROUND_COLOR = GameSettings.getValue(CHECK_BOX_BACKGROUND_COLOR, CHECK_BOX_BACKGROUND_COLOR_DEFAULT);
     private static final Color BORDER_COLOR = GameSettings.getValue(CHECK_BOX_BORDER_COLOR, CHECK_BOX_BORDER_COLOR_DEFAULT);
     private static final Color BORDER_HIGHLIGHT_COLOR = GameSettings.getValue(CHECK_BOX_BORDER_HIGHLIGHT_COLOR, CHECK_BOX_BORDER_HIGHLIGHT_COLOR_DEFAULT);

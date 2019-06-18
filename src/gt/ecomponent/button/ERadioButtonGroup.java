@@ -6,11 +6,13 @@ import java.util.function.IntConsumer;
 
 import gt.ecomponent.EComponent;
 import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.location.EFixedLocation;
 import gt.ecomponent.location.ERelativeLocation;
+import gt.settings.GameSettings;
 
-public class ERadioButtonGroup implements EComponent {
-    private static final int BUTTON_SPACING = 4;
+public class ERadioButtonGroup implements EComponent, EComponentSettings {
+    private static final double BUTTON_SPACING = GameSettings.getDouble(BUTTON_RADIO_GAP, BUTTON_RADIO_GAP_DEFAULT);
 
     private final EButton[] buttons;
 

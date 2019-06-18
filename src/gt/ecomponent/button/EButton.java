@@ -6,20 +6,20 @@ import java.awt.Graphics2D;
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentColors;
 import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.ETextLabel;
 import gt.ecomponent.button.EArrowButtonDrawer.ArrowDirection;
 import gt.gameentity.Drawable;
 import gt.settings.GameSettings;
 
-public class EButton implements EComponent, EComponentColors {
+public class EButton implements EComponent, EComponentSettings {
     private static final Color BACKGROUND_COLOR = GameSettings.getValue(BUTTON_BACKGROUND_COLOR, BUTTON_BACKGROUND_COLOR_DEFAULT);
     private static final Color BORDER_COLOR = GameSettings.getValue(BUTTON_BORDER_COLOR, BUTTON_BORDER_COLOR_DEFAULT);
     private static final Color BORDER_HIGHLIGHT_COLOR = GameSettings.getValue(BUTTON_BORDER_HIGHLIGHT_COLOR, BUTTON_BORDER_HIGHLIGHT_COLOR_DEFAULT);
     private static final Color PRESSED_COLOR = GameSettings.getValue(BUTTON_PRESSED_COLOR, BUTTON_PRESSED_COLOR_DEFAULT);
 
-    public static final int PRESSED_GAP = 2;
+    public static final double PRESSED_GAP = GameSettings.getDouble(BUTTON_PRESSED_GAP, BUTTON_PRESSED_GAP_DEFAULT);
 
     private final EComponentLocation cl;
     private final Drawable drawer;

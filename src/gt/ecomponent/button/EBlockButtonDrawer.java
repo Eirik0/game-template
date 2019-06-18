@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.EComponentSettings;
 import gt.gameentity.Drawable;
+import gt.settings.GameSettings;
 
-public class EBlockButtonDrawer implements Drawable {
-    private static final int BLOCK_GAP = 4;
+public class EBlockButtonDrawer implements Drawable, EComponentSettings {
+    private static final double BLOCK_GAP = GameSettings.getDouble(BUTTON_BLOCK_GAP, BUTTON_BLOCK_GAP_DEFAULT);
 
     private final EComponentLocation buttonLocation;
     private final Color color;
