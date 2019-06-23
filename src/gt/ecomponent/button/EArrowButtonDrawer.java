@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
-import gt.ecomponent.location.EScaledLocation;
+import gt.ecomponent.location.EScaledInnerLocation;
 import gt.gameentity.Drawable;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
@@ -20,7 +20,7 @@ public class EArrowButtonDrawer implements Drawable, EComponentSettings {
     private final ArrowDirection direction;
 
     public EArrowButtonDrawer(EComponentLocation buttonLocation, ArrowDirection direction) {
-        cl = new EScaledLocation(buttonLocation, .33);
+        cl = new EScaledInnerLocation(buttonLocation, .33);
         this.direction = direction;
     }
 

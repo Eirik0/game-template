@@ -1,5 +1,7 @@
 package gt.ecomponent;
 
+import gt.ecomponent.location.EScaledLocation;
+
 public interface EComponentLocation {
     double getX0();
 
@@ -27,5 +29,9 @@ public interface EComponentLocation {
 
     default double getCenterY() {
         return (getY0() + getY1()) / 2;
+    }
+
+    default EScaledLocation scale(double scaleX, double scaleY) {
+        return new EScaledLocation(this, scaleX, scaleY);
     }
 }

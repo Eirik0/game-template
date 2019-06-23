@@ -7,7 +7,7 @@ import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
-import gt.ecomponent.location.EScaledLocation;
+import gt.ecomponent.location.EScaledInnerLocation;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 import gt.util.BooleanConsumer;
@@ -34,7 +34,7 @@ public class ECheckBox implements EComponent, EComponentSettings {
         this.cl = cl;
         this.selected = selected;
         this.action = action;
-        checkLocation = new EScaledLocation(cl, .3);
+        checkLocation = new EScaledInnerLocation(cl, .3);
         background = new EBackground(cl, BACKGROUND_COLOR);
         border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
     }

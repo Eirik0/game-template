@@ -3,31 +3,33 @@ package gt.ecomponent.location;
 import gt.ecomponent.EComponentLocation;
 
 public class EScaledLocation implements EComponentLocation {
-    private final EComponentLocation cl;
-    private final double scale;
+    private final EComponentLocation pl;
+    private final double scaleX;
+    private final double scaleY;
 
-    public EScaledLocation(EComponentLocation cl, double scale) {
-        this.cl = cl;
-        this.scale = scale;
+    public EScaledLocation(EComponentLocation pl, double scaleX, double scaleY) {
+        this.pl = pl;
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
     }
 
     @Override
     public double getX0() {
-        return cl.getX0() + scale * (cl.getWidth() - 1);
+        return pl.getX0() * scaleX;
     }
 
     @Override
     public double getY0() {
-        return cl.getY0() + scale * (cl.getHeight() - 1);
+        return pl.getY0() * scaleY;
     }
 
     @Override
     public double getX1() {
-        return cl.getX0() + (1 - scale) * (cl.getWidth() - 1);
+        return pl.getX1() * scaleX;
     }
 
     @Override
     public double getY1() {
-        return cl.getY0() + (1 - scale) * (cl.getHeight() - 1);
+        return pl.getY1() * scaleY;
     }
 }
