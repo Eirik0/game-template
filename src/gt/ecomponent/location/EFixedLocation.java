@@ -15,6 +15,10 @@ public class EFixedLocation implements EComponentLocation {
         this.y1 = y1;
     }
 
+    public static EFixedLocation fromRect(double x0, double y0, double width, double height) {
+        return new EFixedLocation(x0, y0, x0 + width - 1, y0 + height - 1);
+    }
+
     @Override
     public double getX0() {
         return x0;
