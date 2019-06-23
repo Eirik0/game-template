@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import gt.gameentity.DrawingMethods;
 import gt.io.FileUtilities;
+import gt.util.EMath;
 
 public class GameSettings {
     private static final String SETTINGS_FILE_NAME = "settings.txt";
@@ -80,6 +80,6 @@ public class GameSettings {
     }
 
     public static int getInt(String settingName, GameSetting<Double> defaultValue) {
-        return DrawingMethods.roundS(getValue(settingName, defaultValue).doubleValue());
+        return EMath.round(getValue(settingName, defaultValue).doubleValue());
     }
 }

@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.location.EFixedLocation;
-import gt.ecomponent.scrollbar.EScrollPane;
+import gt.gameentity.TestGameImageDrawer;
 
 public class EScrollPaneTest {
     private static EScrollPane createAndCheckViewLocation(EFixedLocation cl, TestViewport view, int x0, int y0, int x1, int y1) {
-        EScrollPane scrollPane = new EScrollPane(cl, view);
+        EScrollPane scrollPane = new EScrollPane(cl, view, new TestGameImageDrawer());
         EComponentLocation viewLocation = view.getViewLocation();
         assertEquals(x0, viewLocation.getX0());
         assertEquals(y0, viewLocation.getY0());

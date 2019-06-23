@@ -1,9 +1,9 @@
 package gt.gamestate.menu;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 import gt.gameentity.Drawable;
+import gt.gameentity.IGraphics;
 
 public class ScaledMenuItem implements Drawable {
     private final ScaledMenuState parentState;
@@ -30,10 +30,10 @@ public class ScaledMenuItem implements Drawable {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
-        graphics.setColor(containsCursor() ? Color.GREEN : Color.RED);
-        drawRect(graphics, getX0(), getY0(), getX1() - getX0(), getY1() - getY0());
-        drawCenteredString(graphics, name, (getX0() + getX1()) / 2, (getY0() + getY1()) / 2);
+    public void drawOn(IGraphics g) {
+        g.setColor(containsCursor() ? Color.GREEN : Color.RED);
+        g.drawRect(getX0(), getY0(), getX1() - getX0() + 1, getY1() - getY0() + 1);
+        g.drawCenteredString(name, (getX0() + getX1()) / 2, (getY0() + getY1()) / 2);
     }
 
     public boolean containsCursor() {

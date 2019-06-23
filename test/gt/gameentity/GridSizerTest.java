@@ -13,16 +13,28 @@ public class GridSizerTest {
         assertEquals(offsetY, sizer.offsetY);
     }
 
+    private static void checkCoordinates(GridSizer sizer, double cornerX0, double cornerY0, double cornerX1, double cornerY1,
+            double centerX1, double centerY1) {
+        assertEquals(cornerX0, sizer.getCornerX(0));
+        assertEquals(cornerY0, sizer.getCornerY(0));
+        assertEquals(cornerX1, sizer.getCornerX(1));
+        assertEquals(cornerY1, sizer.getCornerY(1));
+        assertEquals(centerX1, sizer.getCenterX(1));
+        assertEquals(centerY1, sizer.getCenterY(1));
+    }
+
     @Test
     public void testFourByFour() {
-        GridSizer sizer = new GridSizer(100, 100, 4, 4);
-        checkSizer(sizer, 25, 100, 100, 0, 0);
+        GridSizer sizer = new GridSizer(4, 4, 4, 4);
+        checkSizer(sizer, 1, 4, 4, 0, 0);
+        checkCoordinates(sizer, 0, 0, 1, 1, 1.5, 1.5);
     }
 
     @Test
     public void testFourByFourCenteredX() {
         GridSizer sizer = new GridSizer(200, 100, 4, 4);
         checkSizer(sizer, 25, 100, 100, 50, 0);
+        checkCoordinates(sizer, 50, 0, 75, 25, 87.5, 37.5);
     }
 
     @Test

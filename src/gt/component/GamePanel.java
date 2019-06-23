@@ -8,17 +8,20 @@ import javax.swing.JPanel;
 
 import gt.gameloop.FixedDurationGameLoop;
 import gt.gamestate.GameState;
+import gt.gamestate.GameStateManager;
 import gt.gamestate.NullGameState;
 import gt.gamestate.UserInput;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
     private final GamePanelController controller;
+    private final GameStateManager gameStateManager;
 
     public GamePanel(String name) {
         super(null, false);
 
         controller = new GamePanelController(name, this, NullGameState.getInstance());
+        gameStateManager = new GameStateManager(this, controller.getMouseTracker(), controller.getGameImageDrawer());
 
         setBackground(ComponentCreator.backgroundColor());
         setIgnoreRepaint(true);
@@ -46,8 +49,8 @@ public class GamePanel extends JPanel {
         }
     }
 
-    public MouseTracker getMouseTracker() {
-        return controller.getMouseTracker();
+    public GameStateManager getGameStateManager() {
+        return gameStateManager;
     }
 
     @Override

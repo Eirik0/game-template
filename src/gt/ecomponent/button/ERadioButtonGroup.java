@@ -1,7 +1,6 @@
 package gt.ecomponent.button;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.function.IntConsumer;
 
 import gt.ecomponent.EComponent;
@@ -9,6 +8,7 @@ import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.location.EFixedLocation;
 import gt.ecomponent.location.ERelativeLocation;
+import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 
 public class ERadioButtonGroup implements EComponent, EComponentSettings {
@@ -67,9 +67,9 @@ public class ERadioButtonGroup implements EComponent, EComponentSettings {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
+    public void drawOn(IGraphics g) {
         for (int i = 0; i < buttons.length; ++i) {
-            buttons[i].drawOn(graphics);
+            buttons[i].drawOn(g);
         }
     }
 

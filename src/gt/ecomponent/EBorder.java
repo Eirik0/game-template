@@ -1,10 +1,11 @@
 package gt.ecomponent;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
+import gt.gameentity.DrawingMethods;
 import gt.gameentity.DurationTimer;
 import gt.gameentity.GameEntity;
+import gt.gameentity.IGraphics;
 import gt.gameloop.TimeConstants;
 
 public class EBorder implements GameEntity {
@@ -32,12 +33,12 @@ public class EBorder implements GameEntity {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
-        Color fadeColor = fadeToColor(baseColor, highlightColor, mouseOverTimer.getPercentComplete());
+    public void drawOn(IGraphics g) {
+        Color fadeColor = DrawingMethods.fadeToColor(baseColor, highlightColor, mouseOverTimer.getPercentComplete());
         if (fill) {
-            fillRect(graphics, cl.getX0(), cl.getY0(), cl.getWidth(), cl.getHeight(), fadeColor);
+            g.fillRect(cl.getX0(), cl.getY0(), cl.getWidth(), cl.getHeight(), fadeColor);
         } else {
-            drawRect(graphics, cl.getX0(), cl.getY0(), cl.getWidth() - 1, cl.getHeight() - 1, fadeColor);
+            g.drawRect(cl.getX0(), cl.getY0(), cl.getWidth(), cl.getHeight(), fadeColor);
         }
     }
 }

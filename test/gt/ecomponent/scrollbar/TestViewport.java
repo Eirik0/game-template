@@ -1,10 +1,7 @@
 package gt.ecomponent.scrollbar;
 
-import java.awt.Graphics2D;
-
 import gt.ecomponent.EComponentLocation;
-import gt.ecomponent.scrollbar.EScrollPaneViewLocation;
-import gt.ecomponent.scrollbar.EViewport;
+import gt.gameentity.IGraphics;
 
 public class TestViewport implements EViewport {
     private final double width;
@@ -29,7 +26,7 @@ public class TestViewport implements EViewport {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
+    public void drawOn(IGraphics g) {
     }
 
     @Override

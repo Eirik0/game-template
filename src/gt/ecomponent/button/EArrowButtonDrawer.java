@@ -1,12 +1,12 @@
 package gt.ecomponent.button;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
-import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.location.EScaledLocation;
 import gt.gameentity.Drawable;
+import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 
 public class EArrowButtonDrawer implements Drawable, EComponentSettings {
@@ -25,7 +25,7 @@ public class EArrowButtonDrawer implements Drawable, EComponentSettings {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
+    public void drawOn(IGraphics g) {
         double centerX = 0;
         double centerY = 0;
         double t1X = 0;
@@ -68,8 +68,8 @@ public class EArrowButtonDrawer implements Drawable, EComponentSettings {
         default:
             throw new IllegalStateException("Unknown direction: " + direction.name());
         }
-        graphics.setColor(ARROW_COLOW);
-        drawLine(graphics, centerX, centerY, t1X, t1Y);
-        drawLine(graphics, centerX, centerY, t2X, t2Y);
+        g.setColor(ARROW_COLOW);
+        g.drawLine(centerX, centerY, t1X, t1Y);
+        g.drawLine(centerX, centerY, t2X, t2Y);
     }
 }

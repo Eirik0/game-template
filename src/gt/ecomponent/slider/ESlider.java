@@ -1,7 +1,6 @@
 package gt.ecomponent.slider;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.function.IntConsumer;
 
 import gt.ecomponent.EBackground;
@@ -10,7 +9,9 @@ import gt.ecomponent.EComponent;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.location.EPaddedLocation;
+import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
+import gt.util.EMath;
 
 public class ESlider implements EComponent, EComponentSettings {
     private static final Color BACKGROUND_COLOR = GameSettings.getValue(SLIDER_BACKGROUND_COLOR, SLIDER_BACKGROUND_COLOR_DEFAULT);
@@ -61,22 +62,22 @@ public class ESlider implements EComponent, EComponentSettings {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
-        background.drawOn(graphics);
+    public void drawOn(IGraphics g) {
+        background.drawOn(g);
         double centerY = cl.getCenterY();
-        graphics.setColor(BAR_COLOR);
-        drawLine(graphics, cl.getX0(), centerY, cl.getX1(), centerY);
-        sliderKnob.drawOn(graphics);
+        g.setColor(BAR_COLOR);
+        g.drawLine(cl.getX0(), centerY, cl.getX1(), centerY);
+        sliderKnob.drawOn(g);
         double tickX = mouseOver || mousePressed ? mouseOverX : getValueX();
-        graphics.setColor(TICK_COLOR);
-        drawLine(graphics, tickX, centerY - TICK_HEIGHT / 2, tickX, centerY + TICK_HEIGHT / 2);
+        g.setColor(TICK_COLOR);
+        g.drawLine(tickX, centerY - TICK_HEIGHT / 2, tickX, centerY + TICK_HEIGHT / 2);
     }
 
     private void checkMousePressed() {
         if (mousePressed) {
             double x = mouseOverX - cl.getX0();
             currentValue = x / pixelsPerValue + min;
-            action.accept(round(currentValue));
+            action.accept(EMath.round(currentValue));
         }
     }
 
@@ -110,7 +111,7 @@ public class ESlider implements EComponent, EComponentSettings {
         if (cl.containsPoint(screenX, screenY)) {
             currentValue = Math.min(Math.max(min, currentValue + wheelDelta * 10), max);
             sliderKnob.setSelected(kcl.containsPoint(screenX, screenY));
-            action.accept(round(currentValue));
+            action.accept(EMath.round(currentValue));
             return true;
         }
         return false;

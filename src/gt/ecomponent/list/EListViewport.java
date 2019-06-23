@@ -1,9 +1,9 @@
 package gt.ecomponent.list;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.function.IntConsumer;
 
+import gt.component.ComponentCreator;
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
@@ -11,7 +11,9 @@ import gt.ecomponent.scrollbar.EScrollBar;
 import gt.ecomponent.scrollbar.EScrollPaneViewLocation;
 import gt.ecomponent.scrollbar.EViewport;
 import gt.ecomponent.scrollbar.EViewportBackgroundLocation;
+import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
+import gt.util.EMath;
 
 public class EListViewport implements EViewport, EComponentSettings {
     private static final Color BACKGROUND_COLOR = GameSettings.getValue(LIST_VIEWPORT_BACKGROUND_COLOR, LIST_VIEWPORT_BACKGROUND_COLOR_DEFAULT);
@@ -70,10 +72,10 @@ public class EListViewport implements EViewport, EComponentSettings {
     }
 
     private int getMouseOverIndex() {
-        double indexY = mouseOverY + round(getTruncatedY0());
+        double indexY = mouseOverY + EMath.round(getTruncatedY0());
         double minY = getTruncatedY0();
         double maxY = Math.min(getViewHeight() + getTruncatedY0() - 1, (items.length - 1) * ITEM_HEIGHT);
-        return round(Math.min(Math.max(minY, indexY), maxY)) / ITEM_HEIGHT;
+        return EMath.round(Math.min(Math.max(minY, indexY), maxY)) / ITEM_HEIGHT;
     }
 
     @Override
@@ -88,24 +90,23 @@ public class EListViewport implements EViewport, EComponentSettings {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
-        background.drawOn(graphics);
+    public void drawOn(IGraphics g) {
+        background.drawOn(g);
         double itemY = -getTruncatedY0();
-        graphics.setColor(TEXT_COLOR);
+        g.setColor(TEXT_COLOR);
+        g.setFont(ComponentCreator.DEFAULT_FONT_SMALL);
         for (int i = 0; i < items.length; ++i) {
             if (itemY >= 0 && itemY <= viewHeight) {
-                drawCenteredYString(graphics, items[i], ITEM_PADDING - getViewX(), itemY + ITEM_HEIGHT / 2);
+                g.drawCenteredYString(items[i], ITEM_PADDING - getViewX(), itemY + ITEM_HEIGHT / 2);
             }
             itemY += ITEM_HEIGHT;
         }
         if (mouseOver || mousePressed) {
-            graphics.setColor(PRESSED_COLOR);
             double mouseOverY = getMouseOverIndex() * ITEM_HEIGHT - getTruncatedY0();
-            drawRect(graphics, 1, mouseOverY + 1, vl.getWidth() - 3, ITEM_HEIGHT - 3);
+            g.drawRect(1, mouseOverY + 1, vl.getWidth() - 2, ITEM_HEIGHT - 2, PRESSED_COLOR);
         }
-        graphics.setColor(SELECTED_COLOR);
         double selectedY = selectedIndex * ITEM_HEIGHT - getTruncatedY0();
-        drawRect(graphics, 0, selectedY, vl.getWidth() - 1, ITEM_HEIGHT - 1);
+        g.drawRect(0, selectedY, vl.getWidth(), ITEM_HEIGHT, SELECTED_COLOR);
     }
 
     @Override
@@ -164,7 +165,7 @@ public class EListViewport implements EViewport, EComponentSettings {
     @Override
     public boolean setMouseOver(int screenX, int screenY) {
         mouseOver = vl.containsPoint(screenX, screenY);
-        mouseOverY = screenY - round(vl.getY0());
+        mouseOverY = screenY - EMath.round(vl.getY0());
         return mouseOver;
     }
 

@@ -2,28 +2,32 @@ package gt.gamestate;
 
 import gt.component.GamePanel;
 import gt.component.MouseTracker;
+import gt.gameentity.GameImageDrawer;
 
 public class GameStateManager {
-    private static final GameStateManager instance = new GameStateManager();
+    private final GamePanel mainPanel;
+    private final MouseTracker mouseTracker;
+    private final GameImageDrawer imageDrawer;
 
-    private GamePanel mainPanel;
-
-    private GameStateManager() {
+    public GameStateManager(GamePanel mainPanel, MouseTracker mouseTracker, GameImageDrawer imageDrawer) {
+        this.mainPanel = mainPanel;
+        this.mouseTracker = mouseTracker;
+        this.imageDrawer = imageDrawer;
     }
 
-    public static void setMainPanel(GamePanel mainPanel) {
-        instance.mainPanel = mainPanel;
+    public void setGameState(GameState gameState) {
+        mainPanel.setGameState(gameState);
     }
 
-    public static void setGameState(GameState gameState) {
-        instance.mainPanel.setGameState(gameState);
+    public MouseTracker getMouseTracker() {
+        return mouseTracker;
     }
 
-    public static MouseTracker getMouseTracker() {
-        return instance.mainPanel.getMouseTracker();
+    public GameImageDrawer getImageDrawer() {
+        return imageDrawer;
     }
 
-    public static void requestFocus() {
-        instance.mainPanel.requestFocus();
+    public void requestFocus() {
+        mainPanel.requestFocus();
     }
 }

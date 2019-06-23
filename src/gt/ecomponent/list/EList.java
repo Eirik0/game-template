@@ -1,15 +1,16 @@
 package gt.ecomponent.list;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.function.IntConsumer;
 
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.location.EPaddedLocation;
 import gt.ecomponent.scrollbar.EScrollPane;
+import gt.gameentity.GameImageDrawer;
+import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 
 public class EList implements EComponent, EComponentSettings {
@@ -22,12 +23,12 @@ public class EList implements EComponent, EComponentSettings {
     private final EListViewport view;
     private final EScrollPane scrollPane;
 
-    public EList(EComponentLocation cl, String[] items, int selectedIndex, IntConsumer action) {
+    public EList(EComponentLocation cl, GameImageDrawer imageDrawer, String[] items, int selectedIndex, IntConsumer action) {
         this.cl = cl;
         border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
         EPaddedLocation sPLoc = new EPaddedLocation(cl, 1, 1, 1, 1);
         view = new EListViewport(sPLoc, items, selectedIndex, action);
-        scrollPane = new EScrollPane(sPLoc, view);
+        scrollPane = new EScrollPane(sPLoc, view, imageDrawer);
     }
 
     public boolean setViewSelected(int screenX, int screenY) {
@@ -41,9 +42,9 @@ public class EList implements EComponent, EComponentSettings {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
-        border.drawOn(graphics);
-        scrollPane.drawOn(graphics);
+    public void drawOn(IGraphics g) {
+        border.drawOn(g);
+        scrollPane.drawOn(g);
     }
 
     @Override

@@ -1,7 +1,6 @@
 package gt.ecomponent.button;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
@@ -11,6 +10,7 @@ import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.ETextLabel;
 import gt.ecomponent.button.EArrowButtonDrawer.ArrowDirection;
 import gt.gameentity.Drawable;
+import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 
 public class EButton implements EComponent, EComponentSettings {
@@ -66,17 +66,16 @@ public class EButton implements EComponent, EComponentSettings {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
-        background.drawOn(graphics);
-        border.drawOn(graphics);
-        drawer.drawOn(graphics);
+    public void drawOn(IGraphics g) {
+        background.drawOn(g);
+        border.drawOn(g);
+        drawer.drawOn(g);
         if (mousePressed || selected) {
-            graphics.setColor(PRESSED_COLOR);
             double x = cl.getX0() + PRESSED_GAP;
             double y = cl.getY0() + PRESSED_GAP;
-            double width = cl.getWidth() - 2 * PRESSED_GAP - 1;
-            double height = cl.getHeight() - 2 * PRESSED_GAP - 1;
-            drawRect(graphics, x, y, width, height);
+            double width = cl.getWidth() - 2 * PRESSED_GAP;
+            double height = cl.getHeight() - 2 * PRESSED_GAP;
+            g.drawRect(x, y, width, height, PRESSED_COLOR);
         }
     }
 

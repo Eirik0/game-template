@@ -1,12 +1,12 @@
 package gt.gamestate.menu;
 
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
 import gt.component.ComponentCreator;
 import gt.component.MouseTracker;
+import gt.gameentity.IGraphics;
 import gt.gamestate.GameState;
 import gt.gamestate.UserInput;
 import gt.util.Pair;
@@ -55,11 +55,11 @@ public class ScaledMenuState implements GameState {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
-        fillRect(graphics, 0, 0, width, height, ComponentCreator.backgroundColor());
-        graphics.setFont(menuFont);
+    public void drawOn(IGraphics g) {
+        g.fillRect(0, 0, width, height, ComponentCreator.backgroundColor());
+        g.setFont(menuFont);
         for (ScaledMenuItem menuItem : menuItems) {
-            menuItem.drawOn(graphics);
+            menuItem.drawOn(g);
         }
     }
 

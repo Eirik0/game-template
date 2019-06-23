@@ -2,10 +2,10 @@ package gt.gameentity;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics2D;
 
 import gt.component.ComponentCreator;
 import gt.gameloop.TimeConstants;
+import gt.util.EMath;
 
 public class FpsTracker implements GameEntity {
     private int frames = 0;
@@ -50,20 +50,20 @@ public class FpsTracker implements GameEntity {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
-        graphics.setColor(Color.RED);
-        graphics.setFont(font);
+    public void drawOn(IGraphics g) {
+        g.setColor(Color.RED);
+        g.setFont(font);
 
-        int percentSleeping = round(currentSleepingTime / TimeConstants.NANOS_PER_SECOND * 100);
+        int percentSleeping = EMath.round(currentSleepingTime / TimeConstants.NANOS_PER_SECOND * 100);
         long actualElapsed = System.nanoTime() - actualTimeStart;
-        int drift = round((updateTime - actualElapsed) / TimeConstants.NANOS_PER_MILLISECOND);
+        int drift = EMath.round((updateTime - actualElapsed) / TimeConstants.NANOS_PER_MILLISECOND);
 
         String fpsText = new StringBuilder("Fps: ").append(currentFps).toString();
         String sleepText = new StringBuilder("Sleeping: ").append(Integer.toString(percentSleeping)).append("%").toString();
         String driftText = new StringBuilder("Drift: ").append(Integer.toString(drift)).append("ms").toString();
 
-        drawCenteredYString(graphics, fpsText, 10, 15);
-        drawCenteredYString(graphics, sleepText, 10, 35);
-        drawCenteredYString(graphics, driftText, 10, 55);
+        g.drawCenteredYString(fpsText, 10, 15);
+        g.drawCenteredYString(sleepText, 10, 35);
+        g.drawCenteredYString(driftText, 10, 55);
     }
 }

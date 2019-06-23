@@ -1,9 +1,9 @@
 package gt.ecomponent;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 import gt.component.ComponentCreator;
+import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 
 public class ETextLabel implements EComponent, EComponentSettings {
@@ -29,13 +29,13 @@ public class ETextLabel implements EComponent, EComponentSettings {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
+    public void drawOn(IGraphics g) {
         if (drawBackground) {
-            background.drawOn(graphics);
+            background.drawOn(g);
         }
-        graphics.setColor(TEXT_COLOR);
-        graphics.setFont(ComponentCreator.DEFAULT_FONT_SMALL);
-        drawCenteredString(graphics, text, cl.getCenterX(), cl.getCenterY());
+        g.setColor(TEXT_COLOR);
+        g.setFont(ComponentCreator.DEFAULT_FONT_SMALL);
+        g.drawCenteredString(text, cl.getCenterX(), cl.getCenterY());
     }
 
     @Override

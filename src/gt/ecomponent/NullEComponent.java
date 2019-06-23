@@ -1,6 +1,6 @@
 package gt.ecomponent;
 
-import java.awt.Graphics2D;
+import gt.gameentity.IGraphics;
 
 public class NullEComponent implements EComponent {
     private static final NullEComponent instance = new NullEComponent();
@@ -17,7 +17,7 @@ public class NullEComponent implements EComponent {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
+    public void drawOn(IGraphics g) {
     }
 
     @Override

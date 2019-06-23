@@ -1,7 +1,8 @@
 package gt.ecomponent;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
+
+import gt.gameentity.IGraphics;
 
 public class EBackground implements EComponent {
     private final EComponentLocation cl;
@@ -17,8 +18,8 @@ public class EBackground implements EComponent {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
-        fillRect(graphics, cl.getX0(), cl.getY0(), cl.getWidth(), cl.getHeight(), color);
+    public void drawOn(IGraphics g) {
+        g.fillRect(cl.getX0(), cl.getY0(), cl.getWidth(), cl.getHeight(), color);
     }
 
     @Override

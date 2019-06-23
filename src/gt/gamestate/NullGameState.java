@@ -1,6 +1,6 @@
 package gt.gamestate;
 
-import java.awt.Graphics2D;
+import gt.gameentity.IGraphics;
 
 public class NullGameState implements GameState {
     private static final NullGameState instance = new NullGameState();
@@ -18,7 +18,7 @@ public class NullGameState implements GameState {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
+    public void drawOn(IGraphics g) {
         // Do nothing
     }
 

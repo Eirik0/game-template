@@ -1,7 +1,6 @@
 package gt.ecomponent.scrollbar;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
@@ -9,6 +8,7 @@ import gt.ecomponent.EComponent;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.button.EButton;
+import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 
 public class EScrollBar implements EComponent, EComponentSettings {
@@ -63,16 +63,15 @@ public class EScrollBar implements EComponent, EComponentSettings {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
+    public void drawOn(IGraphics g) {
         if (!visible) {
             return;
         }
-        button1.drawOn(graphics);
-        button2.drawOn(graphics);
-        background.drawOn(graphics);
-        graphics.setColor(BORDER_COLOR);
-        drawRect(graphics, trackLocation.getX0(), trackLocation.getY0(), trackLocation.getWidth() - 1, trackLocation.getHeight() - 1);
-        barThumb.drawOn(graphics);
+        button1.drawOn(g);
+        button2.drawOn(g);
+        background.drawOn(g);
+        g.drawRect(trackLocation.getX0(), trackLocation.getY0(), trackLocation.getWidth(), trackLocation.getHeight(), BORDER_COLOR);
+        barThumb.drawOn(g);
     }
 
     @Override

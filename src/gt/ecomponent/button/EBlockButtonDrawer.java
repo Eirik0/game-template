@@ -1,11 +1,11 @@
 package gt.ecomponent.button;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
 import gt.gameentity.Drawable;
+import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 
 public class EBlockButtonDrawer implements Drawable, EComponentSettings {
@@ -20,11 +20,11 @@ public class EBlockButtonDrawer implements Drawable, EComponentSettings {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
+    public void drawOn(IGraphics g) {
         double x = buttonLocation.getX0() + BLOCK_GAP;
         double y = buttonLocation.getY0() + BLOCK_GAP;
         double width = buttonLocation.getWidth() - 2 * BLOCK_GAP;
         double height = buttonLocation.getHeight() - 2 * BLOCK_GAP;
-        fillRect(graphics, x, y, width, height, color);
+        g.fillRect(x, y, width, height, color);
     }
 }

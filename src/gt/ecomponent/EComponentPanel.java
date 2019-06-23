@@ -1,9 +1,8 @@
 package gt.ecomponent;
 
-import java.awt.Graphics2D;
-
 import gt.component.MouseTracker;
 import gt.gameentity.Drawable;
+import gt.gameentity.IGraphics;
 import gt.gameentity.Updatable;
 import gt.gameentity.UserInputHandler;
 import gt.gamestate.UserInput;
@@ -32,11 +31,11 @@ public class EComponentPanel implements Updatable, Drawable, UserInputHandler {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
+    public void drawOn(IGraphics g) {
         for (int i = 0; i < components.length; ++i) {
             EComponent[] layer = components[i];
             for (int j = 0; j < layer.length; ++j) {
-                layer[j].drawOn(graphics);
+                layer[j].drawOn(g);
             }
         }
     }

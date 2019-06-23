@@ -1,19 +1,21 @@
 package gt.ecomponent.list;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.function.IntConsumer;
 
+import gt.component.ComponentCreator;
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.button.EArrowButtonDrawer;
 import gt.ecomponent.button.EArrowButtonDrawer.ArrowDirection;
 import gt.ecomponent.location.EGluedLocation;
 import gt.ecomponent.location.EStruttedLocation;
 import gt.ecomponent.location.GlueSide;
+import gt.gameentity.GameImageDrawer;
+import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 
 public class EComboBox implements EComponent, EComponentSettings {
@@ -37,7 +39,7 @@ public class EComboBox implements EComponent, EComponentSettings {
     private boolean mousePressed = false;
     private boolean listVisible = false;
 
-    public EComboBox(EComponentLocation cl, String[] items, double numItemsToShow, int selectedIndex, IntConsumer action) {
+    public EComboBox(EComponentLocation cl, GameImageDrawer imageDrawer, String[] items, double numItemsToShow, int selectedIndex, IntConsumer action) {
         this.cl = cl;
         this.items = items;
         this.selectedIndex = selectedIndex;
@@ -46,7 +48,7 @@ public class EComboBox implements EComponent, EComponentSettings {
         border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
         arrowDrawer = new EArrowButtonDrawer(new EGluedLocation(cl, GlueSide.RIGHT, cl.getHeight()), ArrowDirection.DOWN);
         listLocation = new EStruttedLocation(cl, GlueSide.TOP, Math.min(items.length, numItemsToShow) * EListViewport.ITEM_HEIGHT + 2);
-        list = new EList(listLocation, items, selectedIndex, i -> setSelectedIndex(i));
+        list = new EList(listLocation, imageDrawer, items, selectedIndex, i -> setSelectedIndex(i));
     }
 
     private void setSelectedIndex(int selectedIndex) {
@@ -62,14 +64,15 @@ public class EComboBox implements EComponent, EComponentSettings {
     }
 
     @Override
-    public void drawOn(Graphics2D graphics) {
-        background.drawOn(graphics);
-        border.drawOn(graphics);
-        graphics.setColor(TEXT_COLOR);
-        drawCenteredYString(graphics, items[selectedIndex], EListViewport.ITEM_PADDING + cl.getX0(), cl.getCenterY());
-        arrowDrawer.drawOn(graphics);
+    public void drawOn(IGraphics g) {
+        background.drawOn(g);
+        border.drawOn(g);
+        g.setColor(TEXT_COLOR);
+        g.setFont(ComponentCreator.DEFAULT_FONT_SMALL);
+        g.drawCenteredYString(items[selectedIndex], EListViewport.ITEM_PADDING + cl.getX0(), cl.getCenterY());
+        arrowDrawer.drawOn(g);
         if (listVisible) {
-            list.drawOn(graphics);
+            list.drawOn(g);
         }
     }
 
