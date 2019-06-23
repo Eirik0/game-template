@@ -118,7 +118,6 @@ public class EComboBox implements EComponent, EComponentSettings {
             if (!listLocation.containsPoint(screenX, screenY)) {
                 mousePressed = false;
                 listVisible = false;
-                return;
             }
             list.setMouseReleased(screenX, screenY);
             list.focusLost(true);

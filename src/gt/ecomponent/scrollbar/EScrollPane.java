@@ -92,9 +92,10 @@ public class EScrollPane implements EComponent, EComponentSettings, Sizable {
 
     @Override
     public boolean setMousePressed(int screenX, int screenY) {
-        return view.setMousePressed(screenX, screenY) ||
-                hBar.setMousePressed(screenX, screenY) ||
-                vBar.setMousePressed(screenX, screenY);
+        boolean pressedHBar = hBar.setMousePressed(screenX, screenY);
+        boolean pressedVBar = vBar.setMousePressed(screenX, screenY);
+        boolean pressedView = view.setMousePressed(screenX, screenY);
+        return pressedHBar || pressedVBar || pressedView;
     }
 
     @Override
@@ -106,9 +107,10 @@ public class EScrollPane implements EComponent, EComponentSettings, Sizable {
 
     @Override
     public boolean setMouseScrolled(int screenX, int screenY, double wheelDelta) {
-        return view.setMouseScrolled(screenX, screenY, wheelDelta) ||
-                hBar.setMouseScrolled(screenX, screenY, wheelDelta) ||
-                vBar.setMouseScrolled(screenX, screenY, wheelDelta);
+        boolean scrolledHBar = hBar.setMouseScrolled(screenX, screenY, wheelDelta);
+        boolean scrolledVBar = vBar.setMouseScrolled(screenX, screenY, wheelDelta);
+        boolean scrolledView = view.setMouseScrolled(screenX, screenY, wheelDelta);
+        return scrolledHBar || scrolledVBar || scrolledView;
     }
 
     @Override
