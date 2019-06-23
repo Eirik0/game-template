@@ -15,13 +15,17 @@ public class ETextLabel implements EComponent, EComponentSettings {
     private final EBackground background;
 
     private final boolean drawBackground;
-    private final String text;
+    private String text;
 
     public ETextLabel(EComponentLocation cl, String text, boolean drawBackground) {
         this.cl = cl;
         this.text = text;
         this.drawBackground = drawBackground;
         background = new EBackground(cl, BACKGROUND_COLOR);
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
