@@ -52,6 +52,10 @@ public class ESlider implements EComponent, EComponentSettings {
         sliderKnob = new EBorder(kcl, KNOB_COLOR, KNOB_HIGHLIGHT_COLOR, false);
     }
 
+    public void setCurrentValue(int currentValue) {
+        this.currentValue = Math.min(Math.max(min, currentValue), max);
+    }
+
     public double getValueX() {
         return cl.getX0() + (currentValue - min) * pixelsPerValue;
     }
