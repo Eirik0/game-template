@@ -18,7 +18,7 @@ public enum UserInput {
     U_KEY_PRESSED, V_KEY_PRESSED, W_KEY_PRESSED, X_KEY_PRESSED, Y_KEY_PRESSED, Z_KEY_PRESSED,
     //  -Other keys
     MINUS_KEY_PRESSED, EQUALS_KEY_PRESSED,
-    BACK_SPACE_KEY_PRESSED, ENTER_KEY_PRESSED, CTRL_KEY_PRESSED, ESC_KEY_PRESSED,
+    BACK_SPACE_KEY_PRESSED, ENTER_KEY_PRESSED, CTRL_KEY_PRESSED, ESC_KEY_PRESSED, SPACE_KEY_PRESSED,
     F3_KEY_PRESSED,
     DELETE_KEY_PRESSED,
     // -Released
@@ -26,6 +26,9 @@ public enum UserInput {
 
     public static boolean isKeyboardInput(UserInput input) {
         switch (input) {
+        case RESIZE:
+        case MOUSE_MOVED:
+        case MOUSE_WHEEL_MOVED:
         case LEFT_BUTTON_PRESSED:
         case LEFT_BUTTON_RELEASED:
         case RIGHT_BUTTON_PRESSED:
@@ -38,6 +41,8 @@ public enum UserInput {
 
     public static Character toAscii(UserInput input) {
         switch (input) {
+        case SPACE_KEY_PRESSED:
+            return Character.valueOf(' ');
         case A_KEY_PRESSED:
             return Character.valueOf('A');
         case B_KEY_PRESSED:

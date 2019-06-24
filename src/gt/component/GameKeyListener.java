@@ -23,6 +23,8 @@ public class GameKeyListener implements KeyListener {
             return UserInput.CTRL_KEY_PRESSED;
         case KeyEvent.VK_ESCAPE: // 27
             return UserInput.ESC_KEY_PRESSED;
+        case KeyEvent.VK_SPACE: // 32
+            return UserInput.SPACE_KEY_PRESSED;
         case KeyEvent.VK_LEFT: // 37
             return UserInput.LEFT_KEY_PRESSED;
         case KeyEvent.VK_UP: // 38
