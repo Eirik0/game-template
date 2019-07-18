@@ -1,11 +1,11 @@
 package gt.component;
 
-import gt.gameentity.GameImageDrawer;
+import gt.gameentity.IGameImageDrawer;
 import gt.gameentity.IGameImage;
 import gt.gameentity.IGraphics;
 import gt.util.EMath;
 
-public class JavaGameImageDrawer implements GameImageDrawer {
+public class JavaGameImageDrawer implements IGameImageDrawer {
     @Override
     public JavaGameImage newGameImage() {
         return new JavaGameImage();

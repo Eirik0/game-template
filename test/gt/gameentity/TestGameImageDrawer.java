@@ -2,7 +2,7 @@ package gt.gameentity;
 
 import java.util.List;
 
-public class TestGameImageDrawer implements GameImageDrawer {
+public class TestGameImageDrawer implements IGameImageDrawer {
     @Override
     public TestGameImage newGameImage() {
         return new TestGameImage();

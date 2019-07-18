@@ -6,7 +6,7 @@ import gt.ecomponent.EBackground;
 import gt.ecomponent.EComponent;
 import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
-import gt.gameentity.GameImageDrawer;
+import gt.gameentity.IGameImageDrawer;
 import gt.gameentity.IGameImage;
 import gt.gameentity.IGraphics;
 import gt.gameentity.Sizable;
@@ -17,14 +17,14 @@ public class EScrollPane implements EComponent, EComponentSettings, Sizable {
     private static final Color BACKGROUND_COLOR = GameSettings.getValue(SCROLL_PANE_BACKGROUND_COLOR, SCROLL_PANE_BACKGROUND_COLOR_DEFAULT);
 
     private final EViewport view;
-    private final GameImageDrawer imageDrawer;
+    private final IGameImageDrawer imageDrawer;
     private final IGameImage viewImage;
 
     private final EBackground background;
     private final EScrollBar hBar;
     private final EScrollBar vBar;
 
-    public EScrollPane(EComponentLocation cl, EViewport view, GameImageDrawer imageDrawer) {
+    public EScrollPane(EComponentLocation cl, EViewport view, IGameImageDrawer imageDrawer) {
         this.view = view;
         this.imageDrawer = imageDrawer;
         int width = EMath.round(cl.getWidth());

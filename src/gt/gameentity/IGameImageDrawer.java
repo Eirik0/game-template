@@ -1,6 +1,6 @@
 package gt.gameentity;
 
-public interface GameImageDrawer {
+public interface IGameImageDrawer {
     IGameImage newGameImage();
 
     IGameImage newGameImage(int width, int height);

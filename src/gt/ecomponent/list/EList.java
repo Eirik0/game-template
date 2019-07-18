@@ -9,7 +9,7 @@ import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.location.EPaddedLocation;
 import gt.ecomponent.scrollbar.EScrollPane;
-import gt.gameentity.GameImageDrawer;
+import gt.gameentity.IGameImageDrawer;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 
@@ -23,7 +23,7 @@ public class EList implements EComponent, EComponentSettings {
     private final EListViewport view;
     private final EScrollPane scrollPane;
 
-    public EList(EComponentLocation cl, GameImageDrawer imageDrawer, String[] items, int selectedIndex, IntConsumer action) {
+    public EList(EComponentLocation cl, IGameImageDrawer imageDrawer, String[] items, int selectedIndex, IntConsumer action) {
         this.cl = cl;
         border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
         EPaddedLocation sPLoc = new EPaddedLocation(cl, 1, 1, 1, 1);

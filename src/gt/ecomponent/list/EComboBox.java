@@ -14,7 +14,7 @@ import gt.ecomponent.button.EArrowButtonDrawer.ArrowDirection;
 import gt.ecomponent.location.EGluedLocation;
 import gt.ecomponent.location.EStruttedLocation;
 import gt.ecomponent.location.GlueSide;
-import gt.gameentity.GameImageDrawer;
+import gt.gameentity.IGameImageDrawer;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 
@@ -39,7 +39,7 @@ public class EComboBox implements EComponent, EComponentSettings {
     private boolean mousePressed = false;
     private boolean listVisible = false;
 
-    public EComboBox(EComponentLocation cl, GameImageDrawer imageDrawer, String[] items, double numItemsToShow, int selectedIndex, IntConsumer action) {
+    public EComboBox(EComponentLocation cl, IGameImageDrawer imageDrawer, String[] items, double numItemsToShow, int selectedIndex, IntConsumer action) {
         this.cl = cl;
         this.items = items;
         this.selectedIndex = selectedIndex;

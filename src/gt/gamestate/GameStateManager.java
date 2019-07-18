@@ -2,14 +2,14 @@ package gt.gamestate;
 
 import gt.component.GamePanel;
 import gt.component.MouseTracker;
-import gt.gameentity.GameImageDrawer;
+import gt.gameentity.IGameImageDrawer;
 
 public class GameStateManager {
     private final GamePanel mainPanel;
     private final MouseTracker mouseTracker;
-    private final GameImageDrawer imageDrawer;
+    private final IGameImageDrawer imageDrawer;
 
-    public GameStateManager(GamePanel mainPanel, MouseTracker mouseTracker, GameImageDrawer imageDrawer) {
+    public GameStateManager(GamePanel mainPanel, MouseTracker mouseTracker, IGameImageDrawer imageDrawer) {
         this.mainPanel = mainPanel;
         this.mouseTracker = mouseTracker;
         this.imageDrawer = imageDrawer;
@@ -23,7 +23,7 @@ public class GameStateManager {
         return mouseTracker;
     }
 
-    public GameImageDrawer getImageDrawer() {
+    public IGameImageDrawer getImageDrawer() {
         return imageDrawer;
     }
 
