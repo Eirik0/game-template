@@ -16,7 +16,6 @@ public class TestGraphics implements IGraphics {
     private Font font;
 
     public TestGraphics(TestGameImage gameImage) {
-        super();
         this.gameImage = gameImage;
     }
 
