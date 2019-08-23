@@ -41,7 +41,9 @@ public class ThreadWorker {
                             notify();
                         }
                         runnable.run();
-                        completedWorkerConsumer.accept(this);
+                        if (keepRunning) {
+                            completedWorkerConsumer.accept(this);
+                        }
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
