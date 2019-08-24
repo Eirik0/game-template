@@ -1,5 +1,7 @@
 package gt.gameentity;
 
+import gt.util.EMath;
+
 public class GridSizer {
     public final double cellSize;
     public final double gridWidth;
@@ -31,5 +33,13 @@ public class GridSizer {
 
     public double getCenterY(int y) {
         return y * cellSize + cellSize / 2 + offsetY;
+    }
+
+    public int getCoordinateX(int screenX) {
+        return EMath.round((screenX - offsetX - cellSize / 2) / cellSize);
+    }
+
+    public int getCoordinateY(int screenY) {
+        return EMath.round((screenY - offsetY - cellSize / 2) / cellSize);
     }
 }
