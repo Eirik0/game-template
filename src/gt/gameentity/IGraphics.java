@@ -12,6 +12,8 @@ public interface IGraphics {
 
     void drawLine(double x0, double y0, double x1, double y1);
 
+    void drawThickLine(double x0, double y0, double x1, double y1, float thickness, boolean round);
+
     default void drawPixel(double x0, double y0) {
         drawLine(x0, y0, x0, y0);
     }

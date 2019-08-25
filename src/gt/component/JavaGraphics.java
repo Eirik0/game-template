@@ -1,9 +1,11 @@
 package gt.component;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Stroke;
 
 import gt.gameentity.IGraphics;
 import gt.util.DoublePair;
@@ -33,6 +35,14 @@ public class JavaGraphics implements IGraphics {
     @Override
     public void drawLine(double x0, double y0, double x1, double y1) {
         g.drawLine(EMath.round(x0), EMath.round(y0), EMath.round(x1), EMath.round(y1));
+    }
+
+    @Override
+    public void drawThickLine(double x0, double y0, double x1, double y1, float thickness, boolean round) {
+        Stroke oldStroke = g.getStroke();
+        g.setStroke(new BasicStroke(thickness, round ? BasicStroke.CAP_ROUND : BasicStroke.CAP_SQUARE, BasicStroke.JOIN_ROUND, 0));
+        g.drawLine(EMath.round(x0), EMath.round(y0), EMath.round(x1), EMath.round(y1));
+        g.setStroke(oldStroke);
     }
 
     @Override

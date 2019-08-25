@@ -39,6 +39,11 @@ public class TestGraphics implements IGraphics {
     }
 
     @Override
+    public void drawThickLine(double x0, double y0, double x1, double y1, float thickness, boolean round) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
     public void drawRect(double x0, double y0, double width, double height) {
         gameImage.add(new TestGraphicsRectangle(color, EMath.round(x0), EMath.round(y0), EMath.round(width), EMath.round(height), false));
     }
