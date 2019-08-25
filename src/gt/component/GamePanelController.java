@@ -4,7 +4,6 @@ import java.awt.Graphics;
 
 import gt.gameentity.FpsTracker;
 import gt.gameentity.Sizable;
-import gt.gameloop.FixedDurationGameLoop;
 import gt.gameloop.GameLoopItem;
 import gt.gamestate.GameState;
 import gt.gamestate.UserInput;
@@ -16,7 +15,6 @@ public class GamePanelController implements GameLoopItem, Sizable {
     private final BufferedJavaGameImage gameImage;
 
     private final JavaGameImageDrawer imageDrawer;
-    private final MouseTracker mouseTracker;
 
     private GameState currentState;
     private boolean showFpsToggled = false;
@@ -28,14 +26,6 @@ public class GamePanelController implements GameLoopItem, Sizable {
         gameImage = new BufferedJavaGameImage(imageDrawer.newGameImage(), imageDrawer.newGameImage());
 
         currentState = initialState;
-
-        mouseTracker = new MouseTracker(input -> FixedDurationGameLoop.enqueueUserInput(this, input));
-        GameMouseAdapter mouseAdapter = new GameMouseAdapter(mouseTracker);
-        gamePanel.addMouseListener(mouseAdapter);
-        gamePanel.addMouseMotionListener(mouseAdapter);
-        gamePanel.addMouseWheelListener(mouseAdapter);
-
-        gamePanel.addKeyListener(new GameKeyListener(input -> FixedDurationGameLoop.enqueueUserInput(this, input)));
     }
 
     @Override
@@ -87,9 +77,5 @@ public class GamePanelController implements GameLoopItem, Sizable {
 
     public JavaGameImageDrawer getGameImageDrawer() {
         return imageDrawer;
-    }
-
-    public MouseTracker getMouseTracker() {
-        return mouseTracker;
     }
 }

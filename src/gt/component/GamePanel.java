@@ -21,11 +21,18 @@ public class GamePanel extends JPanel {
         super(null, false);
 
         controller = new GamePanelController(name, this, NullGameState.getInstance());
-        gameStateManager = new GameStateManager(this, controller.getMouseTracker(), controller.getGameImageDrawer());
+        MouseTracker mouseTracker = new MouseTracker(input -> FixedDurationGameLoop.enqueueUserInput(controller, input));
+        gameStateManager = new GameStateManager(this, mouseTracker, controller.getGameImageDrawer());
 
         setBackground(ComponentCreator.backgroundColor());
         setIgnoreRepaint(true);
 
+        GameMouseAdapter mouseAdapter = new GameMouseAdapter(mouseTracker);
+        addMouseListener(mouseAdapter);
+        addMouseMotionListener(mouseAdapter);
+        addMouseWheelListener(mouseAdapter);
+
+        addKeyListener(new GameKeyListener(input -> FixedDurationGameLoop.enqueueUserInput(controller, input)));
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
