@@ -14,17 +14,13 @@ public class GamePanelController implements GameLoopItem, Sizable {
     private final GamePanel gamePanel;
     private final BufferedJavaGameImage gameImage;
 
-    private final JavaGameImageDrawer imageDrawer;
-
     private GameState currentState;
     private boolean showFpsToggled = false;
 
-    public GamePanelController(String name, GamePanel gamePanel, GameState initialState) {
+    public GamePanelController(String name, GamePanel gamePanel, JavaGameImageDrawer imageDrawer, GameState initialState) {
         this.name = name;
         this.gamePanel = gamePanel;
-        imageDrawer = new JavaGameImageDrawer();
         gameImage = new BufferedJavaGameImage(imageDrawer.newGameImage(), imageDrawer.newGameImage());
-
         currentState = initialState;
     }
 
@@ -73,9 +69,5 @@ public class GamePanelController implements GameLoopItem, Sizable {
             break;
         }
         currentState.handleUserInput(input);
-    }
-
-    public JavaGameImageDrawer getGameImageDrawer() {
-        return imageDrawer;
     }
 }

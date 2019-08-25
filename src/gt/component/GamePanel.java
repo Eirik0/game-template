@@ -20,9 +20,10 @@ public class GamePanel extends JPanel {
     public GamePanel(String name) {
         super(null, false);
 
-        controller = new GamePanelController(name, this, NullGameState.getInstance());
+        JavaGameImageDrawer imageDrawer = new JavaGameImageDrawer();
+        controller = new GamePanelController(name, this, imageDrawer, NullGameState.getInstance());
         MouseTracker mouseTracker = new MouseTracker(input -> FixedDurationGameLoop.enqueueUserInput(controller, input));
-        gameStateManager = new GameStateManager(this, mouseTracker, controller.getGameImageDrawer());
+        gameStateManager = new GameStateManager(this, mouseTracker, imageDrawer);
 
         setBackground(ComponentCreator.backgroundColor());
         setIgnoreRepaint(true);
