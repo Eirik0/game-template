@@ -5,9 +5,8 @@ import java.awt.Color;
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
-import gt.ecomponent.location.EScaledInnerLocation;
+import gt.ecomponent.list.EComponentLocation;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 import gt.util.BooleanConsumer;
@@ -34,7 +33,9 @@ public class ECheckBox implements EComponent, EComponentSettings {
         this.cl = cl;
         this.selected = selected;
         this.action = action;
-        checkLocation = new EScaledInnerLocation(cl, .3);
+        double widthPadding = cl.getWidth() * 0.3;
+        double heightPadding = cl.getHeight() * 0.3;
+        checkLocation = cl.createPaddedLocation(widthPadding, heightPadding, widthPadding, heightPadding);
         background = new EBackground(cl, BACKGROUND_COLOR);
         border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
     }

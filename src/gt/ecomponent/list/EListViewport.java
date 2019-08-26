@@ -5,7 +5,6 @@ import java.util.function.IntConsumer;
 
 import gt.component.ComponentCreator;
 import gt.ecomponent.EBackground;
-import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.scrollbar.EScrollBar;
 import gt.ecomponent.scrollbar.EScrollPaneViewLocation;

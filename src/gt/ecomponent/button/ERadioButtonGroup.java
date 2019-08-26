@@ -4,10 +4,9 @@ import java.awt.Color;
 import java.util.function.IntConsumer;
 
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
-import gt.ecomponent.location.EFixedLocation;
-import gt.ecomponent.location.ERelativeLocation;
+import gt.ecomponent.list.EComponentLocation;
+import gt.ecomponent.location.EGluedLocation;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 
@@ -32,8 +31,8 @@ public class ERadioButtonGroup implements EComponent, EComponentSettings {
         for (int i_y = 0; i_y < numHigh; ++i_y) {
             for (int i_x = 0; i_x < numWide; ++i_x) {
                 int value = i;
-                EFixedLocation buttonLoc = new EFixedLocation(x, y, x + buttonWidth - 1, y + buttonHeight - 1);
-                buttons[i] = EButton.createBlockButton(new ERelativeLocation(cl, buttonLoc), colors[i], () -> selectButton(value));
+                EGluedLocation bl = cl.createRelativeLocation(x, y, x + buttonWidth - 1, y + buttonHeight - 1);
+                buttons[i] = EButton.createBlockButton(bl, colors[i], () -> selectButton(value));
                 ++i;
                 x += buttonWidth + BUTTON_SPACING;
             }

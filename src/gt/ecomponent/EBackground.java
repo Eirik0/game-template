@@ -2,6 +2,7 @@ package gt.ecomponent;
 
 import java.awt.Color;
 
+import gt.ecomponent.list.EComponentLocation;
 import gt.gameentity.IGraphics;
 
 public class EBackground implements EComponent {

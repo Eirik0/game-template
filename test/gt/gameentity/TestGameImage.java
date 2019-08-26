@@ -3,8 +3,6 @@ package gt.gameentity;
 import java.util.ArrayList;
 import java.util.List;
 
-import gt.component.ComponentCreator;
-
 public class TestGameImage implements IGameImage {
     private final List<TestGraphicsObject> graphicsObjects = new ArrayList<>();
 
@@ -12,10 +10,6 @@ public class TestGameImage implements IGameImage {
     private int height;
 
     private TestGraphics graphics;
-
-    public TestGameImage() {
-        this(ComponentCreator.DEFAULT_WIDTH, ComponentCreator.DEFAULT_HEIGHT);
-    }
 
     public TestGameImage(int width, int height) {
         setSize(width, height);

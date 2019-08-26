@@ -3,6 +3,7 @@ package gt.ecomponent;
 import java.awt.Color;
 
 import gt.component.ComponentCreator;
+import gt.ecomponent.list.EComponentLocation;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 

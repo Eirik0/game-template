@@ -2,8 +2,8 @@ package gt.ecomponent.button;
 
 import java.awt.Color;
 
-import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
+import gt.ecomponent.list.EComponentLocation;
 import gt.gameentity.Drawable;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;

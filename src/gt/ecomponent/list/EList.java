@@ -5,9 +5,7 @@ import java.util.function.IntConsumer;
 
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
-import gt.ecomponent.location.EPaddedLocation;
 import gt.ecomponent.scrollbar.EScrollPane;
 import gt.gameentity.IGameImageDrawer;
 import gt.gameentity.IGraphics;
@@ -26,7 +24,7 @@ public class EList implements EComponent, EComponentSettings {
     public EList(EComponentLocation cl, IGameImageDrawer imageDrawer, String[] items, int selectedIndex, IntConsumer action) {
         this.cl = cl;
         border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
-        EPaddedLocation sPLoc = new EPaddedLocation(cl, 1, 1, 1, 1);
+        EComponentLocation sPLoc = cl.createPaddedLocation(1, 1, 1, 1);
         view = new EListViewport(sPLoc, items, selectedIndex, action);
         scrollPane = new EScrollPane(sPLoc, view, imageDrawer);
     }

@@ -1,6 +1,6 @@
 package gt.ecomponent.location;
 
-import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.list.EComponentLocation;
 import gt.util.EMath;
 
 public class EScaledLocation implements EComponentLocation {

@@ -7,12 +7,9 @@ import gt.component.ComponentCreator;
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.button.EArrowButtonDrawer;
 import gt.ecomponent.button.EArrowButtonDrawer.ArrowDirection;
-import gt.ecomponent.location.EGluedLocation;
-import gt.ecomponent.location.EStruttedLocation;
 import gt.ecomponent.location.GlueSide;
 import gt.gameentity.IGameImageDrawer;
 import gt.gameentity.IGraphics;
@@ -46,8 +43,8 @@ public class EComboBox implements EComponent, EComponentSettings {
         this.action = action;
         background = new EBackground(cl, BACKGROUND_COLOR);
         border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
-        arrowDrawer = new EArrowButtonDrawer(new EGluedLocation(cl, GlueSide.RIGHT, cl.getHeight()), ArrowDirection.DOWN);
-        listLocation = new EStruttedLocation(cl, GlueSide.TOP, Math.min(items.length, numItemsToShow) * EListViewport.ITEM_HEIGHT + 2);
+        arrowDrawer = new EArrowButtonDrawer(cl.createGluedLocation(GlueSide.RIGHT, -cl.getHeight() + 1, 0, 0, 0), ArrowDirection.DOWN);
+        listLocation = cl.createGluedLocation(GlueSide.BOTTOM, 0, 1, 0, Math.min(items.length, numItemsToShow) * EListViewport.ITEM_HEIGHT + 2);
         list = new EList(listLocation, imageDrawer, items, selectedIndex, i -> setSelectedIndex(i));
     }
 

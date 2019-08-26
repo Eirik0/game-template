@@ -1,6 +1,6 @@
 package gt.ecomponent.scrollbar;
 
-import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.list.EComponentLocation;
 import gt.gameentity.IGraphics;
 
 public class TestViewport implements EViewport {

@@ -2,15 +2,17 @@ package gt.gameentity;
 
 import java.util.List;
 
+import gt.component.ComponentCreator;
+
 public class TestGameImageDrawer implements IGameImageDrawer {
     @Override
     public TestGameImage newGameImage() {
-        return new TestGameImage();
+        return new TestGameImage(ComponentCreator.DEFAULT_WIDTH, ComponentCreator.DEFAULT_HEIGHT);
     }
 
     @Override
     public TestGameImage newGameImage(int width, int height) {
-        return new TestGameImage(width, height);
+        return new TestGameImage(Math.max(1, width), Math.max(1, height));
     }
 
     @Override

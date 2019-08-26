@@ -5,9 +5,9 @@ import java.awt.Color;
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.button.EButton;
+import gt.ecomponent.list.EComponentLocation;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 

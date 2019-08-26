@@ -1,19 +1,19 @@
 package gt.component;
 
-import gt.gameentity.IGameImageDrawer;
 import gt.gameentity.IGameImage;
+import gt.gameentity.IGameImageDrawer;
 import gt.gameentity.IGraphics;
 import gt.util.EMath;
 
 public class JavaGameImageDrawer implements IGameImageDrawer {
     @Override
     public JavaGameImage newGameImage() {
-        return new JavaGameImage();
+        return new JavaGameImage(ComponentCreator.DEFAULT_WIDTH, ComponentCreator.DEFAULT_HEIGHT);
     }
 
     @Override
     public JavaGameImage newGameImage(int width, int height) {
-        return new JavaGameImage(width, height);
+        return new JavaGameImage(Math.max(1, width), Math.max(1, height));
     }
 
     @Override

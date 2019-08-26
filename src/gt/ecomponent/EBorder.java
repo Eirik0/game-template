@@ -2,6 +2,7 @@ package gt.ecomponent;
 
 import java.awt.Color;
 
+import gt.ecomponent.list.EComponentLocation;
 import gt.gameentity.DrawingMethods;
 import gt.gameentity.DurationTimer;
 import gt.gameentity.GameEntity;

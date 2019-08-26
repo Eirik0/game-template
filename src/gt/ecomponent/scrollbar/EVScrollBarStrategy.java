@@ -1,15 +1,14 @@
 package gt.ecomponent.scrollbar;
 
-import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.button.EArrowButtonDrawer.ArrowDirection;
+import gt.ecomponent.list.EComponentLocation;
 import gt.ecomponent.button.EButton;
 import gt.ecomponent.location.EGluedLocation;
-import gt.ecomponent.location.EPaddedLocation;
 import gt.ecomponent.location.GlueSide;
 
 public class EVScrollBarStrategy implements EScrollBarStrategy {
-    private final EPaddedLocation cl;
-    private final EPaddedLocation trackLocation;
+    private final EGluedLocation cl;
+    private final EComponentLocation trackLocation;
     private final EVScrollBarThumbLocation thumbLocation;
 
     private final EViewport view;
@@ -21,11 +20,11 @@ public class EVScrollBarStrategy implements EScrollBarStrategy {
 
     public EVScrollBarStrategy(EComponentLocation parentLocation, EViewport view) {
         this.view = view;
-        cl = new EPaddedLocation(new EGluedLocation(parentLocation, GlueSide.RIGHT, EScrollBar.BAR_WIDTH), 0, EScrollBar.BAR_WIDTH, 0, 0);
-        trackLocation = new EPaddedLocation(cl, EScrollBar.BAR_WIDTH, EScrollBar.BAR_WIDTH, 0, 0);
-        button1 = EButton.createArrowButton(new EGluedLocation(cl, GlueSide.TOP, EScrollBar.BAR_WIDTH), ArrowDirection.UP,
+        cl = parentLocation.createGluedLocation(GlueSide.RIGHT, -EScrollBar.BAR_WIDTH + 1, 0, 0, 0);
+        trackLocation = cl.createPaddedLocation(0, EScrollBar.BAR_WIDTH, 0, EScrollBar.BAR_WIDTH);
+        button1 = EButton.createArrowButton(cl.createGluedLocation(GlueSide.TOP, 0, 0, 0, EScrollBar.BAR_WIDTH - 1), ArrowDirection.UP,
                 () -> view.move(0, -view.getYIncrement()));
-        button2 = EButton.createArrowButton(new EGluedLocation(cl, GlueSide.BOTTOM, EScrollBar.BAR_WIDTH), ArrowDirection.DOWN,
+        button2 = EButton.createArrowButton(cl.createGluedLocation(GlueSide.BOTTOM, 0, -EScrollBar.BAR_WIDTH + 1, 0, 0), ArrowDirection.DOWN,
                 () -> view.move(0, view.getYIncrement()));
         thumbLocation = new EVScrollBarThumbLocation(trackLocation, view);
     }
@@ -57,7 +56,7 @@ public class EVScrollBarStrategy implements EScrollBarStrategy {
 
     @Override
     public void setOtherBarVisible(boolean visible) {
-        cl.setPadding(0, visible ? EScrollBar.BAR_WIDTH : 0, 0, 0);
+        cl.setDeltas(-EScrollBar.BAR_WIDTH + 1, 0, 0, visible ? -EScrollBar.BAR_WIDTH : 0);
     }
 
     @Override

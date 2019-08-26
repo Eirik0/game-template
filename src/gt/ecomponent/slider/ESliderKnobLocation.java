@@ -1,6 +1,6 @@
 package gt.ecomponent.slider;
 
-import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.list.EComponentLocation;
 
 public class ESliderKnobLocation implements EComponentLocation {
     private final EComponentLocation pl;

@@ -4,8 +4,8 @@ import java.awt.Color;
 
 import gt.ecomponent.EBackground;
 import gt.ecomponent.EComponent;
-import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.EComponentSettings;
+import gt.ecomponent.list.EComponentLocation;
 import gt.gameentity.IGameImageDrawer;
 import gt.gameentity.IGameImage;
 import gt.gameentity.IGraphics;

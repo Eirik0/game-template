@@ -1,6 +1,6 @@
 package gt.ecomponent.scrollbar;
 
-import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.list.EComponentLocation;
 
 public class EHScrollBarThumbLocation implements EComponentLocation {
     private final EComponentLocation trackLocation;

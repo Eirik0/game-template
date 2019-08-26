@@ -1,7 +1,7 @@
 package gt.ecomponent.scrollbar;
 
-import gt.ecomponent.EComponentLocation;
 import gt.ecomponent.button.EButton;
+import gt.ecomponent.list.EComponentLocation;
 
 public interface EScrollBarStrategy {
     EComponentLocation getComponentLocation();

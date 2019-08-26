@@ -6,10 +6,6 @@ public class JavaGameImage implements IJavaGameImage {
     private BufferedImage image;
     private JavaGraphics graphics;
 
-    public JavaGameImage() {
-        resizeImage(ComponentCreator.DEFAULT_WIDTH, ComponentCreator.DEFAULT_HEIGHT);
-    }
-
     public JavaGameImage(int width, int height) {
         resizeImage(width, height);
     }

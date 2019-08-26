@@ -1,6 +1,6 @@
 package gt.ecomponent.location;
 
-import gt.ecomponent.EComponentLocation;
+import gt.ecomponent.list.EComponentLocation;
 
 public class EFixedLocation implements EComponentLocation {
     private final double x0;
