@@ -6,7 +6,9 @@ import gt.ecomponent.EBackground;
 import gt.ecomponent.EBorder;
 import gt.ecomponent.EComponent;
 import gt.ecomponent.EComponentSettings;
+import gt.ecomponent.ETextLabel;
 import gt.ecomponent.list.EComponentLocation;
+import gt.gameentity.Drawable;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 import gt.util.BooleanConsumer;
@@ -16,10 +18,10 @@ public class ECheckBox implements EComponent, EComponentSettings {
     private static final Color BORDER_COLOR = GameSettings.getValue(CHECK_BOX_BORDER_COLOR, CHECK_BOX_BORDER_COLOR_DEFAULT);
     private static final Color BORDER_HIGHLIGHT_COLOR = GameSettings.getValue(CHECK_BOX_BORDER_HIGHLIGHT_COLOR, CHECK_BOX_BORDER_HIGHLIGHT_COLOR_DEFAULT);
     private static final Color PRESSED_COLOR = GameSettings.getValue(CHECK_BOX_PRESSED_COLOR, CHECK_BOX_PRESSED_COLOR_DEFAULT);
-    private static final Color SELECTED_COLOR = GameSettings.getValue(CHECK_BOX_SELECTED_COLOR, CHECK_BOX_SELECTED_COLOR_DEFAULT);
 
     private final EComponentLocation cl;
-    private final EComponentLocation checkLocation;
+    private final Drawable selectedDrawable;
+    private final Drawable deselectedDrawable;
 
     private final EBackground background;
     private final EBorder border;
@@ -30,12 +32,24 @@ public class ECheckBox implements EComponent, EComponentSettings {
     private boolean selected;
 
     public ECheckBox(EComponentLocation cl, boolean selected, BooleanConsumer action) {
+        selectedDrawable = new ECheckDrawer(cl);
+        deselectedDrawable = g -> {
+        };
         this.cl = cl;
         this.selected = selected;
         this.action = action;
-        double widthPadding = cl.getWidth() * 0.3;
-        double heightPadding = cl.getHeight() * 0.3;
-        checkLocation = cl.createPaddedLocation(widthPadding, heightPadding, widthPadding, heightPadding);
+
+        background = new EBackground(cl, BACKGROUND_COLOR);
+        border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
+    }
+
+    public ECheckBox(EComponentLocation cl, String selectedText, String deslectedText, boolean selected, BooleanConsumer action) {
+        selectedDrawable = new ETextLabel(cl, selectedText, false);
+        deselectedDrawable = new ETextLabel(cl, deslectedText, false);
+        this.cl = cl;
+        this.selected = selected;
+        this.action = action;
+
         background = new EBackground(cl, BACKGROUND_COLOR);
         border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
     }
@@ -50,9 +64,9 @@ public class ECheckBox implements EComponent, EComponentSettings {
         background.drawOn(g);
         border.drawOn(g);
         if (selected) {
-            g.setColor(SELECTED_COLOR);
-            g.drawLine(checkLocation.getX0(), checkLocation.getY0(), checkLocation.getX1(), checkLocation.getY1());
-            g.drawLine(checkLocation.getX1(), checkLocation.getY0(), checkLocation.getX0(), checkLocation.getY1());
+            selectedDrawable.drawOn(g);
+        } else {
+            deselectedDrawable.drawOn(g);
         }
         if (mousePressed) {
             double x = cl.getX0() + EButton.PRESSED_GAP;
