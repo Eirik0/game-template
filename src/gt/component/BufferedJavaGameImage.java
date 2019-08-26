@@ -41,12 +41,12 @@ public class BufferedJavaGameImage implements IJavaGameImage {
     }
 
     @Override
-    public int getWidth() {
+    public double getWidth() {
         return current.getWidth();
     }
 
     @Override
-    public int getHeight() {
+    public double getHeight() {
         return current.getHeight();
     }
 }

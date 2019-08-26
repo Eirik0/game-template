@@ -1,8 +1,9 @@
 package gt.ecomponent;
 
 import gt.ecomponent.location.EScaledLocation;
+import gt.gameentity.Sized;
 
-public interface EComponentLocation {
+public interface EComponentLocation extends Sized {
     double getX0();
 
     double getY0();
@@ -15,10 +16,12 @@ public interface EComponentLocation {
         return screenX >= getX0() && screenX <= getX1() && screenY >= getY0() && screenY <= getY1();
     }
 
+    @Override
     default double getWidth() {
         return getX1() - getX0() + 1;
     }
 
+    @Override
     default double getHeight() {
         return getY1() - getY0() + 1;
     }

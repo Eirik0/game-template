@@ -56,12 +56,12 @@ public class JavaGameImage implements IJavaGameImage {
     }
 
     @Override
-    public int getWidth() {
+    public double getWidth() {
         return image.getWidth();
     }
 
     @Override
-    public int getHeight() {
+    public double getHeight() {
         return image.getHeight();
     }
 }

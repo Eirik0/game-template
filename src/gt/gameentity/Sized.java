@@ -1,7 +1,7 @@
 package gt.gameentity;
 
 public interface Sized {
-    int getWidth();
+    double getWidth();
 
-    int getHeight();
+    double getHeight();
 }

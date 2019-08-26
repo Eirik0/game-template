@@ -29,12 +29,12 @@ public class TestGameImage implements IGameImage {
     }
 
     @Override
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 
     @Override
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
