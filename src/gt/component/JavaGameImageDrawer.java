@@ -12,8 +12,8 @@ public class JavaGameImageDrawer implements IGameImageDrawer {
     }
 
     @Override
-    public JavaGameImage newGameImage(int width, int height) {
-        return new JavaGameImage(Math.max(1, width), Math.max(1, height));
+    public JavaGameImage newGameImage(double width, double height) {
+        return new JavaGameImage(Math.max(1, EMath.round(width)), Math.max(1, EMath.round(height)));
     }
 
     @Override

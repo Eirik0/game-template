@@ -35,7 +35,7 @@ public class BufferedJavaGameImage implements IJavaGameImage {
     }
 
     @Override
-    public synchronized void setSize(int width, int height) {
+    public synchronized void setSize(double width, double height) {
         current.setSize(width, height);
         buffer.setSize(width, height);
     }

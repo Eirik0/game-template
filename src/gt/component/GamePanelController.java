@@ -53,7 +53,7 @@ public class GamePanelController implements GameLoopItem, Sizable {
     }
 
     @Override
-    public void setSize(int width, int height) {
+    public void setSize(double width, double height) {
         gameImage.setSize(width, height);
         currentState.setSize(width, height);
     }

@@ -9,9 +9,9 @@ public class GridSizer {
     public final double offsetX;
     public final double offsetY;
 
-    public GridSizer(int imageWidth, int imageHeight, int numCellsX, int numCellsY) {
-        double cellSizeX = (double) imageWidth / numCellsX;
-        double cellSizeY = (double) imageHeight / numCellsY;
+    public GridSizer(double imageWidth, double imageHeight, int numCellsX, int numCellsY) {
+        double cellSizeX = imageWidth / numCellsX;
+        double cellSizeY = imageHeight / numCellsY;
         cellSize = Math.min(cellSizeX, cellSizeY);
         gridWidth = cellSize * numCellsX;
         gridHeight = cellSize * numCellsY;

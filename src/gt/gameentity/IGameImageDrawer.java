@@ -3,7 +3,7 @@ package gt.gameentity;
 public interface IGameImageDrawer {
     IGameImage newGameImage();
 
-    IGameImage newGameImage(int width, int height);
+    IGameImage newGameImage(double width, double height);
 
     void drawImage(IGraphics g, IGameImage image, double x, double y);
 

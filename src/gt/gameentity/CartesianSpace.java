@@ -21,7 +21,7 @@ public class CartesianSpace implements Sizable {
     }
 
     @Override
-    public void setSize(int imageWidth, int imageHeight) {
+    public void setSize(double imageWidth, double imageHeight) {
         this.imageWidth = imageWidth;
         this.imageHeight = imageHeight;
         setBounds(x0, y0, width, height);

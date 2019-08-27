@@ -3,6 +3,7 @@ package gt.gameentity;
 import java.util.List;
 
 import gt.component.ComponentCreator;
+import gt.util.EMath;
 
 public class TestGameImageDrawer implements IGameImageDrawer {
     @Override
@@ -11,8 +12,8 @@ public class TestGameImageDrawer implements IGameImageDrawer {
     }
 
     @Override
-    public TestGameImage newGameImage(int width, int height) {
-        return new TestGameImage(Math.max(1, width), Math.max(1, height));
+    public TestGameImage newGameImage(double width, double height) {
+        return new TestGameImage(Math.max(1, EMath.round(width)), Math.max(1, EMath.round(height)));
     }
 
     @Override

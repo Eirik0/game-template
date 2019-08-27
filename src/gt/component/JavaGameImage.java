@@ -2,6 +2,8 @@ package gt.component;
 
 import java.awt.image.BufferedImage;
 
+import gt.util.EMath;
+
 public class JavaGameImage implements IJavaGameImage {
     private BufferedImage image;
     private JavaGraphics graphics;
@@ -31,12 +33,12 @@ public class JavaGameImage implements IJavaGameImage {
     }
 
     @Override
-    public void setSize(int width, int height) {
+    public void setSize(double width, double height) {
         if (width <= 0 || height <= 0) {
             return;
         }
         if (image.getWidth() != width || image.getHeight() != height) {
-            resizeImage(width, height);
+            resizeImage(EMath.round(width), EMath.round(height));
         }
     }
 

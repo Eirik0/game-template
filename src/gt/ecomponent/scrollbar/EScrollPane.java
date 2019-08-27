@@ -37,7 +37,7 @@ public class EScrollPane implements EComponent, EComponentSettings, Sizable {
     }
 
     @Override
-    public void setSize(int width, int height) {
+    public void setSize(double width, double height) {
         boolean hBarVisible = view.getWidth() > width || (view.getHeight() > height && view.getWidth() > width - EScrollBar.BAR_WIDTH);
         boolean vBarVisible = view.getHeight() > height || (view.getWidth() > width && view.getHeight() > height - EScrollBar.BAR_WIDTH);
         double newImageWidth = vBarVisible ? width - EScrollBar.BAR_WIDTH : width;

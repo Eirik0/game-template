@@ -6,8 +6,8 @@ import java.util.List;
 public class TestGameImage implements IGameImage {
     private final List<TestGraphicsObject> graphicsObjects = new ArrayList<>();
 
-    private int width;
-    private int height;
+    private double width;
+    private double height;
 
     private TestGraphics graphics;
 
@@ -16,7 +16,7 @@ public class TestGameImage implements IGameImage {
     }
 
     @Override
-    public void setSize(int width, int height) {
+    public void setSize(double width, double height) {
         this.width = width;
         this.height = height;
         graphics = new TestGraphics(this);
