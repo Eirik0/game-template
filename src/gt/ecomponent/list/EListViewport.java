@@ -4,12 +4,10 @@ import java.awt.Color;
 import java.util.function.IntConsumer;
 
 import gt.component.ComponentCreator;
-import gt.ecomponent.EBackground;
 import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.scrollbar.EScrollBar;
 import gt.ecomponent.scrollbar.EScrollPaneViewLocation;
 import gt.ecomponent.scrollbar.EViewport;
-import gt.ecomponent.scrollbar.EViewportBackgroundLocation;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 import gt.util.EMath;
@@ -26,8 +24,6 @@ public class EListViewport implements EViewport, EComponentSettings {
     private final EComponentLocation cl;
     private final EScrollPaneViewLocation vl;
     private final String[] items;
-
-    private final EBackground background;
 
     private double x0 = 0;
     private double y0 = 0;
@@ -47,7 +43,6 @@ public class EListViewport implements EViewport, EComponentSettings {
         this.selectedIndex = selectedIndex;
         this.action = action;
         vl = new EScrollPaneViewLocation(cl, this);
-        background = new EBackground(new EViewportBackgroundLocation(this), BACKGROUND_COLOR);
         viewWidth = cl.getWidth();
         viewHeight = cl.getHeight();
     }
@@ -90,7 +85,7 @@ public class EListViewport implements EViewport, EComponentSettings {
 
     @Override
     public void drawOn(IGraphics g) {
-        background.drawOn(g);
+        g.fillRect(0, 0, getViewWidth(), getViewHeight(), BACKGROUND_COLOR);
         double itemY = -getTruncatedY0();
         g.setColor(TEXT_COLOR);
         g.setFont(ComponentCreator.DEFAULT_FONT_SMALL);
