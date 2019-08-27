@@ -3,13 +3,13 @@ package gt.ecomponent;
 import java.util.ArrayList;
 import java.util.List;
 
-import gt.component.MouseTracker;
+import gt.component.IMouseTracker;
 
 public class EComponentPanelBuilder {
-    private final MouseTracker mouseTracker;
+    private final IMouseTracker mouseTracker;
     private final List<List<EComponent>> componentLists = new ArrayList<>();
 
-    public EComponentPanelBuilder(MouseTracker mouseTracker) {
+    public EComponentPanelBuilder(IMouseTracker mouseTracker) {
         this.mouseTracker = mouseTracker;
     }
 

@@ -1,6 +1,6 @@
 package gt.ecomponent;
 
-import gt.component.MouseTracker;
+import gt.component.IMouseTracker;
 import gt.gameentity.Drawable;
 import gt.gameentity.IGraphics;
 import gt.gameentity.Updatable;
@@ -8,15 +8,13 @@ import gt.gameentity.UserInputHandler;
 import gt.gamestate.UserInput;
 
 public class EComponentPanel implements Updatable, Drawable, UserInputHandler {
-    private final MouseTracker mouseTracker;
-    private double mouseWheelRotation;
+    private final IMouseTracker mouseTracker;
 
     private final EComponent[][] components;
     private EComponent selectedComponent = null;
 
-    public EComponentPanel(MouseTracker mouseTracker, EComponent[][] components) {
+    public EComponentPanel(IMouseTracker mouseTracker, EComponent[][] components) {
         this.mouseTracker = mouseTracker;
-        mouseWheelRotation = mouseTracker.wheelRotation;
         this.components = components;
     }
 
@@ -56,8 +54,8 @@ public class EComponentPanel implements Updatable, Drawable, UserInputHandler {
 
     @Override
     public void handleUserInput(UserInput input) {
-        int mouseX = mouseTracker.mouseX;
-        int mouseY = mouseTracker.mouseY;
+        int mouseX = mouseTracker.mouseX();
+        int mouseY = mouseTracker.mouseY();
         switch (input) {
         case MOUSE_MOVED:
             if (selectedComponent != null) {
@@ -94,8 +92,7 @@ public class EComponentPanel implements Updatable, Drawable, UserInputHandler {
             mouseMoved(mouseX, mouseY);
             break;
         case MOUSE_WHEEL_MOVED:
-            double wheelDelta = mouseTracker.wheelRotation - mouseWheelRotation;
-            mouseWheelRotation = mouseTracker.wheelRotation;
+            double wheelDelta = mouseTracker.wheelRotationDelta();
             for (int i = components.length - 1; i >= 0; --i) {
                 EComponent[] layer = components[i];
                 for (int j = 0; j < layer.length; ++j) {

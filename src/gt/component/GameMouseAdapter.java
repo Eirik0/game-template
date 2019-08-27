@@ -7,9 +7,9 @@ import java.awt.event.MouseWheelEvent;
 import gt.gamestate.UserInput;
 
 public class GameMouseAdapter extends MouseAdapter {
-    private final MouseTracker mouseTracker;
+    private final GameMouseTracker mouseTracker;
 
-    public GameMouseAdapter(MouseTracker mouseTracker) {
+    public GameMouseAdapter(GameMouseTracker mouseTracker) {
         this.mouseTracker = mouseTracker;
     }
 
@@ -39,16 +39,19 @@ public class GameMouseAdapter extends MouseAdapter {
     public void mouseEntered(MouseEvent e) {
         mouseTracker.setMouseEntered(true);
         mouseTracker.setMouseXY(e.getX(), e.getY());
+        mouseTracker.handleUserInput(UserInput.MOUSE_MOVED);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         mouseTracker.setMouseEntered(false);
+        mouseTracker.setMouseXY(e.getX(), e.getY());
+        mouseTracker.handleUserInput(UserInput.MOUSE_MOVED);
     }
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        mouseTracker.wheelRotation += e.getPreciseWheelRotation();
+        mouseTracker.addWheelRotation(e.getWheelRotation());
         mouseTracker.handleUserInput(UserInput.MOUSE_WHEEL_MOVED);
     }
 
