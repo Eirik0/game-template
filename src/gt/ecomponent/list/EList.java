@@ -29,8 +29,8 @@ public class EList implements EComponent, EComponentSettings {
         scrollPane = new EScrollPane(sPLoc, view, imageDrawer);
     }
 
-    public boolean setViewSelected(int screenX, int screenY) {
-        return view.setSelected(screenX, screenY);
+    public boolean setViewSelected(double screenX, double screenY) {
+        return view.setSelected(screenX - (cl.getX0() + 1), screenY - (cl.getY0() + 1));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class EList implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMouseOver(int screenX, int screenY) {
+    public boolean setMouseOver(double screenX, double screenY) {
         boolean containsPoint = cl.containsPoint(screenX, screenY);
         border.setSelected(containsPoint);
         scrollPane.setMouseOver(screenX, screenY);
@@ -54,17 +54,17 @@ public class EList implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMousePressed(int screenX, int screenY) {
+    public boolean setMousePressed(double screenX, double screenY) {
         return scrollPane.setMousePressed(screenX, screenY);
     }
 
     @Override
-    public void setMouseReleased(int screenX, int screenY) {
+    public void setMouseReleased(double screenX, double screenY) {
         scrollPane.setMouseReleased(screenX, screenY);
     }
 
     @Override
-    public boolean setMouseScrolled(int screenX, int screenY, double wheelDelta) {
+    public boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
         return scrollPane.setMouseScrolled(screenX, screenY, wheelDelta);
     }
 

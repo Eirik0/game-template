@@ -6,8 +6,8 @@ import gt.ecomponent.EBackground;
 import gt.ecomponent.EComponent;
 import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.list.EComponentLocation;
-import gt.gameentity.IGameImageDrawer;
 import gt.gameentity.IGameImage;
+import gt.gameentity.IGameImageDrawer;
 import gt.gameentity.IGraphics;
 import gt.gameentity.Sizable;
 import gt.settings.GameSettings;
@@ -16,6 +16,7 @@ import gt.util.EMath;
 public class EScrollPane implements EComponent, EComponentSettings, Sizable {
     private static final Color BACKGROUND_COLOR = GameSettings.getValue(SCROLL_PANE_BACKGROUND_COLOR, SCROLL_PANE_BACKGROUND_COLOR_DEFAULT);
 
+    private final EComponentLocation cl;
     private final EViewport view;
     private final IGameImageDrawer imageDrawer;
     private final IGameImage viewImage;
@@ -25,6 +26,7 @@ public class EScrollPane implements EComponent, EComponentSettings, Sizable {
     private final EScrollBar vBar;
 
     public EScrollPane(EComponentLocation cl, EViewport view, IGameImageDrawer imageDrawer) {
+        this.cl = cl;
         this.view = view;
         this.imageDrawer = imageDrawer;
         int width = EMath.round(cl.getWidth());
@@ -79,37 +81,37 @@ public class EScrollPane implements EComponent, EComponentSettings, Sizable {
         hBar.drawOn(g);
         vBar.drawOn(g);
         view.drawOn(viewImage.getGraphics());
-        imageDrawer.drawImage(g, viewImage, EMath.round(view.getViewLocation().getX0()), EMath.round(view.getViewLocation().getY0()));
+        imageDrawer.drawImage(g, viewImage, cl.getX0(), cl.getY0());
     }
 
     @Override
-    public boolean setMouseOver(int screenX, int screenY) {
+    public boolean setMouseOver(double screenX, double screenY) {
         boolean overVBar = hBar.setMouseOver(screenX, screenY);
         boolean overHBar = vBar.setMouseOver(screenX, screenY);
-        boolean overView = view.setMouseOver(screenX, screenY);
+        boolean overView = view.setMouseOver(screenX - cl.getX0(), screenY - cl.getY0());
         return overVBar || overHBar || overView;
     }
 
     @Override
-    public boolean setMousePressed(int screenX, int screenY) {
+    public boolean setMousePressed(double screenX, double screenY) {
         boolean pressedHBar = hBar.setMousePressed(screenX, screenY);
         boolean pressedVBar = vBar.setMousePressed(screenX, screenY);
-        boolean pressedView = view.setMousePressed(screenX, screenY);
+        boolean pressedView = view.setMousePressed(screenX - cl.getX0(), screenY - cl.getY0());
         return pressedHBar || pressedVBar || pressedView;
     }
 
     @Override
-    public void setMouseReleased(int screenX, int screenY) {
+    public void setMouseReleased(double screenX, double screenY) {
         hBar.setMouseReleased(screenX, screenY);
         vBar.setMouseReleased(screenX, screenY);
-        view.setMouseReleased(screenX, screenY);
+        view.setMouseReleased(screenX - cl.getX0(), screenY - cl.getY0());
     }
 
     @Override
-    public boolean setMouseScrolled(int screenX, int screenY, double wheelDelta) {
+    public boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
         boolean scrolledHBar = hBar.setMouseScrolled(screenX, screenY, wheelDelta);
         boolean scrolledVBar = vBar.setMouseScrolled(screenX, screenY, wheelDelta);
-        boolean scrolledView = view.setMouseScrolled(screenX, screenY, wheelDelta);
+        boolean scrolledView = view.setMouseScrolled(screenX - cl.getX0(), screenY - cl.getY0(), wheelDelta);
         return scrolledHBar || scrolledVBar || scrolledView;
     }
 

@@ -85,7 +85,7 @@ public class ESlider implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMouseOver(int screenX, int screenY) {
+    public boolean setMouseOver(double screenX, double screenY) {
         mouseOver = cl.containsPoint(screenX, screenY);
         mouseOverX = Math.min(Math.max(cl.getX0(), screenX), cl.getX1());
         sliderKnob.setSelected(kcl.containsPoint(screenX, screenY) || mousePressed);
@@ -94,7 +94,7 @@ public class ESlider implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMousePressed(int screenX, int screenY) {
+    public boolean setMousePressed(double screenX, double screenY) {
         mousePressed = cl.containsPoint(screenX, screenY) || kcl.containsPoint(screenX, screenY);
         if (mousePressed) {
             sliderKnob.setSelected(true);
@@ -104,13 +104,13 @@ public class ESlider implements EComponent, EComponentSettings {
     }
 
     @Override
-    public void setMouseReleased(int screenX, int screenY) {
+    public void setMouseReleased(double screenX, double screenY) {
         mousePressed = false;
         sliderKnob.setSelected(kcl.containsPoint(screenX, screenY));
     }
 
     @Override
-    public boolean setMouseScrolled(int screenX, int screenY, double wheelDelta) {
+    public boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
         if (cl.containsPoint(screenX, screenY)) {
             currentValue = Math.min(Math.max(min, currentValue + wheelDelta * 10), max);
             sliderKnob.setSelected(kcl.containsPoint(screenX, screenY));

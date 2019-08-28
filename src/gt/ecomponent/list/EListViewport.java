@@ -6,7 +6,6 @@ import java.util.function.IntConsumer;
 import gt.component.ComponentCreator;
 import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.scrollbar.EScrollBar;
-import gt.ecomponent.scrollbar.EScrollPaneViewLocation;
 import gt.ecomponent.scrollbar.EViewport;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
@@ -22,7 +21,6 @@ public class EListViewport implements EViewport, EComponentSettings {
     public static final int ITEM_HEIGHT = GameSettings.getInt(LIST_VIEWPORT_ITEM_HEIGHT, LIST_VIEWPORT_ITEM_HEIGHT_DEFAULT);
 
     private final EComponentLocation cl;
-    private final EScrollPaneViewLocation vl;
     private final String[] items;
 
     private double x0 = 0;
@@ -35,29 +33,27 @@ public class EListViewport implements EViewport, EComponentSettings {
 
     private boolean mousePressed = false;
     private boolean mouseOver = false;
-    private int mouseOverY = 0;
+    private double mouseOverY = 0;
 
     public EListViewport(EComponentLocation cl, String[] items, int selectedIndex, IntConsumer action) {
         this.cl = cl;
         this.items = items;
         this.selectedIndex = selectedIndex;
         this.action = action;
-        vl = new EScrollPaneViewLocation(cl, this);
         viewWidth = cl.getWidth();
         viewHeight = cl.getHeight();
     }
 
-    public boolean setSelected(int screenX, int screenY) {
-        boolean containsPoint = vl.containsPoint(screenX, screenY);
+    private boolean containsPoint(double screenX, double screenY) {
+        return screenX >= 0 && screenX <= viewWidth && screenY >= 0 && screenY <= viewHeight;
+    }
+
+    public boolean setSelected(double screenX, double screenY) {
+        boolean containsPoint = containsPoint(screenX, screenY);
         if (containsPoint) {
             mousePressed = true;
         }
         return containsPoint;
-    }
-
-    @Override
-    public EComponentLocation getViewLocation() {
-        return vl;
     }
 
     private double getTruncatedY0() {
@@ -97,10 +93,10 @@ public class EListViewport implements EViewport, EComponentSettings {
         }
         if (mouseOver || mousePressed) {
             double mouseOverY = getMouseOverIndex() * ITEM_HEIGHT - getTruncatedY0();
-            g.drawRect(1, mouseOverY + 1, vl.getWidth() - 2, ITEM_HEIGHT - 2, PRESSED_COLOR);
+            g.drawRect(1, mouseOverY + 1, viewWidth - 2, ITEM_HEIGHT - 2, PRESSED_COLOR);
         }
         double selectedY = selectedIndex * ITEM_HEIGHT - getTruncatedY0();
-        g.drawRect(0, selectedY, vl.getWidth(), ITEM_HEIGHT, SELECTED_COLOR);
+        g.drawRect(0, selectedY, viewWidth, ITEM_HEIGHT, SELECTED_COLOR);
     }
 
     @Override
@@ -157,21 +153,21 @@ public class EListViewport implements EViewport, EComponentSettings {
     }
 
     @Override
-    public boolean setMouseOver(int screenX, int screenY) {
-        mouseOver = vl.containsPoint(screenX, screenY);
-        mouseOverY = screenY - EMath.round(vl.getY0());
+    public boolean setMouseOver(double screenX, double screenY) {
+        mouseOver = containsPoint(screenX, screenY);
+        mouseOverY = screenY;
         return mouseOver;
     }
 
     @Override
-    public boolean setMousePressed(int screenX, int screenY) {
-        mousePressed = vl.containsPoint(screenX, screenY);
+    public boolean setMousePressed(double screenX, double screenY) {
+        mousePressed = containsPoint(screenX, screenY);
         return mousePressed;
     }
 
     @Override
-    public void setMouseReleased(int screenX, int screenY) {
-        boolean containsPoint = vl.containsPoint(screenX, screenY);
+    public void setMouseReleased(double screenX, double screenY) {
+        boolean containsPoint = containsPoint(screenX, screenY);
         if (mousePressed && containsPoint) {
             int selected = getMouseOverIndex();
             selectedIndex = selected;
@@ -181,8 +177,8 @@ public class EListViewport implements EViewport, EComponentSettings {
     }
 
     @Override
-    public boolean setMouseScrolled(int screenX, int screenY, double wheelDelta) {
-        if (vl.containsPoint(screenX, screenY)) {
+    public boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
+        if (containsPoint(screenX, screenY)) {
             move(0, wheelDelta * getYIncrement());
             return true;
         }

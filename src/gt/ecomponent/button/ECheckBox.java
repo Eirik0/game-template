@@ -78,20 +78,20 @@ public class ECheckBox implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMouseOver(int screenX, int screenY) {
+    public boolean setMouseOver(double screenX, double screenY) {
         boolean containsPoint = cl.containsPoint(screenX, screenY);
         border.setSelected(containsPoint);
         return containsPoint;
     }
 
     @Override
-    public boolean setMousePressed(int screenX, int screenY) {
+    public boolean setMousePressed(double screenX, double screenY) {
         mousePressed = cl.containsPoint(screenX, screenY);
         return mousePressed;
     }
 
     @Override
-    public void setMouseReleased(int screenX, int screenY) {
+    public void setMouseReleased(double screenX, double screenY) {
         if (mousePressed && cl.containsPoint(screenX, screenY)) {
             selected = !selected;
             action.accept(selected);
@@ -100,7 +100,7 @@ public class ECheckBox implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMouseScrolled(int screenX, int screenY, double wheelDelta) {
+    public boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
         return false;
     }
 

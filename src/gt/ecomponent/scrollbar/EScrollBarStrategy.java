@@ -18,7 +18,7 @@ public interface EScrollBarStrategy {
 
     void checkMousePressed();
 
-    void setMouseOverImpl(int screenX, int screenY);
+    void setMouseOverImpl(double screenX, double screenY);
 
     void setMouseScrolledImpl(double wheelDelta);
 }

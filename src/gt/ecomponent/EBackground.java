@@ -24,21 +24,21 @@ public class EBackground implements EComponent {
     }
 
     @Override
-    public boolean setMouseOver(int screenX, int screenY) {
+    public boolean setMouseOver(double screenX, double screenY) {
         return false;
     }
 
     @Override
-    public boolean setMousePressed(int screenX, int screenY) {
+    public boolean setMousePressed(double screenX, double screenY) {
         return cl.containsPoint(screenX, screenY);
     }
 
     @Override
-    public void setMouseReleased(int screenX, int screenY) {
+    public void setMouseReleased(double screenX, double screenY) {
     }
 
     @Override
-    public boolean setMouseScrolled(int screenX, int screenY, double wheelDelta) {
+    public boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
         return false;
     }
 

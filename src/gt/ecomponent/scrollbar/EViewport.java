@@ -1,11 +1,8 @@
 package gt.ecomponent.scrollbar;
 
 import gt.ecomponent.EComponent;
-import gt.ecomponent.list.EComponentLocation;
 
 public interface EViewport extends EComponent {
-    EComponentLocation getViewLocation();
-
     double getWidth();
 
     double getHeight();

@@ -3,13 +3,13 @@ package gt.ecomponent;
 import gt.gameentity.GameEntity;
 
 public interface EComponent extends GameEntity {
-    boolean setMouseOver(int screenX, int screenY);
+    boolean setMouseOver(double screenX, double screenY);
 
-    boolean setMousePressed(int screenX, int screenY);
+    boolean setMousePressed(double screenX, double screenY);
 
-    void setMouseReleased(int screenX, int screenY);
+    void setMouseReleased(double screenX, double screenY);
 
-    boolean setMouseScrolled(int screenX, int screenY, double wheelDelta);
+    boolean setMouseScrolled(double screenX, double screenY, double wheelDelta);
 
     void focusLost(boolean fromClick);
 }

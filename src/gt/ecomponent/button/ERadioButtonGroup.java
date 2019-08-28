@@ -73,7 +73,7 @@ public class ERadioButtonGroup implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMouseOver(int screenX, int screenY) {
+    public boolean setMouseOver(double screenX, double screenY) {
         boolean containsPoint = false;
         for (int i = 0; i < buttons.length; ++i) {
             if (buttons[i].setMouseOver(screenX, screenY)) {
@@ -84,7 +84,7 @@ public class ERadioButtonGroup implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMousePressed(int screenX, int screenY) {
+    public boolean setMousePressed(double screenX, double screenY) {
         for (int i = 0; i < buttons.length; ++i) {
             if (buttons[i].setMousePressed(screenX, screenY)) {
                 return true;
@@ -94,14 +94,14 @@ public class ERadioButtonGroup implements EComponent, EComponentSettings {
     }
 
     @Override
-    public void setMouseReleased(int screenX, int screenY) {
+    public void setMouseReleased(double screenX, double screenY) {
         for (int i = 0; i < buttons.length; ++i) {
             buttons[i].setMouseReleased(screenX, screenY);
         }
     }
 
     @Override
-    public boolean setMouseScrolled(int screenX, int screenY, double wheelDelta) {
+    public boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
         return false;
     }
 

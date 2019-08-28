@@ -75,7 +75,7 @@ public class EScrollBar implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMouseOver(int screenX, int screenY) {
+    public boolean setMouseOver(double screenX, double screenY) {
         if (!visible) {
             return false;
         }
@@ -90,7 +90,7 @@ public class EScrollBar implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMousePressed(int screenX, int screenY) {
+    public boolean setMousePressed(double screenX, double screenY) {
         if (!visible) {
             return false;
         }
@@ -106,7 +106,7 @@ public class EScrollBar implements EComponent, EComponentSettings {
     }
 
     @Override
-    public void setMouseReleased(int screenX, int screenY) {
+    public void setMouseReleased(double screenX, double screenY) {
         if (!visible) {
             return;
         }
@@ -117,7 +117,7 @@ public class EScrollBar implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMouseScrolled(int screenX, int screenY, double wheelDelta) {
+    public boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
         if (visible && strategy.getComponentLocation().containsPoint(screenX, screenY)) {
             strategy.setMouseScrolledImpl(wheelDelta);
             return true;

@@ -1,6 +1,5 @@
 package gt.ecomponent.scrollbar;
 
-import gt.ecomponent.list.EComponentLocation;
 import gt.gameentity.IGraphics;
 
 public class TestViewport implements EViewport {
@@ -13,12 +12,9 @@ public class TestViewport implements EViewport {
     private double viewWidth;
     private double viewHeight;
 
-    private final EScrollPaneViewLocation vl;
-
-    public TestViewport(EComponentLocation cl, double width, double height) {
+    public TestViewport(double width, double height) {
         this.width = width;
         this.height = height;
-        vl = new EScrollPaneViewLocation(cl, this);
     }
 
     @Override
@@ -27,11 +23,6 @@ public class TestViewport implements EViewport {
 
     @Override
     public void drawOn(IGraphics g) {
-    }
-
-    @Override
-    public EComponentLocation getViewLocation() {
-        return vl;
     }
 
     @Override
@@ -87,21 +78,21 @@ public class TestViewport implements EViewport {
     }
 
     @Override
-    public boolean setMouseOver(int screenX, int screenY) {
+    public boolean setMouseOver(double screenX, double screenY) {
         return false;
     }
 
     @Override
-    public boolean setMousePressed(int screenX, int screenY) {
+    public boolean setMousePressed(double screenX, double screenY) {
         return false;
     }
 
     @Override
-    public void setMouseReleased(int screenX, int screenY) {
+    public void setMouseReleased(double screenX, double screenY) {
     }
 
     @Override
-    public boolean setMouseScrolled(int screenX, int screenY, double wheelDelta) {
+    public boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
         return false;
     }
 

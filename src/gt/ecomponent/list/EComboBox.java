@@ -74,7 +74,7 @@ public class EComboBox implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMouseOver(int screenX, int screenY) {
+    public boolean setMouseOver(double screenX, double screenY) {
         boolean containsPoint = cl.containsPoint(screenX, screenY);
         border.setSelected(containsPoint);
         boolean listContains = listVisible && list.setMouseOver(screenX, screenY);
@@ -85,7 +85,7 @@ public class EComboBox implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMousePressed(int screenX, int screenY) {
+    public boolean setMousePressed(double screenX, double screenY) {
         mousePressed = cl.containsPoint(screenX, screenY);
         if (mousePressed) {
             listVisible = !listVisible;
@@ -104,7 +104,7 @@ public class EComboBox implements EComponent, EComponentSettings {
     }
 
     @Override
-    public void setMouseReleased(int screenX, int screenY) {
+    public void setMouseReleased(double screenX, double screenY) {
         if (listVisible) {
             if (mousePressed) {
                 if (cl.containsPoint(screenX, screenY)) {
@@ -123,7 +123,7 @@ public class EComboBox implements EComponent, EComponentSettings {
     }
 
     @Override
-    public boolean setMouseScrolled(int screenX, int screenY, double wheelDelta) {
+    public boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
         return listVisible && list.setMouseScrolled(screenX, screenY, wheelDelta);
     }
 

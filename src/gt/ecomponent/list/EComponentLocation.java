@@ -14,7 +14,7 @@ public interface EComponentLocation extends Sized {
 
     double getY1();
 
-    default boolean containsPoint(int screenX, int screenY) {
+    default boolean containsPoint(double screenX, double screenY) {
         return screenX >= getX0() && screenX <= getX1() && screenY >= getY0() && screenY <= getY1();
     }
 

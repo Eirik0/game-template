@@ -69,7 +69,7 @@ public class EVScrollBarStrategy implements EScrollBarStrategy {
     }
 
     @Override
-    public void setMouseOverImpl(int screenX, int screenY) {
+    public void setMouseOverImpl(double screenX, double screenY) {
         mouseOverY = Math.min(Math.max(trackLocation.getY0(), screenY), trackLocation.getY1());
     }
 
