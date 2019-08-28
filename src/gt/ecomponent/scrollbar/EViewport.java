@@ -1,31 +1,18 @@
 package gt.ecomponent.scrollbar;
 
 import gt.ecomponent.EComponent;
+import gt.gameentity.Sized;
 
-public interface EViewport extends EComponent {
-    double getWidth();
+public interface EViewport extends EComponent, Sized {
+    ViewportWindow getWindow();
 
-    double getHeight();
-
-    double getViewX();
-
-    double getViewY();
-
-    double getViewWidth();
-
-    double getViewHeight();
-
-    double getXIncrement();
-
-    double getYIncrement();
-
-    void setPosition(double viewX, double viewY);
-
-    void setViewSize(double viewWidth, double viewHeight);
-
-    default void move(double dx, double dy) {
-        double x = Math.min(Math.max(0, getViewX() + dx), Math.max(0, getWidth() - getViewWidth()));
-        double y = Math.min(Math.max(0, getViewY() + dy), Math.max(0, getHeight() - getViewHeight()));
-        setPosition(x, y);
+    @Override
+    default boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
+        ViewportWindow window = getWindow();
+        boolean containsPoint = window.containsPoint(screenX, screenY);
+        if (containsPoint) {
+            window.move(0, wheelDelta * window.getYIncrement());
+        }
+        return containsPoint;
     }
 }

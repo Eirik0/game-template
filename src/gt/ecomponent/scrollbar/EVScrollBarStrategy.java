@@ -1,8 +1,8 @@
 package gt.ecomponent.scrollbar;
 
 import gt.ecomponent.button.EArrowButtonDrawer.ArrowDirection;
-import gt.ecomponent.list.EComponentLocation;
 import gt.ecomponent.button.EButton;
+import gt.ecomponent.list.EComponentLocation;
 import gt.ecomponent.location.EGluedLocation;
 import gt.ecomponent.location.GlueSide;
 
@@ -23,9 +23,9 @@ public class EVScrollBarStrategy implements EScrollBarStrategy {
         cl = parentLocation.createGluedLocation(GlueSide.RIGHT, -EScrollBar.BAR_WIDTH + 1, 0, 0, 0);
         trackLocation = cl.createPaddedLocation(0, EScrollBar.BAR_WIDTH, 0, EScrollBar.BAR_WIDTH);
         button1 = EButton.createArrowButton(cl.createGluedLocation(GlueSide.TOP, 0, 0, 0, EScrollBar.BAR_WIDTH - 1), ArrowDirection.UP,
-                () -> view.move(0, -view.getYIncrement()));
+                () -> view.getWindow().move(0, -view.getWindow().getYIncrement()));
         button2 = EButton.createArrowButton(cl.createGluedLocation(GlueSide.BOTTOM, 0, -EScrollBar.BAR_WIDTH + 1, 0, 0), ArrowDirection.DOWN,
-                () -> view.move(0, view.getYIncrement()));
+                () -> view.getWindow().move(0, view.getWindow().getYIncrement()));
         thumbLocation = new EVScrollBarThumbLocation(trackLocation, view);
     }
 
@@ -61,10 +61,10 @@ public class EVScrollBarStrategy implements EScrollBarStrategy {
 
     @Override
     public void checkMousePressed() {
-        if (view.getHeight() > view.getViewHeight()) {
+        if (view.getHeight() > view.getWindow().getHeight()) {
             double y = mouseOverY - trackLocation.getY0();
             double percent = y / (trackLocation.getHeight() - 1);
-            view.setPosition(view.getViewX(), (view.getHeight() - view.getViewHeight()) * percent);
+            view.getWindow().setPosition(view.getWindow().getX0(), (view.getHeight() - view.getWindow().getHeight()) * percent);
         }
     }
 
@@ -75,6 +75,6 @@ public class EVScrollBarStrategy implements EScrollBarStrategy {
 
     @Override
     public void setMouseScrolledImpl(double wheelDelta) {
-        view.move(0, wheelDelta * view.getYIncrement());
+        view.getWindow().move(0, wheelDelta * view.getWindow().getYIncrement());
     }
 }

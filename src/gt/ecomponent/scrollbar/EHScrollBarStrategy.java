@@ -1,8 +1,8 @@
 package gt.ecomponent.scrollbar;
 
 import gt.ecomponent.button.EArrowButtonDrawer.ArrowDirection;
-import gt.ecomponent.list.EComponentLocation;
 import gt.ecomponent.button.EButton;
+import gt.ecomponent.list.EComponentLocation;
 import gt.ecomponent.location.EGluedLocation;
 import gt.ecomponent.location.GlueSide;
 
@@ -22,9 +22,9 @@ public class EHScrollBarStrategy implements EScrollBarStrategy {
         this.view = view;
         cl = parentLocation.createGluedLocation(GlueSide.BOTTOM, 0, -EScrollBar.BAR_WIDTH + 1, 0, 0);
         button1 = EButton.createArrowButton(cl.createGluedLocation(GlueSide.LEFT, 0, 0, EScrollBar.BAR_WIDTH - 1, 0), ArrowDirection.LEFT,
-                () -> view.move(-view.getXIncrement(), 0));
+                () -> view.getWindow().move(-view.getWindow().getXIncrement(), 0));
         button2 = EButton.createArrowButton(cl.createGluedLocation(GlueSide.RIGHT, -EScrollBar.BAR_WIDTH + 1, 0, 0, 0), ArrowDirection.RIGHT,
-                () -> view.move(view.getXIncrement(), 0));
+                () -> view.getWindow().move(view.getWindow().getXIncrement(), 0));
         trackLocation = cl.createPaddedLocation(EScrollBar.BAR_WIDTH, 0, EScrollBar.BAR_WIDTH, 0);
         thumbLocation = new EHScrollBarThumbLocation(trackLocation, view);
     }
@@ -61,10 +61,10 @@ public class EHScrollBarStrategy implements EScrollBarStrategy {
 
     @Override
     public void checkMousePressed() {
-        if (view.getWidth() > view.getViewWidth()) {
+        if (view.getWidth() > view.getWindow().getWidth()) {
             double x = mouseOverX - trackLocation.getX0();
             double percent = x / (trackLocation.getWidth() - 1);
-            view.setPosition((view.getWidth() - view.getViewWidth()) * percent, view.getViewY());
+            view.getWindow().setPosition((view.getWidth() - view.getWindow().getWidth()) * percent, view.getWindow().getY0());
         }
     }
 
@@ -75,6 +75,6 @@ public class EHScrollBarStrategy implements EScrollBarStrategy {
 
     @Override
     public void setMouseScrolledImpl(double wheelDelta) {
-        view.move(wheelDelta * view.getXIncrement(), 0);
+        view.getWindow().move(wheelDelta * view.getWindow().getXIncrement(), 0);
     }
 }

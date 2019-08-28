@@ -47,7 +47,9 @@ public class EScrollPane implements EComponent, EComponentSettings, Sizable {
         double x = view.getWidth() - newImageWidth;
         double y = view.getHeight() - newImageHeight;
 
-        if (x < view.getViewX() || y < view.getViewY()) {
+        ViewportWindow window = view.getWindow();
+
+        if (x < window.getX0() || y < window.getY0()) {
             if (x < 0) {
                 x = 0;
                 newImageWidth = view.getWidth();
@@ -56,7 +58,7 @@ public class EScrollPane implements EComponent, EComponentSettings, Sizable {
                 y = 0;
                 newImageHeight = view.getHeight();
             }
-            view.setPosition(Math.min(x, view.getViewX()), Math.min(y, view.getViewY()));
+            window.setPosition(Math.min(x, window.getX0()), Math.min(y, window.getY0()));
         }
 
         hBar.setVisible(hBarVisible);
@@ -64,7 +66,7 @@ public class EScrollPane implements EComponent, EComponentSettings, Sizable {
         hBar.setOtherBarVisible(vBarVisible);
         vBar.setOtherBarVisible(hBarVisible);
 
-        view.setViewSize(vBarVisible ? width - EScrollBar.BAR_WIDTH : width, hBarVisible ? height - EScrollBar.BAR_WIDTH : height);
+        window.setSize(vBarVisible ? width - EScrollBar.BAR_WIDTH : width, hBarVisible ? height - EScrollBar.BAR_WIDTH : height);
         viewImage.setSize(EMath.round(newImageWidth), EMath.round(newImageHeight));
     }
 

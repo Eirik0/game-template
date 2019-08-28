@@ -1,20 +1,23 @@
 package gt.ecomponent.scrollbar;
 
+import gt.ecomponent.list.EComponentLocation;
 import gt.gameentity.IGraphics;
 
 public class TestViewport implements EViewport {
+    private final ViewportWindow window;
+
     private final double width;
     private final double height;
 
-    private double viewX = 0;
-    private double viewY = 0;
-
-    private double viewWidth;
-    private double viewHeight;
-
-    public TestViewport(double width, double height) {
+    public TestViewport(EComponentLocation cl, double width, double height) {
+        window = new ViewportWindow(this, 0, 0, cl.getWidth(), cl.getHeight(), 0, 0);
         this.width = width;
         this.height = height;
+    }
+
+    @Override
+    public ViewportWindow getWindow() {
+        return window;
     }
 
     @Override
@@ -36,48 +39,6 @@ public class TestViewport implements EViewport {
     }
 
     @Override
-    public double getViewX() {
-        return viewX;
-    }
-
-    @Override
-    public double getViewY() {
-        return viewY;
-    }
-
-    @Override
-    public double getViewWidth() {
-        return viewWidth;
-    }
-
-    @Override
-    public double getViewHeight() {
-        return viewHeight;
-    }
-
-    @Override
-    public double getXIncrement() {
-        return 0;
-    }
-
-    @Override
-    public double getYIncrement() {
-        return 0;
-    }
-
-    @Override
-    public void setPosition(double viewX, double viewY) {
-        this.viewX = viewX;
-        this.viewY = viewY;
-    }
-
-    @Override
-    public void setViewSize(double viewWidth, double viewHeight) {
-        this.viewWidth = viewWidth;
-        this.viewHeight = viewHeight;
-    }
-
-    @Override
     public boolean setMouseOver(double screenX, double screenY) {
         return false;
     }
@@ -89,11 +50,6 @@ public class TestViewport implements EViewport {
 
     @Override
     public void setMouseReleased(double screenX, double screenY) {
-    }
-
-    @Override
-    public boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
-        return false;
     }
 
     @Override

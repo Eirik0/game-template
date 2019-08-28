@@ -18,7 +18,7 @@ public class EVScrollBarThumbLocation implements EComponentLocation {
 
     @Override
     public double getY0() {
-        double y0Percent = view.getViewY() / (view.getHeight() - 1);
+        double y0Percent = view.getWindow().getY0() / (view.getHeight() - 1);
         return trackLocation.getY0() + 1 + (trackLocation.getHeight() - 1) * y0Percent;
     }
 
@@ -29,7 +29,7 @@ public class EVScrollBarThumbLocation implements EComponentLocation {
 
     @Override
     public double getY1() {
-        double y1Percent = Math.min(1, (view.getViewY() + view.getViewHeight() - 1) / (view.getHeight() - 1));
+        double y1Percent = Math.min(1, (view.getWindow().getY0() + view.getWindow().getHeight() - 1) / (view.getHeight() - 1));
         return trackLocation.getY0() + (trackLocation.getHeight() - 1) * y1Percent - 1;
     }
 }

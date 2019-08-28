@@ -7,6 +7,7 @@ import gt.component.ComponentCreator;
 import gt.ecomponent.EComponentSettings;
 import gt.ecomponent.scrollbar.EScrollBar;
 import gt.ecomponent.scrollbar.EViewport;
+import gt.ecomponent.scrollbar.ViewportWindow;
 import gt.gameentity.IGraphics;
 import gt.settings.GameSettings;
 import gt.util.EMath;
@@ -21,13 +22,9 @@ public class EListViewport implements EViewport, EComponentSettings {
     public static final int ITEM_HEIGHT = GameSettings.getInt(LIST_VIEWPORT_ITEM_HEIGHT, LIST_VIEWPORT_ITEM_HEIGHT_DEFAULT);
 
     private final EComponentLocation cl;
+    private final ViewportWindow window;
+
     private final String[] items;
-
-    private double x0 = 0;
-    private double y0 = 0;
-    private double viewWidth;
-    private double viewHeight;
-
     private final IntConsumer action;
     private int selectedIndex;
 
@@ -37,34 +34,29 @@ public class EListViewport implements EViewport, EComponentSettings {
 
     public EListViewport(EComponentLocation cl, String[] items, int selectedIndex, IntConsumer action) {
         this.cl = cl;
+        window = new ViewportWindow(this, 0, 0, cl.getWidth(), cl.getHeight(), 0, ITEM_HEIGHT);
         this.items = items;
         this.selectedIndex = selectedIndex;
         this.action = action;
-        viewWidth = cl.getWidth();
-        viewHeight = cl.getHeight();
     }
 
-    private boolean containsPoint(double screenX, double screenY) {
-        return screenX >= 0 && screenX <= viewWidth && screenY >= 0 && screenY <= viewHeight;
+    @Override
+    public ViewportWindow getWindow() {
+        return window;
     }
 
     public boolean setSelected(double screenX, double screenY) {
-        boolean containsPoint = containsPoint(screenX, screenY);
+        boolean containsPoint = window.containsPoint(screenX, screenY);
         if (containsPoint) {
             mousePressed = true;
         }
         return containsPoint;
     }
 
-    private double getTruncatedY0() {
-        double rounded = (int) y0 / ITEM_HEIGHT * ITEM_HEIGHT;
-        return y0 - rounded < ITEM_HEIGHT / 2 ? rounded : rounded + ITEM_HEIGHT;
-    }
-
     private int getMouseOverIndex() {
-        double indexY = mouseOverY + EMath.round(getTruncatedY0());
-        double minY = getTruncatedY0();
-        double maxY = Math.min(getViewHeight() + getTruncatedY0() - 1, (items.length - 1) * ITEM_HEIGHT);
+        double indexY = mouseOverY + EMath.round(window.getTruncatedY0(ITEM_HEIGHT));
+        double minY = window.getTruncatedY0(ITEM_HEIGHT);
+        double maxY = Math.min(window.getHeight() + window.getTruncatedY0(ITEM_HEIGHT) - 1, (items.length - 1) * ITEM_HEIGHT);
         return EMath.round(Math.min(Math.max(minY, indexY), maxY)) / ITEM_HEIGHT;
     }
 
@@ -72,31 +64,31 @@ public class EListViewport implements EViewport, EComponentSettings {
     public void update(double dt) {
         if (mousePressed) {
             if (mouseOverY < 0) {
-                move(0, mouseOverY / 15.0);
-            } else if (mouseOverY > getViewHeight() - 1) {
-                move(0, (mouseOverY - (getViewHeight() - 1)) / 15.0);
+                window.move(0, mouseOverY / 15.0);
+            } else if (mouseOverY > window.getHeight() - 1) {
+                window.move(0, (mouseOverY - (window.getHeight() - 1)) / 15.0);
             }
         }
     }
 
     @Override
     public void drawOn(IGraphics g) {
-        g.fillRect(0, 0, getViewWidth(), getViewHeight(), BACKGROUND_COLOR);
-        double itemY = -getTruncatedY0();
+        g.fillRect(0, 0, window.getWidth(), window.getHeight(), BACKGROUND_COLOR);
+        double itemY = -window.getTruncatedY0(ITEM_HEIGHT);
         g.setColor(TEXT_COLOR);
         g.setFont(ComponentCreator.DEFAULT_FONT_SMALL);
         for (int i = 0; i < items.length; ++i) {
-            if (itemY >= 0 && itemY <= viewHeight) {
-                g.drawCenteredYString(items[i], ITEM_PADDING - getViewX(), itemY + ITEM_HEIGHT / 2);
+            if (itemY >= 0 && itemY <= window.getHeight()) {
+                g.drawCenteredYString(items[i], ITEM_PADDING - window.getX0(), itemY + ITEM_HEIGHT / 2);
             }
             itemY += ITEM_HEIGHT;
         }
         if (mouseOver || mousePressed) {
-            double mouseOverY = getMouseOverIndex() * ITEM_HEIGHT - getTruncatedY0();
-            g.drawRect(1, mouseOverY + 1, viewWidth - 2, ITEM_HEIGHT - 2, PRESSED_COLOR);
+            double mouseOverY = getMouseOverIndex() * ITEM_HEIGHT - window.getTruncatedY0(ITEM_HEIGHT);
+            g.drawRect(1, mouseOverY + 1, window.getWidth() - 2, ITEM_HEIGHT - 2, PRESSED_COLOR);
         }
-        double selectedY = selectedIndex * ITEM_HEIGHT - getTruncatedY0();
-        g.drawRect(0, selectedY, viewWidth, ITEM_HEIGHT, SELECTED_COLOR);
+        double selectedY = selectedIndex * ITEM_HEIGHT - window.getTruncatedY0(ITEM_HEIGHT);
+        g.drawRect(0, selectedY, window.getWidth(), ITEM_HEIGHT, SELECTED_COLOR);
     }
 
     @Override
@@ -111,78 +103,26 @@ public class EListViewport implements EViewport, EComponentSettings {
     }
 
     @Override
-    public double getViewX() {
-        return x0;
-    }
-
-    @Override
-    public double getViewY() {
-        return y0;
-    }
-
-    @Override
-    public double getViewWidth() {
-        return viewWidth;
-    }
-
-    @Override
-    public double getViewHeight() {
-        return viewHeight;
-    }
-
-    @Override
-    public double getXIncrement() {
-        return 10;
-    }
-
-    @Override
-    public double getYIncrement() {
-        return ITEM_HEIGHT;
-    }
-
-    @Override
-    public void setPosition(double x, double y) {
-        x0 = x;
-        y0 = y;
-    }
-
-    @Override
-    public void setViewSize(double width, double height) {
-        viewWidth = width;
-        viewHeight = height;
-    }
-
-    @Override
     public boolean setMouseOver(double screenX, double screenY) {
-        mouseOver = containsPoint(screenX, screenY);
+        mouseOver = window.containsPoint(screenX, screenY);
         mouseOverY = screenY;
         return mouseOver;
     }
 
     @Override
     public boolean setMousePressed(double screenX, double screenY) {
-        mousePressed = containsPoint(screenX, screenY);
+        mousePressed = window.containsPoint(screenX, screenY);
         return mousePressed;
     }
 
     @Override
     public void setMouseReleased(double screenX, double screenY) {
-        boolean containsPoint = containsPoint(screenX, screenY);
-        if (mousePressed && containsPoint) {
+        if (mousePressed && window.containsPoint(screenX, screenY)) {
             int selected = getMouseOverIndex();
             selectedIndex = selected;
             action.accept(selected);
         }
         mousePressed = false;
-    }
-
-    @Override
-    public boolean setMouseScrolled(double screenX, double screenY, double wheelDelta) {
-        if (containsPoint(screenX, screenY)) {
-            move(0, wheelDelta * getYIncrement());
-            return true;
-        }
-        return false;
     }
 
     @Override
