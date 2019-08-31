@@ -16,13 +16,19 @@ public class ETextLabel implements EComponent, EComponentSettings {
     private final EBackground background;
 
     private final boolean drawBackground;
+    private final boolean center;
     private String text;
 
-    public ETextLabel(EComponentLocation cl, String text, boolean drawBackground) {
+    public ETextLabel(EComponentLocation cl, String text, boolean drawBackground, boolean center) {
         this.cl = cl;
         this.text = text;
         this.drawBackground = drawBackground;
+        this.center = center;
         background = new EBackground(cl, BACKGROUND_COLOR);
+    }
+
+    public ETextLabel(EComponentLocation cl, String text, boolean drawBackground) {
+        this(cl, text, drawBackground, true);
     }
 
     public void setText(String text) {
@@ -40,7 +46,11 @@ public class ETextLabel implements EComponent, EComponentSettings {
         }
         g.setColor(TEXT_COLOR);
         g.setFont(ComponentCreator.DEFAULT_FONT_SMALL);
-        g.drawCenteredString(text, cl.getCenterX(), cl.getCenterY());
+        if (center) {
+            g.drawCenteredString(text, cl.getCenterX(), cl.getCenterY());
+        } else {
+            g.drawCenteredYString(text, cl.getX0() + 2, cl.getCenterY());
+        }
     }
 
     @Override
