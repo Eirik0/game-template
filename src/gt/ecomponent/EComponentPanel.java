@@ -92,7 +92,10 @@ public class EComponentPanel implements Updatable, Drawable, UserInputHandler {
             mouseMoved(mouseX, mouseY);
             break;
         case MOUSE_WHEEL_MOVED:
-            double wheelDelta = mouseTracker.wheelRotationDelta();
+            int wheelDelta = mouseTracker.wheelRotationDelta();
+            if (wheelDelta == 0) {
+                return;
+            }
             for (int i = components.length - 1; i >= 0; --i) {
                 EComponent[] layer = components[i];
                 for (int j = 0; j < layer.length; ++j) {
@@ -101,6 +104,7 @@ public class EComponentPanel implements Updatable, Drawable, UserInputHandler {
                     }
                 }
             }
+            mouseTracker.addWheelRotation(wheelDelta);
             break;
         default:
             break;

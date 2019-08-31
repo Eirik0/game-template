@@ -7,5 +7,7 @@ public interface IMouseTracker {
 
     int mouseY();
 
+    void addWheelRotation(int rotation);
+
     int wheelRotationDelta();
 }

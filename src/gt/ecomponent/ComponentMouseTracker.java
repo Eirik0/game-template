@@ -29,6 +29,11 @@ public class ComponentMouseTracker implements IMouseTracker {
     }
 
     @Override
+    public void addWheelRotation(int rotation) {
+        parent.addWheelRotation(rotation);
+    }
+
+    @Override
     public int wheelRotationDelta() {
         return parent.wheelRotationDelta();
     }
