@@ -5,15 +5,23 @@ import java.awt.image.BufferedImage;
 import gt.util.EMath;
 
 public class JavaGameImage implements IJavaGameImage {
+    private final int imageType;
+
     private BufferedImage image;
     private JavaGraphics graphics;
 
-    public JavaGameImage(int width, int height) {
+    public JavaGameImage(int width, int height, int imageType) {
+        this.imageType = imageType;
         resizeImage(width, height);
+    }
+
+    public JavaGameImage(int width, int height) {
+        this(width, height, BufferedImage.TYPE_INT_RGB);
     }
 
     private JavaGameImage(BufferedImage image) {
         this.image = image;
+        imageType = image.getType();
         graphics = new JavaGraphics(image.createGraphics());
     }
 
@@ -43,7 +51,7 @@ public class JavaGameImage implements IJavaGameImage {
     }
 
     private void resizeImage(int width, int height) {
-        BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage newImage = new BufferedImage(width, height, imageType);
         JavaGraphics newGraphics = new JavaGraphics(newImage.createGraphics());
         newGraphics.fillRect(0, 0, width, height, ComponentCreator.backgroundColor());
         if (image != null) {
