@@ -52,6 +52,18 @@ public class EComponentPanel implements Updatable, Drawable, UserInputHandler {
         }
     }
 
+    private void deselectComponents(int exceptLayer, int exceptIndex) {
+        for (int i = 0; i < components.length; ++i) {
+            EComponent[] layer = components[i];
+            for (int j = 0; j < layer.length; ++j) {
+                if (i == exceptLayer && j == exceptIndex) {
+                    continue;
+                }
+                layer[j].focusLost(true);
+            }
+        }
+    }
+
     @Override
     public void handleUserInput(UserInput input) {
         int mouseX = mouseTracker.mouseX();
@@ -65,24 +77,17 @@ public class EComponentPanel implements Updatable, Drawable, UserInputHandler {
             }
             break;
         case LEFT_BUTTON_PRESSED:
-            boolean pressed = false;
             for (int i = components.length - 1; i >= 0; --i) {
                 EComponent[] layer = components[i];
                 for (int j = 0; j < layer.length; ++j) {
-                    if (pressed) {
-                        layer[j].focusLost(true);
-                    } else {
-                        if (layer[j].setMousePressed(mouseX, mouseY)) {
-                            selectedComponent = layer[j];
-                            pressed = true;
-                            break;
-                        }
+                    if (layer[j].setMousePressed(mouseX, mouseY)) {
+                        selectedComponent = layer[j];
+                        deselectComponents(i, j);
+                        return;
                     }
                 }
             }
-            if (!pressed) {
-                selectedComponent = NullEComponent.getInstance();
-            }
+            selectedComponent = NullEComponent.getInstance();
             break;
         case LEFT_BUTTON_RELEASED:
             if (selectedComponent != null) {
