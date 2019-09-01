@@ -54,6 +54,10 @@ public class ECheckBox implements EComponent, EComponentSettings {
         border = new EBorder(cl, BORDER_COLOR, BORDER_HIGHLIGHT_COLOR, false);
     }
 
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
     @Override
     public void update(double dt) {
         border.update(dt);
