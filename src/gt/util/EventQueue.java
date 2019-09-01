@@ -12,12 +12,14 @@ public class EventQueue<E> {
         sourceQueue.add(e);
     }
 
-    public void popAll(Consumer<E> eventConsumer) {
+    public int popAll(Consumer<E> eventConsumer) {
         drainSource();
         E event;
+        int numEvents = sinkQueue.size();
         while ((event = sinkQueue.poll()) != null) {
             eventConsumer.accept(event);
         }
+        return numEvents;
     }
 
     private synchronized void drainSource() {
