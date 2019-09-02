@@ -5,6 +5,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.function.Consumer;
 
 public class ThreadWorker {
+    public static final Consumer<ThreadWorker> DO_NOTHING_ON_COMPLETE = worker -> {
+    };
+
     private final String name;
 
     private final Consumer<ThreadWorker> completedWorkerConsumer;
@@ -16,12 +19,15 @@ public class ThreadWorker {
     private final BlockingQueue<Runnable> runnableQueue = new ArrayBlockingQueue<>(1);
 
     public ThreadWorker() {
-        this("Worker_" + ThreadNumber.getThreadNum("Worker"), worker -> {
-        });
+        this("Worker", DO_NOTHING_ON_COMPLETE);
+    }
+
+    public ThreadWorker(String name) {
+        this(name, DO_NOTHING_ON_COMPLETE);
     }
 
     public ThreadWorker(Consumer<ThreadWorker> completedWorkerConsumer) {
-        this("Worker_" + ThreadNumber.getThreadNum("Worker"), completedWorkerConsumer);
+        this("Worker", completedWorkerConsumer);
     }
 
     public ThreadWorker(String name, Consumer<ThreadWorker> completedWorkerConsumer) {
