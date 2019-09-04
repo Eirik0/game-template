@@ -2,7 +2,9 @@ package gt.gameentity;
 
 import gt.util.EMath;
 
-public class GridSizer {
+public class GridSizer implements Sized {
+    private final double imageWidth;
+    private final double imageHeight;
     public final double cellSize;
     public final double gridWidth;
     public final double gridHeight;
@@ -10,6 +12,8 @@ public class GridSizer {
     public final double offsetY;
 
     public GridSizer(double imageWidth, double imageHeight, int numCellsX, int numCellsY) {
+        this.imageWidth = imageWidth;
+        this.imageHeight = imageHeight;
         double cellSizeX = imageWidth / numCellsX;
         double cellSizeY = imageHeight / numCellsY;
         cellSize = Math.min(cellSizeX, cellSizeY);
@@ -17,6 +21,16 @@ public class GridSizer {
         gridHeight = cellSize * numCellsY;
         offsetX = (imageWidth - gridWidth) / 2;
         offsetY = (imageHeight - gridHeight) / 2;
+    }
+
+    @Override
+    public double getWidth() {
+        return imageWidth;
+    }
+
+    @Override
+    public double getHeight() {
+        return imageHeight;
     }
 
     public double getCornerX(int x) { // Upper left
