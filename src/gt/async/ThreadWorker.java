@@ -96,22 +96,6 @@ public class ThreadWorker {
     }
 
     @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        } else if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        ThreadWorker other = (ThreadWorker) obj;
-        return name.equals(other.name);
-    }
-
-    @Override
     public String toString() {
         return name;
     }
