@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,7 +24,7 @@ public class FileUtilities {
         return System.getProperty("user.home") + File.separator + "." + projectName + File.separator;
     }
 
-    public static List<String> fileToList(File file) throws IOException {
+    public static List<String> fileToList(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             List<String> lines = new ArrayList<>();
 
@@ -33,24 +34,25 @@ public class FileUtilities {
             }
 
             return lines;
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
 
-    public static <T> void collectionToFile(File file, Collection<T> ts, Function<T, String> toString) throws IOException {
+    public static <T> void collectionToFile(File file, Collection<T> ts, Function<T, String> toString) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (T t : ts) {
                 writer.write(toString.apply(t));
             }
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
     }
 
     public static <T> T loadFromFile(String filePath, Function<List<String>, T> onSuccess, Supplier<T> onFailure) {
         File file = new File(filePath);
         if (file.exists()) {
-            try {
-                return onSuccess.apply(FileUtilities.fileToList(file));
-            } catch (IOException e) {
-            }
+            return onSuccess.apply(FileUtilities.fileToList(file));
         }
         return onFailure.get();
     }
@@ -58,11 +60,8 @@ public class FileUtilities {
     public static void initFromFile(String filePath, Consumer<List<String>> onSuccess, Runnable onFailure) {
         File file = new File(filePath);
         if (file.exists()) {
-            try {
-                onSuccess.accept(FileUtilities.fileToList(file));
-                return;
-            } catch (IOException e) {
-            }
+            onSuccess.accept(FileUtilities.fileToList(file));
+            return;
         }
         onFailure.run();
     }
