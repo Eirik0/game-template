@@ -1,7 +1,6 @@
 package gt.settings;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,7 +18,8 @@ public class GameSettings {
 
     public static void loadSettings(String projectName) {
         String settingsFilePath = FileUtilities.getProjectDirectory(projectName) + SETTINGS_FILE_NAME;
-        FileUtilities.initFromFile(settingsFilePath,
+        FileUtilities.initFromFile(
+                settingsFilePath,
                 lines -> {
                     for (String line : lines) {
                         try {
@@ -31,7 +31,8 @@ public class GameSettings {
                         } catch (Exception e) {
                         }
                     }
-                }, () -> {
+                },
+                () -> {
                 });
     }
 
@@ -53,11 +54,8 @@ public class GameSettings {
         settingsFile.getParentFile().mkdirs();
         List<Entry<String, GameSetting<?>>> entryList = new ArrayList<>(settingsMap.entrySet());
         Collections.sort(entryList, (s1, s2) -> s1.getKey().compareTo(s2.getKey()));
-        try {
-            FileUtilities.collectionToFile(settingsFile, entryList,
-                    entry -> entry.getKey() + "=" + entry.getValue().toFileString() + System.lineSeparator());
-        } catch (IOException e) {
-        }
+        FileUtilities.collectionToFile(settingsFile, entryList,
+                entry -> entry.getKey() + "=" + entry.getValue().toFileString() + System.lineSeparator());
     }
 
     @SuppressWarnings("unchecked")
