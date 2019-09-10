@@ -23,10 +23,11 @@ public class GameSettings {
                 lines -> {
                     for (String line : lines) {
                         try {
-                            String[] settingStr = line.split("=");
-                            GameSetting<?> setting = parseSetting(settingStr[1]);
+                            int settingIndex = line.indexOf("=");
+                            String settingName = line.substring(0, settingIndex);
+                            GameSetting<?> setting = parseSetting(line.substring(settingIndex + 1));
                             if (setting != null) {
-                                settingsMap.put(settingStr[0], setting);
+                                settingsMap.put(settingName, setting);
                             }
                         } catch (Exception e) {
                         }
@@ -40,6 +41,9 @@ public class GameSettings {
         if (s.startsWith("color(") && s.endsWith(")")) {
             String[] colors = s.substring(6, s.length() - 1).split(",");
             return new ColorSetting(Integer.parseInt(colors[0]), Integer.parseInt(colors[1]), Integer.parseInt(colors[2]));
+        }
+        if (s.startsWith("\"") && s.endsWith("\"")) {
+            return new StringSetting(s.substring(1, s.length() - 1));
         }
         try {
             return new DoubleSetting(Double.valueOf(Double.parseDouble(s)));
@@ -71,6 +75,10 @@ public class GameSettings {
             settingsMap.put(settingName, defaultValue);
             return defaultValue.getValue();
         }
+    }
+
+    public static void setValue(String settingName, GameSetting<?> value) {
+        settingsMap.put(settingName, value);
     }
 
     public static double getDouble(String settingName, GameSetting<Double> defaultValue) {
